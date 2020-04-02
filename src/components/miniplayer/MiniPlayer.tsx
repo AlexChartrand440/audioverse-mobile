@@ -74,12 +74,10 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
   }
 
   const handlePress = () => { navigation.navigate({ routeName: 'Player' }) }
-
-  const rightAvatar = loading || playbackState === PlayerState.Buffering
+  const isLoading = loading || playbackState === PlayerState.Buffering
+  const rightElement = isLoading
     ? <ActivityIndicator size="large" color="black" />
-    : undefined
-
-  const rightElement = <ImageButton
+    : <ImageButton
     source={playbackState === PlayerState.Playing ? iconPause : iconPlay}
     imageStyle={styles.playPause}
     onPress={actions.playPause}
@@ -100,7 +98,6 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
         subtitle={track.artist}
         subtitleProps={{numberOfLines: 1}}
         onPress={handlePress}
-        rightAvatar={rightAvatar}
         rightElement={rightElement}
         containerStyle={{backgroundColor: 'transparent'}}
         underlayColor="#E0E0E0"
