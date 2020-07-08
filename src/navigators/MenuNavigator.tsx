@@ -1,4 +1,5 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import { createStackNavigator } from 'react-navigation-stack'
 import { NavigationInjectedProps } from 'react-navigation'
 
@@ -66,10 +67,16 @@ ScriptureSongsNavigator.navigationOptions = ({ navigation }: NavigationInjectedP
   return options
 }
 
-const navigationOptionsFunction = ({ navigation }: NavigationInjectedProps) => ({
-  headerTitle: null,
-  title: navigation.state.params ? navigation.state.params.title : '',
+export const navigationOptionsFunction = ({ navigation }: NavigationInjectedProps) => ({
+  headerTitle: navigation.state.params ? navigation.state.params.title  : '',
+  title: navigation.state.params ? navigation.state.params.title  : '',
+  headerTitleContainerStyle: {
+    width: Platform.OS === 'ios' ? '60%' : '75%',
+    alignItems: Platform.OS === 'ios' ? 'center' : 'flex-start',
+  }
+  // WORKAROUND: https://github.com/react-navigation/react-navigation/issues/7057#issuecomment-593086348
 })
+// TODO: move somewhere global?
 
 const Navigator = createStackNavigator({
   Menu: {

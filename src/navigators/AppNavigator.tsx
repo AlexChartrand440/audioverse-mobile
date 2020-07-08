@@ -27,6 +27,7 @@ import Conference from '../containers/conferences/conference'
 import Sponsor from '../containers/sponsors/sponsor'
 import Serie from '../containers/series/serie'
 import SearchNavigator from './SearchNavigator'
+import { navigationOptionsFunction } from './MenuNavigator'
 
 const DiscoverNavigator = createStackNavigator({
   Discover,
@@ -94,10 +95,22 @@ const PlayerStackNavigator = createStackNavigator({
     },
   },
   Transcript,
-  Sponsor,
-  Presenter,
-  Conference,
-  Serie,
+  Sponsor: {
+    screen: Sponsor,
+    navigationOptions: navigationOptionsFunction
+  },
+  Presenter: {
+    screen: Presenter,
+    navigationOptions: navigationOptionsFunction
+  },
+  Conference: {
+    screen: Conference,
+    navigationOptions: navigationOptionsFunction
+  },
+  Serie: {
+    screen: Serie,
+    navigationOptions: navigationOptionsFunction
+  },
 },{
   defaultNavigationOptions: {
     headerStyle: GlobalStyles.header,
