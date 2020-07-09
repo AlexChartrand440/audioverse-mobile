@@ -1,0 +1,44 @@
+fastlane_version '2.151.1'
+
+before_all do
+  # ensure_git_branch
+  # ensure_git_status_clean
+  # git_pull
+end
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  desc "This will also make sure the profile is up to date"  
+  lane :beta do
+    # UI.important "Important Message"
+    # UI.error "O NO!"
+    # UI.message "Basic blah"
+    answer = UI.select("Would you like to add a Changelog?", ["Yes", "No"])
+    changelog = ask('Type Changelog message:') if answer == "Yes"
+    
+    # Get latest certs appstore
+    # match(type: 'appstore')
+    get_certificates
+    get_provisioning_profile(app_identifier: "org.audioverse.mobile")
+    
+    increment_build_number(xcodeproj: "ios/AudioVerse.xcodeproj")
+    build_app(workspace: "ios/AudioVerse.xcworkspace", scheme: "AudioVerse", include_bitcode: true, include_symbols: true)
+    
+    if changelog
+      upload_to_testflight(changelog: changelog, skip_submission: true, skip_waiting_for_build_processing: true)
+    else
+      upload_to_testflight(skip_submission: true, skip_waiting_for_build_processing: true)
+    end    
+    
+    version = get_version_number(xcodeproj: "ios/AudioVerse.xcodeproj")
+    slack(
+      message: "AudioVerse for iOS #{version} – #{lane_context[SharedValues::BUILD_NUMBER]} uploaded to TestFlight",
+      channel: "#development",
+      slack_url: ENV['SLACK_WEBHOOK_URL']
+    )
+  end
+end
+
+platform :android do
+  # Android Lanes
+end
