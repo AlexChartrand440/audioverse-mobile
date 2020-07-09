@@ -40,5 +40,19 @@ platform :ios do
 end
 
 platform :android do
-  # Android Lanes
+  lane :build do
+    gradle(task: 'clean', project_dir: 'android/')
+    gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+  end
+
+  lane :beta do
+    build
+    upload_to_play_store(json_key: ENV['GOOGLE_PLAY_JSON_KEY'], package_name: 'org.audioverse.exodus', track: 'internal')
+    version = android_get_version_name(gradle_file: 'android/app/build.gradle')
+    slack(
+      message: "AudioVerse for Android #{version} uploaded to Google Play Store 'internal' track",
+      channel: "#development",
+      slack_url: ENV['SLACK_WEBHOOK_URL']
+    )
+  end
 end
