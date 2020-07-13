@@ -129,7 +129,7 @@ const PlayerOptions: React.FC<Props> = ({
       cancelButtonIndex: options.length - 1,
     }, buttonIndex => {
       if (typeof buttonIndex !== 'undefined' && buttonIndex !== options.length - 1) {
-        Linking.openURL(track.attachments[buttonIndex].downloadURL).catch(err => console.error(err))
+        Linking.openURL(track.attachments[buttonIndex].url).catch(err => console.error(err))
       }
     })
   }

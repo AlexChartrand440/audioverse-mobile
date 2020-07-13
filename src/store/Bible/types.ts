@@ -5,11 +5,11 @@ export interface BibleState {
     abbr: string
   }
   book: {
+    id: string
     name: string
-    book_id: string
     testament: string
   }
-  chapter: number
+  chapter: string
   verses: string
 }
 
@@ -37,7 +37,7 @@ interface BibleBookAction {
 
 interface BibleChapterAction {
   type: typeof BIBLE_CHAPTER
-  chapter: number
+  chapter: string
 }
 
 interface BibleVersesAction {

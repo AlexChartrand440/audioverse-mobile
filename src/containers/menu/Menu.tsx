@@ -65,11 +65,11 @@ const data: Item[] = [
     routeName: 'Series',
     icon: 'package',
   },
-  {
-    title: 'topics',
-    routeName: 'Topics',
-    icon: 'folder',
-  },
+  // {
+  //   title: 'topics',
+  //   routeName: 'Topics',
+  //   icon: 'folder',
+  // },
   {
     title: 'download_queue',
     routeName: 'DownloadsQueue',

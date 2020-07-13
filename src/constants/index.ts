@@ -3,6 +3,7 @@ import ContentTypes from './contentTypes'
 import Dirs from './dirs'
 import Bitrates from './bitrates'
 import Bibles from './bibles'
+import Queries from './queries'
 
 export {
   Endpoints,
@@ -10,4 +11,5 @@ export {
   Dirs,
   Bitrates,
   Bibles,
+  Queries,
 }

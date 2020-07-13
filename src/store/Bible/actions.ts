@@ -30,7 +30,7 @@ export const bibleBook = (book: BibleState["book"]): BibleActionTypes => {
   }
 }
 
-export const bibleChapter = (chapter: number): BibleActionTypes => {
+export const bibleChapter = (chapter: string): BibleActionTypes => {
   return {
     type: BIBLE_CHAPTER,
     chapter,

@@ -47,6 +47,7 @@ const getSlides = (data: Track) => {
     route: '',
     params: {},
   }
+  // ^ TODO: what is this?
 
   if ( data.contentType === ContentTypes.sermon && data.presenters && data.presenters.length === 1 ) {
     presenter.route = 'Presenter'
@@ -54,39 +55,41 @@ const getSlides = (data: Track) => {
       url: data.presenters[0].recordingsURI,
       title: data.artist,
       description: data.presenters[0].description,
-      image: data.presenters[0].photo256
+      image: data.presenters[0].photo.url
     }
   }
 
   slides.push(presenter)
 	
 	// conference
-	// don't show conference for books/stories
-	if (data.contentType != ContentTypes.book && data.conference && data.conference.length) {
-		const image = data.conference[0].logo != '' ? data.conference[0].photo86 : AVLogo
+  // don't show conference for books/stories
+  const {collection} = data;
+	if (data.contentType != ContentTypes.book && collection) {
+    const image = collection.logoImage ? collection.logoImage.url : AVLogo
 		slides.push({
       type: 'conference',
       image: image,
-      title: data.conference[0].title,
+      title: collection.title,
       route: 'Conference',
       params: {
-        url: data.conference[0].recordingsURI,
-        title: data.conference[0].title
+        url: collection.recordingsURI,
+        title: collection.title
       }
     })
 	}
 	
-	// series
-	if (data.series && data.series.length) {
-		const image = data.series[0].logo != '' ? data.series[0].photo86 : AVLogo
+  // series
+  const {sequence} = data;
+	if (sequence) {
+		const image = sequence.logoImage ? sequence.logoImage.url : AVLogo
 		slides.push({
       type: 'serie',
       image: image,
-      title: data.series[0].title,
+      title: sequence.title,
       route: 'Serie',
       params: {
-        url: data.series[0].recordingsURI,
-        title: data.series[0].title
+        url: sequence.recordingsURI,
+        title: sequence.title
       }
     })
 	}
@@ -99,9 +102,9 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
   const slides = getSlides(data)
   const recordingDate = (!data.recordingDate || data.recordingDate == '0000-00-00 00:00:00') ? '' : I18n.t('Recorded', {locale: language}) + ' ' + data.recordingDate
   let sponsor: {[key: string]: any} = {}
-  if (data.sponsor && data.sponsor.length) {
-    sponsor = {...data.sponsor[0]}
-    sponsor.image = sponsor.logo != '' ? sponsor.photo86 : AVLogo
+  if (data.sponsor) {
+    sponsor = {...data.sponsor}
+    sponsor.image = sponsor.logoImage ? sponsor.logoImage.url : AVLogo
   }
 
   const handleOnPressSponsor = () => {

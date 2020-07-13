@@ -54,7 +54,7 @@ const Presenters: React.FC<Props> = ({ navigation, items, pagination, actions })
     setSearch(search)
     const text = search.toLowerCase()
     const filteredData = items.filter((el: Item) => {
-      return `${el.surname} ${el.givenName}`.toLowerCase().indexOf(text) > -1
+      return `${el.name}`.toLowerCase().indexOf(text) > -1
     })
     setData(filteredData)
   }
@@ -68,17 +68,17 @@ const Presenters: React.FC<Props> = ({ navigation, items, pagination, actions })
     return (
       <ListItem
         leftAvatar={{
-          source: item.photo86 && item.photo86.toString().startsWith('http') ? 
-          { uri: item.photo86 } : item.photo86
+          source: item.photo86 ? 
+          { uri: item.photo86.url } : item.photo86
         }}
-        title={item.givenName + ' ' + item.surname}
+        title={item.name}
         titleProps={{numberOfLines: 1}}
         onPress={() => 
           navigation.navigate({
             routeName: 'Presenter',
             params: {
-              url: item.recordingsURI,
-              title: item.givenName + ' ' + item.surname,
+              url: item.id,
+              title: item.name,
               description: item.description,
               image: item.photo256
             }

@@ -3,6 +3,7 @@ import {
   BASIC_TOKEN,
   API_URL,
   BEARER_TOKEN,
+  GRAPHQL_URL,
 } from 'react-native-dotenv'
 import { Track } from 'react-native-track-player'
 import { parseRecording } from '../utils'
@@ -32,7 +33,7 @@ async function callApi(endpoint: string, parse: ((json: {[key: string]: any}) =>
     const json = await response.json()
     return {
       result: typeof parse === 'function' ? parse(json) : json,
-      nextPageUrl: json.next
+      nextAfterCursor: json.next // TODO: this is wrong
     }
   } else {
     return await response.text()
@@ -57,13 +58,22 @@ async function callApi2(endpoint: string) {
 
 export const fetchData = (url: string) => callApi(url, (json: {[key: string]: any}) => json.result)
 
-export const fetchBibleBooks = (url: string) => callApi(url, json => {
-  let result = []
-  for (let item in json.result) {
-    result.push(json.result[item])
-  }
-  return result
-})
+export const fetchGraphQLData = async (query: string, variables: { [key: string]: any}, keyMapper: (results: any) => any) => {
+  console.log('GraphQL variables:', variables, query)
+  const response = await fetch(GRAPHQL_URL, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query, variables })
+    // headers: {
+    //   Authorization: `Bearer ${BEARER_TOKEN}`
+    // }
+    // ^ TODO: handle session token
+  })
+  return response.json().then(json => {
+    const results = keyMapper(json.data);
+    return { result: results.nodes, nextAfterCursor: results.pageInfo?.endCursor };
+  });
+}
 
 export const fetchFavorites = (url: string) => callApi(url, json => Object.keys(json.result.recording).reverse().map(el => ({
   ...json.result.recording[el][0].recordings,

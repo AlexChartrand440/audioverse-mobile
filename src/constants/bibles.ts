@@ -1,16 +1,16 @@
 export default [
   {
-    id: 'ENGESV2',
+    id: 'ENGESVC',
     name: '2001 English Standard',
     abbr: 'ESV'
   },
   {
-    id: 'ENGKJV1',
+    id: 'ENGKJVC',
     name: 'King James Version',
     abbr: 'KJV'
   },
   {
-    id: 'ENGKJV2',
+    id: 'ENGKJVC2',
     name: 'King James Version (Dramatized)',
     abbr: 'KJV(D)'
   }

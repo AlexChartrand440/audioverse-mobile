@@ -166,7 +166,7 @@ function* getVideoUrl(item: Track) {
 
   const videoFile = item.videoFiles && item.videoFiles.length ? item.videoFiles[0] : {}
   let url = videoFile.downloadURL
-  let logUrl = videoFile.container === 'm3u8_ios' ? videoFile.logURL : null
+  let logUrl = videoFile.container === 'm3u8_ios' ? videoFile.logUrl : null
 
   const downloads = yield select(selectors.getDownloadsById, item.id)
   let currentUrl = null, exists = false

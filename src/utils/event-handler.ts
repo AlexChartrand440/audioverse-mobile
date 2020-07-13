@@ -216,8 +216,8 @@ async function eventHandler(store: Store, data: Data) {
     store.dispatch(actions.trackInitialized(track))
   
     // Bible chapter
-    if (track.chapter) {
-      store.dispatch(bibleChapter(track.chapter))
+    if (track.contentType === ContentTypes.bible) {
+      store.dispatch(bibleChapter(track.id))
       store.dispatch(actions.loadBibleVerses())
     }
   }

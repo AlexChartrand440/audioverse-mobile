@@ -14,7 +14,28 @@ export const getCurrentTrackId = (state: AppState) => state.playback.currentTrac
 export const getRate = (state: AppState) => state.playback.rate
 export const getPosition = (state: AppState) => state.playback.position
 
-export const getBible = (state: AppState) => state.bible
+/**
+ * This map attempts to preserve backward-compatibility with previous bible version ids stored in the redux store.
+ */
+const legacyBibleIdsMap = {
+  ENGESV2: 'ENGESVC',
+  ENGKJV1: 'ENGKJVC',
+  ENGKJV2: 'ENGKJVC2',
+  ENGESVC: 'ENGESVC',
+  ENGKJVC: 'ENGKJVC',
+  ENGKJVC2: 'ENGKJVC2',
+} as any;
+
+export const getBible = (state: AppState) => {
+  const id = legacyBibleIdsMap[state.bible.version.id];
+  return {
+    ...state.bible,
+    version: {
+      ...state.bible.version,
+      id
+    }
+  }
+}
 export const getBibleBooks = (state: AppState) => state.bibleBooks.data
 export const getBibleBooksPagination = (state: AppState) => state.bibleBooks
 export const getBibleChapters = (state: AppState) => state.bibleChapters.data.map(item => {
@@ -25,16 +46,16 @@ export const getBibleChapters = (state: AppState) => state.bibleChapters.data.ma
   }
 })
 export const getBibleChaptersPagination = (state: AppState) => state.bibleChapters
-export const getNewRecordings = (state: AppState) => state.newRecordings.data.map(item => parseRecording(item.recordings))
+export const getNewRecordings = (state: AppState) => state.newRecordings.data.map((item: any) => parseRecording(item));
 export const getNewRecordingsPagination = (state: AppState) => state.newRecordings
-export const getTrendingRecordings = (state: AppState) => state.trendingRecordings.data.map(item => parseRecording(item.recordings))
+export const getTrendingRecordings = (state: AppState) => state.trendingRecordings.data.map((item: any) => parseRecording(item))
 export const getTrendingRecordingsPagination = (state: AppState) => state.trendingRecordings
-export const getFeaturedRecordings = (state: AppState) => state.featuredRecordings.data.map(item => parseRecording(item.recordings))
+export const getFeaturedRecordings = (state: AppState) => state.featuredRecordings.data.map((item: any) => parseRecording(item))
 export const getFeaturedRecordingsPagination = (state: AppState) => state.featuredRecordings
-export const getBooks = (state: AppState) => state.books.data.map(item => item.audiobooks)
+export const getBooks = (state: AppState) => state.books.data
 export const getBooksPagination = (state: AppState) => state.books
-export const getBook = (state: AppState) => state.book.data.map(item => {
-  const recording = parseRecording(item.recordings)
+export const getBook = (state: AppState) => state.book.data.map((item: any) => {
+  const recording = parseRecording(item)
   // contentType property was added later on on the API, since the book is being cached check if it doesn't exists
   if (!recording.contentType) {
     recording.contentType = ContentTypes.book
@@ -55,30 +76,30 @@ export const getBook = (state: AppState) => state.book.data.map(item => {
   }
 })
 export const getBookPagination = (state: AppState) => state.book
-export const getStories = (state: AppState) => state.stories.data.map(item => item.audiobooks)
+export const getStories = (state: AppState) => state.stories.data
 export const getStoriesPagination = (state: AppState) => state.stories
-export const getStory = (state: AppState) => state.story.data.map(item => parseRecording(item.recordings))
+export const getStory = (state: AppState) => state.story.data.map((item: any) => parseRecording(item))
 export const getStoryPagination = (state: AppState) => state.story
-export const getPresenters = (state: AppState) => state.presenters.data.map(item => item.presenters)
+export const getPresenters = (state: AppState) => state.presenters.data
 export const getPresentersPagination = (state: AppState) => state.presenters
-export const getPresenter = (state: AppState) => state.presenter.data.map(item => parseRecording(item.recordings))
+export const getPresenter = (state: AppState) => state.presenter.data.map((item: any) => parseRecording(item))
 export const getPresenterPagination = (state: AppState) => state.presenter
-export const getConferences = (state: AppState) => state.conferences.data.map(item => item.conferences)
+export const getConferences = (state: AppState) => state.conferences.data
 export const getConferencesPagination = (state: AppState) => state.conferences
-export const getConference = (state: AppState) => state.conference.data.map(item => parseRecording(item.recordings))
+export const getConference = (state: AppState) => state.conference.data.map((item: any) => parseRecording(item))
 export const getConferencePagination = (state: AppState) => state.conference
 export const getSponsors = (state: AppState) => state.sponsors.data.map(item =>  (
   {
-    ...item.sponsors,
-    photo86: item.sponsors.logo !== '' ? item.sponsors.photo86 : defaultImage
+    ...item,
+    photo86: item.logoImage ? item.logoImage.url : defaultImage
   }
 ))
 export const getSponsorsPagination = (state: AppState) => state.sponsors
-export const getSponsor = (state: AppState) => state.sponsor.data.map(item => parseRecording(item.recordings))
+export const getSponsor = (state: AppState) => state.sponsor.data.map((item: any) => parseRecording(item))
 export const getSponsorPagination = (state: AppState) => state.sponsor
-export const getSeries = (state: AppState) => state.series.data.map(item => item.series)
+export const getSeries = (state: AppState) => state.series.data
 export const getSeriesPagination = (state: AppState) => state.series
-export const getSerie = (state: AppState) => state.serie.data.map(item => parseRecording(item.recordings))
+export const getSerie = (state: AppState) => state.serie.data.map((item: any) => parseRecording(item))
 export const getSeriePagination = (state: AppState) => state.serie
 export const getTopics = (state: AppState) => state.topics.data.map(item => item.topics)
 export const getTopicsPagination = (state: AppState) => state.topics
@@ -86,24 +107,24 @@ export const getTopic = (state: AppState) => state.topic.data.map(item => parseR
 export const getTopicPagination = (state: AppState) => state.topic
 export const getTagsBooks = (state: AppState) => state.tagsBooks.data
 export const getTagsBooksPagination = (state: AppState) => state.tagsBooks
-export const getTagBook = (state: AppState) => state.tagBook.data.map(item => parseRecording(item.recordings))
+export const getTagBook = (state: AppState) => state.tagBook.data.map((item: any) => parseRecording(item))
 export const getTagBookPagination = (state: AppState) => state.tagBook
-export const getTagsAlbums = (state: AppState) => state.tagsAlbums.data.map(item => item.series)
+export const getTagsAlbums = (state: AppState) => state.tagsAlbums.data
 export const getTagsAlbumsPagination = (state: AppState) => state.tagsAlbums
-export const getTagAlbum = (state: AppState) => state.tagAlbum.data.map(item => parseRecording(item.recordings))
+export const getTagAlbum = (state: AppState) => state.tagAlbum.data.map((item: any) => parseRecording(item))
 export const getTagAlbumPagination = (state: AppState) => state.tagAlbum
 export const getTagsSponsors = (state: AppState) => state.tagsSponsors.data.map(item => (
   {
-    ...item.sponsors,
-    photo86: item.sponsors.logo !== '' ? item.sponsors.photo86 : defaultImage
+    ...item,
+    photo86: item.logoImage ? item.logoImage.url : defaultImage
   }
 ))
 export const getTagsSponsorsPagination = (state: AppState) => state.tagsSponsors
-export const getTagSponsor = (state: AppState) => state.tagSponsor.data.map(item => parseRecording(item.recordings))
+export const getTagSponsor = (state: AppState) => state.tagSponsor.data.map((item: any) => parseRecording(item))
 export const getTagSponsorPagination = (state: AppState) => state.tagSponsor
 export const getTags = (state: AppState) => state.tags.data
 export const getTagsPagination = (state: AppState) => state.tags
-export const getTag = (state: AppState) => state.tag.data.map(item => parseRecording(item.recordings))
+export const getTag = (state: AppState) => state.tag.data.map((item: any) => parseRecording(item))
 export const getTagPagination = (state: AppState) => state.tag
 
 export const getDownloads = (state: AppState) => state.lists.downloads.map(el => parseRecording(el))

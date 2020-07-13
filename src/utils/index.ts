@@ -67,7 +67,7 @@ export const getMediaFile = (mediaFiles: MediaFile[], bitRate: string) => {
 export const getPresenterName = (item: {[key: string]: any}) => {
   if (item.presenters && item.presenters.length) {
     if (item.presenters.length === 1) {
-      return item.presenters[0].givenName + ' ' + item.presenters[0].surname
+      return item.presenters[0].name
     } else {
       return 'Various Presenters'
     }
@@ -81,10 +81,10 @@ export const getPresenterName = (item: {[key: string]: any}) => {
  * @param {string} bitRate 
  */
 export const getPresenterPicture = (item: {[key: string]: any}) => {
-  if (item.presenters && item.presenters.length == 1 && item.presenters[0].photo != "default.png" ) {
-    return item.presenters[0].photo256
-  } else if (item.conference && item.conference.length && item.conference[0].logo != "" ) {
-    return item.conference[0].photo256
+  if (item.presenters && item.presenters.length == 1 && item.presenters[0].photo) {
+    return item.presenters[0].photo.url
+  } else if (item.conference && item.conference.length && item.conference[0].photo) {
+    return item.conference[0].photo.url
   }
   return defaultImage
 }
@@ -106,16 +106,18 @@ export const parseRecording = (item: Track): Track => ({
  * @param {object} item 
  * @param {object} bible 
  */
-export const parseBibleChapter = (item: {[key: string]: any}, bible: {[key: string]: any}) => ({
-  id: `${bible.version.id}_${item.book_id}_${item.chapter_id}`,
-  title: `${item.book_id} ${item.chapter_id}`,
-  artist: bible.version.name,
-  artwork: defaultImage,
-  fileName: `${bible.version.id}_${item.book_id}_chapter_${item.chapter_id}.mp3`,
-  downloadURL: `${Endpoints.bibleCDN}${bible.version.id}_${item.book_id}_chapter_${item.chapter_id}.mp3/${encodeURIComponent(item.path)}`,
-  chapter: item.chapter_id,
-  contentType: ContentTypes.bible
-})
+export const parseBibleChapter = (item: {[key: string]: any}, bible: {[key: string]: any}) => {
+  return ({
+    id: item.id,
+    title: item.title,
+    url: item.url,
+    downloadURL: item.url,
+    artist: bible.version.name,
+    artwork: defaultImage,
+    fileName: (item.url || '').split('/').pop(),
+    contentType: ContentTypes.bible
+  })
+}
 
 
 /**

@@ -9,16 +9,16 @@ import {
 
 const initialState: BibleState = {
   version: {
-    id: 'ENGESV2',
+    id: 'ENGESVC',
     name: '2001 English Standard',
     abbr: 'ESV'
   },
   book: {
     name: 'Genesis',
-    book_id: 'Gen',
+    id: 'Gen',
     testament: 'O',
   },
-  chapter: 1,
+  chapter: 'ENGESVC-Gen-1',
   verses: ''
 }
 

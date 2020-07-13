@@ -68,7 +68,7 @@ const BibleChapters: React.FC<Props> = ({
   }, [])
 
   const handlePressItem = (item: {[key: string]: any}) => {
-    actions.bibleChapter(item.chapter)
+    actions.bibleChapter(item.id)
 
     actions.resetAndPlayTrack(items, item.id)
     navigation.navigate({ routeName: 'Verses' })
@@ -100,7 +100,7 @@ const BibleChapters: React.FC<Props> = ({
   const renderItem: ListRenderItem<{[key: string]: any}> = ({ item }) => {
     return (
       <ListItem
-        title={`${bible.book.name} ${item.chapter}`}
+        title={`${item.title}`}
         onPress={handlePressItem.bind(null, item)}
         rightElement={<RightElement data={item} onPress={handlePressItemAction} />}
         bottomDivider
@@ -113,7 +113,7 @@ const BibleChapters: React.FC<Props> = ({
       <FlatList
         data={items}
         renderItem={renderItem}
-        keyExtractor={item => item.chapter}
+        keyExtractor={item => item.id}
         refreshing={pagination.isFetching}
       />
     </View>

@@ -43,6 +43,7 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
   }
 
   const openURL = async (url: string) => {
+    // TODO: redo this function
 
     if (url.match("/sermons/recordings/")) { // recording
       const urlMatch = url.match(/\d+/) || []
@@ -71,6 +72,7 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
       const bookId = parts[parts.length - 2]
       if (version && bookId) {
         store.dispatch(setBibleVersion(version, bookId))
+        // TODO: ensure this selects the right book
       }
     } else if (url.match("/audiobooks/books/")) { // book
       routeName = 'Book'

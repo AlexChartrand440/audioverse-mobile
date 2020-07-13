@@ -20,10 +20,11 @@ import InViewPort from './InViewPort'
 import SliderEntry from './SliderEntry'
 import Entry from './Entry'
 import { sliderWidth, itemWidth } from './SliderEntry'
-import { fetchData } from '../../services'
-import { Endpoints, ContentTypes } from '../../constants'
+import { fetchData, fetchGraphQLData } from '../../services'
+import { Endpoints, ContentTypes, Queries } from '../../constants'
 import { parseRecording } from '../../utils'
 import { resetAndPlayTrack } from '../../actions'
+import {LANGUAGE_MAP} from '../../sagas/api'
 
 interface Item {
   [key: string]: any
@@ -34,6 +35,7 @@ interface Props extends NavigationInjectedProps {
   actions: {
     resetAndPlayTrack: typeof resetAndPlayTrack
   }
+  language: keyof typeof LANGUAGE_MAP
 }
 
 const styles = StyleSheet.create({
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Discover: React.FC<Props> = ({ navigation, history, actions }) => {
+const Discover: React.FC<Props> = ({ navigation, history, actions, language }) => {
 
   const [sliderActiveSlide, setSliderActiveSlide] = useState(0)
   const [posts, setPosts] = useState([])
@@ -87,13 +89,10 @@ const Discover: React.FC<Props> = ({ navigation, history, actions }) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const { result } = await fetchData(`${Endpoints.postsFeatured}`)
+      const { result } = await fetchGraphQLData(Queries.featuredBlogPosts, { language: LANGUAGE_MAP[language] }, (results) => results.featuredBlogPosts)
       if (result.length) {
         setPosts(
-          result.map((el: {[key: string]: any}) => ({
-            ...el.posts,
-            url: el.uri,
-          }))
+          result
         )
       }
     }
@@ -164,13 +163,13 @@ const Discover: React.FC<Props> = ({ navigation, history, actions }) => {
   const renderItemWithParallax: ListRenderItem<Item> = ({ item }) => {
     const data = {
       illustration: {
-        uri: item.image
+        uri: item.image.url
       }
     }
     return (
       <SliderEntry
         data={data}
-        onPress={() => navigation.navigate({ routeName: 'Post', params: {url: item.url} })}
+        onPress={() => navigation.navigate({ routeName: 'Post', params: {url: item.id} })}
       />
     )
   }

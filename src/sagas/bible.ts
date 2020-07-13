@@ -6,6 +6,7 @@ import * as selectors from '../reducers/selectors'
 import { BibleState, SetBibleVersionAction } from '../store/Bible/types'
 import * as api from './api'
 import * as player from './player'
+import ContentTypes from '../constants/contentTypes'
 
 /**
  * Set Bible version
@@ -18,7 +19,7 @@ export function* setBibleVersion({ version, bookId }: SetBibleVersionAction) {
 
   if (bookId) {
     const books = yield select(selectors.getBibleBooks)
-    const book = books.find((el: BibleState["book"]) => el.book_id === bookId)
+    const book = books.find((el: BibleState["book"]) => el.id === bookId)
     if (book) {
       // refresh chapters
       yield call(api.loadBibleChapters, { type: '', loadMore: false, refresh: false, book: book })
@@ -30,8 +31,11 @@ export function* setBibleVersion({ version, bookId }: SetBibleVersionAction) {
     if (id) {
       const tracks = yield select(selectors.getBibleChapters)
       const currentTrack = yield call(TrackPlayer.getTrack, id)
-      const track = tracks.find((el: {[key: string]: any}) => el.chapter === currentTrack.chapter)
-      yield call(player.resetAndPlayTrack, { type: '', tracks, id: track.id })
+      const currentChapterNumber = currentTrack.contentType === ContentTypes.bible ? currentTrack.id.split('-').pop() : false;
+      if(currentChapterNumber) {
+        const track = tracks.find((el: {[key: string]: any}) => el.id.split('-').pop() == currentChapterNumber)
+        yield call(player.resetAndPlayTrack, { type: '', tracks, id: track.id })
+      }
     }
   }
 }

@@ -20,7 +20,7 @@ const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
   onPress: (item: Item) => props.navigation.navigate({
     routeName: 'TagBook',
     params: {
-      url: item.recordingsURI,
+      url: item.name,
       title: item.name,
     },
   }),

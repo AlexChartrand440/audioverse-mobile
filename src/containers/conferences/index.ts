@@ -15,12 +15,12 @@ interface Item {
 const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
   items: getConferences(state),
   pagination: getConferencesPagination(state),
-  avatarExtractor: (item: Item) => item.photo86,
+  avatarExtractor: (item: Item) => item.logoImage.url,
   subtitleExtractor: () => '',
   onPress: (item: Item) => props.navigation.navigate({
     routeName: 'Conference',
     params: {
-      url: item.recordingsURI,
+      url: item.id,
       title: item.title,
     },
   }),

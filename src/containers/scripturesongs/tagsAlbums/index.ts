@@ -16,11 +16,11 @@ const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
   items: getTagsAlbums(state),
   pagination: getTagsAlbumsPagination(state),
   subtitleExtractor: () => '',
-  avatarExtractor: (item: Item) => item.photo86,
+  avatarExtractor: (item: Item) => item.logoImage.url,
   onPress: (item: Item) => props.navigation.navigate({
     routeName: 'TagAlbum',
     params: {
-      url: item.recordingsURI,
+      url: item.id,
       title: item.title,
     },
   }),

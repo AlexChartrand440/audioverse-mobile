@@ -94,7 +94,7 @@ export const List: React.FC<Props> = ({
 
   const handleEndReached = () => {
     console.log('end reached!!', onEndReachedCalledDuringMomentumRef.current)
-    if (!onEndReachedCalledDuringMomentumRef.current && pagination && pagination.nextPageUrl) {
+    if (!onEndReachedCalledDuringMomentumRef.current && pagination && pagination.nextAfterCursor) {
       onEndReachedCalledDuringMomentumRef.current = true
       const { url, id } = navigation.state.params || { url: null, id: null }
       actions.loadData(true, false, url, id)

@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux'
-import { createMigrate, persistReducer } from 'redux-persist'
+import { persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage';
 import { Track } from 'react-native-track-player'
+import RNFetchBlob from 'rn-fetch-blob'
 
 import * as ActionTypes from '../actions'
 import paginate from './paginate'
-import { ContentTypes } from '../constants'
+import { ContentTypes, Dirs } from '../constants'
 
 import { settingsReducer as settings } from './settings/reducers'
 import { playbackReducer as playback } from './playback/reducers'
@@ -14,6 +15,8 @@ import { userReducer as user } from './user/reducers'
 import { localFilesReducer as localFiles } from './localFiles/reducers'
 import { listsReducer as lists } from './lists/reducers'
 import { downloadsQueueReducer as downloadsQueue } from './downloadsQueue/reducers'
+import customCreateMigrate from './customCreateMigrate'
+import { Platform } from 'react-native';
 
 const rootReducer = combineReducers({
   settings,
@@ -264,7 +267,7 @@ const migrations: any = {
         ...state.playback,
         tracks: state.playback.tracks.map((el: Track) => ({
           ...el,
-          contentType: ContentTypes[el.mediaType],
+          contentType: (ContentTypes as any)[el.mediaType],
         })),
       },
       lists: lists,
@@ -278,6 +281,21 @@ const migrations: any = {
         bitRate: "48",
       }
     }
+  },
+  3: async (state: {[key: string]: any}) => { // Clear out pre-graphql data
+    /**
+     * The files cached here don't have the same data shape as the new graphql responses
+     */
+    const BIBLE_AND_BOOKS_DIR = Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir : `${RNFetchBlob.fs.dirs.MainBundleDir}/app_appdata`
+    for(const folder of [Dirs.bible, Dirs.audiobooks]) {
+      const currentFolder = `${BIBLE_AND_BOOKS_DIR}/${folder}/`;
+      const files = await RNFetchBlob.fs.ls(currentFolder);
+      for(const filename of files) {
+        await RNFetchBlob.fs.unlink(`${currentFolder}/${filename}`);
+      }
+    }
+    return {...state, bible: undefined, presenters: undefined}
+    // TODO: test this correctly clears bible and presenters from previous version
   }
 }
 
@@ -287,8 +305,11 @@ const persistConfig = {
   storage: AsyncStorage,
   whitelist: ['settings', 'playback', 'bible', 'user', 'lists', 'presenters'],
   timeout: 0, // disable timeout https://github.com/rt2zz/redux-persist/issues/717
-  version: 2,
-  migrate: createMigrate(migrations, { debug: false }),
+  version: 3,
+  migrate: customCreateMigrate(migrations, {
+    debug: true,
+    asyncMigrations: true,
+  }),
 }
 
 export default persistReducer(persistConfig, rootReducer)

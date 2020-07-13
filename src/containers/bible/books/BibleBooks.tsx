@@ -27,7 +27,7 @@ const BibleBooks: React.FC<Props> = ({ navigation, items, pagination, actions })
     return (
       <ListItem
         leftIcon={{type: 'feather', name: 'volume-2'}}
-        title={item.name}
+        title={item.title}
         onPress={handlePressItem.bind(null, item)}
         bottomDivider
       />
@@ -41,7 +41,7 @@ const BibleBooks: React.FC<Props> = ({ navigation, items, pagination, actions })
       pagination={pagination}
       actions={{loadData: actions.loadData}}
       renderItem={renderItem}
-      keyExtractor={item => item.book_id}
+      keyExtractor={item => item.id}
     />
   )
 

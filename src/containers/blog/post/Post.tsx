@@ -12,8 +12,8 @@ import {
 import HTML from 'react-native-render-html'
 import { NavigationInjectedProps } from 'react-navigation'
 
-import { fetchData } from '../../../services'
-import { Endpoints } from '../../../constants'
+import { fetchData, fetchGraphQLData } from '../../../services'
+import { Endpoints, Queries } from '../../../constants'
 
 interface Post {
   image: string
@@ -68,7 +68,7 @@ const Post: React.FC<NavigationInjectedProps> = ({ navigation }) => {
   useEffect(() => {
     const { params } = navigation.state
     const fetchPosts = async () => {
-      const { result } = await fetchData(params!.url)
+      const { result } = await fetchGraphQLData(Queries.blogPost, { postId: params!.url }, (results) => ({ nodes: results.blogPost }))
       console.log(result)
       if (result.length) {
         setPost(result[0].posts)
@@ -103,6 +103,7 @@ const Post: React.FC<NavigationInjectedProps> = ({ navigation }) => {
       id = hrefMatch[0]
       url = `${Endpoints.sponsor}/${id}`
     }
+    // TODO: update above
 
     if (routeName !== '') {
       navigation.navigate({

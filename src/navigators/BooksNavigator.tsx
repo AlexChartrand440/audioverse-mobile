@@ -9,6 +9,7 @@ import Books from '../containers/books'
 import Book from '../containers/books/book'
 import HeaderRightBook from './headerrightbook'
 import SearchNavigator from './SearchNavigator'
+import I18n from '../../locales'
 
 const Navigator = createStackNavigator({
   BooksList: {
@@ -21,6 +22,7 @@ const Navigator = createStackNavigator({
   Book: {
     screen: Book,
     navigationOptions: ({ navigation }: NavigationInjectedProps) => ({
+      headerBackTitle: I18n.t('books'),
       title: navigation.state.params!.title,
       headerRight: () => <HeaderRightBook />,
     }),

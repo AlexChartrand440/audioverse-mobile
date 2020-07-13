@@ -1,6 +1,8 @@
+import uniqBy from "lodash.uniqby"
+
 export interface PaginationState {
   isFetching: boolean
-  nextPageUrl: string | undefined
+  nextAfterCursor: string | undefined
   pageCount: number
   data: {[key: string]: any}[]
 }
@@ -21,7 +23,7 @@ function paginate({ types }: { types: string[] }) {
 
   const initialState: PaginationState = {
     isFetching: false,
-    nextPageUrl: undefined,
+    nextAfterCursor: undefined,
     pageCount: 0,
     data: [],
   }
@@ -40,14 +42,15 @@ function paginate({ types }: { types: string[] }) {
         }
       case successType:
         console.log('action success', action, state)
+        // TODO: redo pagination handling
         return {
           ...state,
           isFetching: false,
-          data: [
+          data: uniqBy([
             ...state.data,
             ...action.response.result
-          ],
-          nextPageUrl: action.response.nextPageUrl,
+          ], item => item.id), // TODO: handle this only for featured recordings which are ordered randomly and could repeat
+          nextAfterCursor: action.response.nextAfterCursor,
           pageCount: state.pageCount + 1
         }
       case refreshType:
@@ -56,8 +59,8 @@ function paginate({ types }: { types: string[] }) {
           ...state,
           isFetching: false,
           data: action.response.result,
-          nextPageUrl: action.response.nextPageUrl,
-          pageCount: typeof action.response.nextPageUrl !== 'undefined' ? state.pageCount + 1 : 0
+          nextAfterCursor: action.response.nextAfterCursor,
+          pageCount: typeof action.response.nextAfterCursor !== 'undefined' ? state.pageCount + 1 : 0
         }
       case failureType:
         console.log('action failure', action, state)

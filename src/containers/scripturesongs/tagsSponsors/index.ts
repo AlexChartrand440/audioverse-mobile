@@ -20,7 +20,7 @@ const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
   onPress: (item: Item) => props.navigation.navigate({
     routeName: 'TagSponsor',
     params: {
-      url: item.recordingsURI,
+      url: item.id,
       title: item.title,
     },
   }),

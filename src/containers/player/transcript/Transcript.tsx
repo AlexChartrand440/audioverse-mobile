@@ -9,8 +9,8 @@ import { WebView } from 'react-native-webview'
 import { Track } from 'react-native-track-player'
 
 import I18n from '../../../../locales'
-import { fetchData } from "../../../services"
-import { Endpoints } from "../../../constants"
+import { fetchGraphQLData } from "../../../services"
+import { Queries } from "../../../constants"
 
 interface Props {
   track: Track | undefined
@@ -38,13 +38,11 @@ const Transcript: React.FC<Props> = ({ track }) => {
 
   useEffect(() => {
     const fetchTranscript = async () => {
-      const { result } = await fetchData(`${Endpoints.transcripts}/${track!.id}`)
-      if (result.length) {
-        setTranscript(result[0].transcripts.transcript)
-        setLoading(false)
-      } else {
-        setLoading(false)
+      const { result } = await fetchGraphQLData(Queries.recordingTranscript, { recordingId: track!.id }, (results) => ({ nodes: results.recording.transcript }))
+      if (result.text) {
+        setTranscript(result.text)
       }
+      setLoading(false)
     }
 
     fetchTranscript()

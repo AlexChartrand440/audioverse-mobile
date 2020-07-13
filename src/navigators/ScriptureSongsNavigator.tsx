@@ -13,6 +13,8 @@ import TagsAlbums from '../containers/scripturesongs/tagsAlbums'
 import TagAlbum from '../containers/scripturesongs/tagsAlbums/tagAlbum'
 import TagsSponsors from '../containers/scripturesongs/tagsSponsors'
 import TagSponsor from '../containers/scripturesongs/tagsSponsors/tagSponsor'
+import { navigationOptionsFunction } from './MenuNavigator'
+import I18n from '../../locales'
 
 interface TabBarLabelProps {
   tintColor: string
@@ -56,27 +58,19 @@ const ScriptureSongsStack = createStackNavigator({
   ScriptureSongsTab,
   TagBook: {
     screen: TagBook,
-    navigationOptions: ({ navigation }: NavigationInjectedProps) => ({
-      title: navigation.state.params ? navigation.state.params.title : '',
-    }),
+    navigationOptions: navigationOptionsFunction
   },
   TagAlbum: {
     screen: TagAlbum,
-    navigationOptions: ({ navigation }: NavigationInjectedProps) => ({
-      title: navigation.state.params ? navigation.state.params.title : '',
-    }),
+    navigationOptions: navigationOptionsFunction
   },
   TagSponsor: {
     screen: TagSponsor,
-    navigationOptions: ({ navigation }: NavigationInjectedProps) => ({
-      title: navigation.state.params ? navigation.state.params.title : '',
-    }),
+    navigationOptions: navigationOptionsFunction
   },
   Tag: {
     screen: Tag,
-    navigationOptions: ({ navigation }: NavigationInjectedProps) => ({
-      title: navigation.state.params ? navigation.state.params.title : '',
-    }),
+    navigationOptions: navigationOptionsFunction
   }
 }, {
   defaultNavigationOptions: ({ navigation }: NavigationInjectedProps) => {
@@ -87,6 +81,7 @@ const ScriptureSongsStack = createStackNavigator({
     if (navigation.state.index !== undefined) {
       options.headerShown = false
     }
+    options.headerBackTitle = I18n.t('Scripture_Songs')
     return options
   },
 })
