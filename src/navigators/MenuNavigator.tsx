@@ -76,7 +76,6 @@ export const navigationOptionsFunction = ({ navigation }: NavigationInjectedProp
   }
   // WORKAROUND: https://github.com/react-navigation/react-navigation/issues/7057#issuecomment-593086348
 })
-// TODO: move somewhere global?
 
 const Navigator = createStackNavigator({
   Menu: {

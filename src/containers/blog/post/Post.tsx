@@ -12,11 +12,13 @@ import {
 import HTML from 'react-native-render-html'
 import { NavigationInjectedProps } from 'react-navigation'
 
-import { fetchData, fetchGraphQLData } from '../../../services'
-import { Endpoints, Queries } from '../../../constants'
+import { fetchGraphQLData } from '../../../services'
+import { Queries } from '../../../constants'
 
 interface Post {
-  image: string
+  image: {
+    url: string
+  }
   title: string
   body: string
 }
@@ -68,14 +70,11 @@ const Post: React.FC<NavigationInjectedProps> = ({ navigation }) => {
   useEffect(() => {
     const { params } = navigation.state
     const fetchPosts = async () => {
-      const { result } = await fetchGraphQLData(Queries.blogPost, { postId: params!.url }, (results) => ({ nodes: results.blogPost }))
-      console.log(result)
-      if (result.length) {
-        setPost(result[0].posts)
-        setLoading(false)
-      } else {
-        setLoading(false)
+      const { result } = await fetchGraphQLData(Queries.blogPost, { id: params!.url }, (results) => ({ nodes: results.blogPost }))
+      if (result) {
+        setPost(result)
       }
+      setLoading(false)
     }
 
     fetchPosts()
@@ -85,32 +84,27 @@ const Post: React.FC<NavigationInjectedProps> = ({ navigation }) => {
     let routeName = ''
     let hrefMatch: any = null
     let id = null
-    let url = ''
 
     if (href.match("/conferences/")) {
       routeName = 'Conference'
       hrefMatch = href.match(/\d+/)
       id = hrefMatch[0]
-      url = `${Endpoints.conference}/${id}`
-    } else if (href.match("/series/")) {
+    } else if (href.match("/series/") || href.match("/seriess/")) {
       routeName = 'Serie'
       hrefMatch = href.match(/\d+/)
       id = hrefMatch[0]
-      url = `${Endpoints.serie}/${id}`
     } else if (href.match("/sponsors/")) {
       routeName = 'Sponsor'
       hrefMatch = href.match(/\d+/)
       id = hrefMatch[0]
-      url = `${Endpoints.sponsor}/${id}`
     }
-    // TODO: update above
 
     if (routeName !== '') {
       navigation.navigate({
         routeName: routeName,
         params: {
           id,
-          url,
+          url: id,
         }
       })
     } else {
@@ -133,7 +127,7 @@ const Post: React.FC<NavigationInjectedProps> = ({ navigation }) => {
         <View style={styles.card}>
           <Image
             style={styles.image}
-            source={{uri: post.image}} />
+            source={{uri: post.image.url}} />
           <Text style={styles.title}>{post.title}</Text>
           <HTML
             html={post.body}

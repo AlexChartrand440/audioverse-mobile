@@ -47,7 +47,6 @@ const getSlides = (data: Track) => {
     route: '',
     params: {},
   }
-  // ^ TODO: what is this?
 
   if ( data.contentType === ContentTypes.sermon && data.presenters && data.presenters.length === 1 ) {
     presenter.route = 'Presenter'

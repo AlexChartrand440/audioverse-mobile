@@ -10,8 +10,9 @@ export interface PaginationState {
 /**
  * Creates a reducer to manage pagination, given the actions types to handle,
  * @param {array} types 
+ * @param boolean filterUniq This ensures that randomly ordered paginated lists contain unique elements
  */
-function paginate({ types }: { types: string[] }) {
+function paginate({ types }: { types: string[] }, filterUniq = false) {
   if (!Array.isArray(types) || types.length !== 4) {
     throw new Error('Expected types to be an array of four elements.')
   }
@@ -42,14 +43,14 @@ function paginate({ types }: { types: string[] }) {
         }
       case successType:
         console.log('action success', action, state)
-        // TODO: redo pagination handling
+        const nextData = [
+          ...state.data,
+          ...action.response.result
+        ]; 
         return {
           ...state,
           isFetching: false,
-          data: uniqBy([
-            ...state.data,
-            ...action.response.result
-          ], item => item.id), // TODO: handle this only for featured recordings which are ordered randomly and could repeat
+          data: filterUniq ? uniqBy(nextData, item => item.id) : nextData,
           nextAfterCursor: action.response.nextAfterCursor,
           pageCount: state.pageCount + 1
         }

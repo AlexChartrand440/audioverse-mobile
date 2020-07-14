@@ -2,8 +2,15 @@ import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
 import { resetAndPlayTrack } from '../../actions'
+import { AppState } from '../../store'
 
 import Search from './Search'
+import { getLanguage } from '../../reducers/selectors'
+
+
+const mapStateToProps = (state: AppState) => ({
+  language: getLanguage(state),
+})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   actions: bindActionCreators({
@@ -11,4 +18,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }, dispatch),
 })
 
-export default connect(null, mapDispatchToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

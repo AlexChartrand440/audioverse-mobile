@@ -3,6 +3,7 @@ import { ContentTypes } from '../constants'
 import { parseRecording, parseBibleChapter } from '../utils'
 import { defaultImage } from '../styles'
 import { AppState } from '../store'
+import { legacyBibleIdsMap } from '../constants/bibles'
 
 export const getLanguage = (state: AppState) => state.settings.language
 export const getBitRate = (state: AppState) => state.settings.bitRate
@@ -14,17 +15,6 @@ export const getCurrentTrackId = (state: AppState) => state.playback.currentTrac
 export const getRate = (state: AppState) => state.playback.rate
 export const getPosition = (state: AppState) => state.playback.position
 
-/**
- * This map attempts to preserve backward-compatibility with previous bible version ids stored in the redux store.
- */
-const legacyBibleIdsMap = {
-  ENGESV2: 'ENGESVC',
-  ENGKJV1: 'ENGKJVC',
-  ENGKJV2: 'ENGKJVC2',
-  ENGESVC: 'ENGESVC',
-  ENGKJVC: 'ENGKJVC',
-  ENGKJVC2: 'ENGKJVC2',
-} as any;
 
 export const getBible = (state: AppState) => {
   const id = legacyBibleIdsMap[state.bible.version.id];
@@ -48,7 +38,7 @@ export const getBibleChapters = (state: AppState) => state.bibleChapters.data.ma
 export const getBibleChaptersPagination = (state: AppState) => state.bibleChapters
 export const getNewRecordings = (state: AppState) => state.newRecordings.data.map((item: any) => parseRecording(item));
 export const getNewRecordingsPagination = (state: AppState) => state.newRecordings
-export const getTrendingRecordings = (state: AppState) => state.trendingRecordings.data.map((item: any) => parseRecording(item))
+export const getTrendingRecordings = (state: AppState) => state.trendingRecordings.data.map((item: any) => parseRecording(item.recording))
 export const getTrendingRecordingsPagination = (state: AppState) => state.trendingRecordings
 export const getFeaturedRecordings = (state: AppState) => state.featuredRecordings.data.map((item: any) => parseRecording(item))
 export const getFeaturedRecordingsPagination = (state: AppState) => state.featuredRecordings

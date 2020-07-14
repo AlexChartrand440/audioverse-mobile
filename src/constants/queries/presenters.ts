@@ -1,9 +1,8 @@
-// TODO: support pagination for the presenters list
 export default
 `query presenters($language: Language!, $afterCursor: String) {
   presenters(
     language: $language
-    first: 2500
+    first: 1000
     after: $afterCursor
     orderBy: [{ field: NAME, direction: ASC }]
   ) {

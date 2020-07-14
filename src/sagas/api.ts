@@ -142,7 +142,6 @@ function* fetchData(loadMore: boolean = false, refresh: boolean = false, paginat
  */
 function* fetchDataGraphQL(loadMore: boolean = false, refresh: boolean = false, pagination: PaginationState | undefined, fetchFn: typeof fetchNewRecordings, query: string, variables: { [key: string]: any} = {}) {
   console.log('ACTION GraphQL....', loadMore, refresh)
-  // TODO: redo pagination handling
   if (!pagination || !pagination.pageCount || loadMore || refresh) {
     const nextAfterCursor = refresh ? null : pagination ? pagination.nextAfterCursor : null
     const response = yield call(fetchFn, null, query, {...variables, afterCursor: nextAfterCursor}, refresh)

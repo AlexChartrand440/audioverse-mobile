@@ -65,7 +65,7 @@ const rootReducer = combineReducers({
       ActionTypes.FEATURED_RECORDINGS.REFRESH,
       ActionTypes.FEATURED_RECORDINGS.FAILURE
     ]
-  }),
+  }, true),
   books: paginate({
     types: [
       ActionTypes.BOOKS.REQUEST,

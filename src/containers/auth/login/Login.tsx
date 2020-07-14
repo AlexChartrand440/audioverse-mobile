@@ -25,10 +25,11 @@ import firebase from 'react-native-firebase'
 import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../../locales'
-import { Endpoints } from '../../../constants'
+import { Endpoints, Queries } from '../../../constants'
 import * as api from '../../../services'
 import logo from '../../../../assets/av-logo-red-gray.png'
 import { setUser } from '../../../store/user/actions'
+import { UserState } from '../../../store/user/types'
 
 interface Props extends NavigationInjectedProps {
   language: string
@@ -157,14 +158,21 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
   }
 
   const loginSocial = async (data: {[key:string]: any}, socialName: string) => {
-    const url = `${Endpoints.loginSocial}?socialId=${data.id}&socialName=${socialName}&firstName=${data.first_name}&lastName=${data.last_name}&email=${data.email}`
-    const result = await api.fetchData(url)
-    if (result && result.result) {
-      const user = result.result
+    const {result} = await api.fetchGraphQLData(Queries.loginSocial, {
+      socialId: data.id,
+      socialName: socialName,
+      givenName: data.first_name,
+      surname: data.last_name,
+      email: data.email
+    }, (results) => ({
+      nodes: results.loginSocial
+    }))
+    if (result && result.authenticatedUser) {
+      const user = formatUser(result.authenticatedUser)
       // set user
       actions.setUser(user)
       // firebase analytics
-      firebase.analytics().setUserId(user.userId ? user.userId.toString() : null)
+      firebase.analytics().setUserId(user!.userId ? user!.userId.toString() : null)
       firebase.analytics().logEvent('login', { sign_up_method: 'email' })
       // navigate to the main screen
       navigate()
@@ -174,7 +182,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
   const handleLoginWithFB = async () => {
     try {
       LoginManager.logOut()
-      const result = await LoginManager.logInWithPermissions(["public_profile"])
+      const result = await LoginManager.logInWithPermissions(["email", "public_profile"])
       if (!result.isCancelled) {
         const infoRequest = new GraphRequest(
           '/me',
@@ -196,18 +204,31 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
     }
   }
 
+  const formatUser = (authenticatedUser: any): UserState => {
+    const { sessionToken, user } = authenticatedUser;
+    const { id: userId } = user;
+    return {
+      sessionToken,
+      userId
+    };
+  }
+
   const signIn = async () => {
     setLoading(true)
-    const url = `${Endpoints.login}?email=${email}&password=${encodeURIComponent(password)}`
     try {
-      const response = await api.signIn(url)
+      const {result} = await api.fetchGraphQLData(Queries.login, {
+        email,
+        password
+      }, (results) => ({
+        nodes: results.login
+      }))
       setLoading(false)
-      if (response.data) {
-        const user = response.data
+      if (result && result.authenticatedUser) {
+        const user = formatUser(result.authenticatedUser)
         // set user
         actions.setUser(user)
         // firebase analytics
-        firebase.analytics().setUserId(user.userId ? user.userId.toString() : null)
+        firebase.analytics().setUserId(user!.userId ? user!.userId.toString() : null)
         firebase.analytics().logEvent('login', { sign_up_method: 'email' })
         // navigate to the main screen
         navigate()
@@ -222,16 +243,26 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 
   const signUp = async () => {
     setLoading(true)
-    const url = `${Endpoints.signup}?email=${email}&password=${encodeURIComponent(password)}&password_confirmation=${encodeURIComponent(password)}&language=${language}`
     try {
-      const response = await api.signUp(url)
+      const {result} = await api.fetchGraphQLData(Queries.signup, {
+        email,
+        password
+      }, (results) => ({
+        nodes: results.signup
+      }))
       setLoading(false)
-      if (response.data) {
+      if (result && result.authenticatedUser) {
         // firebase analytics
         firebase.analytics().logEvent('sign_up', { sign_up_method: 'email' })
-        // alert user
-        Alert.alert(I18n.t('Account_created._Please_check_your_email_to_activate_it.'))
-        setSignin(true)
+        
+        const user = formatUser(result.authenticatedUser)
+        // set user
+        actions.setUser(user)
+        // firebase analytics
+        firebase.analytics().setUserId(user!.userId ? user!.userId.toString() : null)
+        firebase.analytics().logEvent('login', { sign_up_method: 'email' })
+        // navigate to the main screen
+        navigate()
       } else {
         Alert.alert(I18n.t('Email_exists.'))
       }
@@ -274,6 +305,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
           <TextInput
             placeholder={I18n.t('Email')}
             value={email}
+            onBlur={setFormValid}
             onChangeText={handleChangeTextEmail}
             autoCapitalize="none"
             style={styles.input}
@@ -289,6 +321,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
           <TextInput
             placeholder={I18n.t('Password')}
             value={password}
+            onBlur={setFormValid}
             onChangeText={handleChangeTextPassword}
             style={styles.input}
             underlineColorAndroid="transparent"

@@ -15,40 +15,42 @@ import SearchLayout from 'react-navigation-addon-search-layout'
 import { Track } from 'react-native-track-player'
 
 import I18n from '../../../locales'
-import { Endpoints } from '../../constants'
+import { Queries } from '../../constants'
 import * as services from '../../services'
 import { resetAndPlayTrack } from '../../actions'
 import { GlobalStyles, primaryColor } from '../../styles'
 import { parseRecording } from '../../utils'
 import { defaultImage } from '../../styles'
 import TabBarLabel from '../../navigators/tabbarlabel'
+import {LANGUAGE_MAP} from '../../sagas/api'
 
 interface Item {
   [key: string]: any
 }
 
 interface SearchResult {
-  presentation: {
-    recordings: Track
-  }[]
-  presenter: {
-    presenters: Item
-  }[]
-  conference: {
-    conferences: Item
-  }[]
-  series: {
-    series: Item
-  }[]
-  sponsor: {
-    sponsors: Item
-  }[]
+  sermons: {
+    nodes: Track[]
+  }
+  presenters: {
+    nodes: Item[]
+  }
+  conferences: {
+    nodes: Item[]
+  }
+  serieses: {
+    nodes: Item[]
+  }
+  sponsors: {
+    nodes: Item[]
+  }
 }
 
 interface Props extends NavigationInjectedProps {
   actions: {
     resetAndPlayTrack: typeof resetAndPlayTrack
   }
+  language: keyof typeof LANGUAGE_MAP
 }
 
 interface ResultsRouteI {
@@ -68,7 +70,7 @@ const ResultsRoute: React.FC<ResultsRouteI> = ({ data, renderItem, onRefresh }) 
   )
 }
 
-const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, actions }) => {
+const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, actions, language }) => {
 
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(false)
@@ -93,27 +95,25 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
       // firebase analytics
       firebase.analytics().logEvent('search', { search_term: search })
       // search
-      let url = Endpoints.search
-
       try {
         setLoading(true)
-        const response = await services.search(url + search)
+        const response = await services.fetchGraphQLData(Queries.search, { language: LANGUAGE_MAP[language], term: search }, (results) => ({ nodes: results }))
         setLoading(false)
         const data: SearchResult = response.result
         setPresentations(
-          data.presentation.map((item) => parseRecording(item.recordings))
+          data.sermons.nodes.map((item: any) => parseRecording(item))
         )
         setPresenters(
-          data.presenter.map((item) => item.presenters)
+          data.presenters.nodes
         )
         setConferences(
-          data.conference.map((item) => item.conferences)
+          data.conferences.nodes
         )
         setSeries(
-          data.series.map((item) => item.series)
+          data.serieses.nodes
         )
         setSponsors(
-          data.sponsor.map((item) => item.sponsors)
+          data.sponsors.nodes
         )
       } catch(e) {
         console.log(e)
@@ -139,17 +139,17 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderPresenterItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.photo !== '' ? {uri: item.photo86} : defaultImage
+        source: item.photo ? {uri: item.photo.url} : defaultImage
       }}
-      title={item.givenName + ' ' + item.surname}
+      title={item.name}
       onPress={() => {
         navigation.navigate({
           routeName: 'Presenter',
           params: {
-            url: item.recordingsURI,
-            title: item.givenName + ' ' + item.surname,
+            url: item.id,
+            title: item.name,
             description: item.description,
-            image: item.photo256,
+            image: item.photo && item.photo.url,
           }
         })}
       }
@@ -160,10 +160,10 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderConferenceItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.logo !== '' || item.sponsorLogo !== '' ? {uri: item.photo86} : defaultImage
+        source: item.logoImage ? {uri: item.logoImage.url} : defaultImage
       }}
       title={item.title}
-      onPress={() => navigation.navigate({ routeName: 'Conference', params: { url: item.recordingsURI, title: item.title } })}
+      onPress={() => navigation.navigate({ routeName: 'Conference', params: { url: item.id, title: item.title } })}
       bottomDivider
     />
   )
@@ -171,10 +171,10 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderSerieItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.logo !== '' ? {uri: item.photo86} : defaultImage
+        source: item.logoImage ? {uri: item.logoImage.url} : defaultImage
       }}
       title={item.title}
-      onPress={() => navigation.navigate({ routeName: 'Serie', params: { url: item.recordingsURI, title: item.title } })}
+      onPress={() => navigation.navigate({ routeName: 'Serie', params: { url: item.id, title: item.title } })}
       bottomDivider
     />
   )
@@ -182,10 +182,10 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderSponsorItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.logo !== '' ? {uri: item.photo86} : defaultImage
+        source: item.logoImage ? {uri: item.logoImage.url} : defaultImage
       }}
       title={item.title}
-      onPress={() => navigation.navigate({ routeName: 'Sponsor', params: { url: item.recordingsURI, title: item.title } })}
+      onPress={() => navigation.navigate({ routeName: 'Sponsor', params: { url: item.id, title: item.title } })}
       bottomDivider
     />
   )

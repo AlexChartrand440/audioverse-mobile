@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect } from 'react'
-import {Linking, StatusBar, View} from 'react-native'
+import {Linking, StatusBar} from 'react-native'
 import { NavigationState, NavigationRoute } from 'react-navigation'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -14,9 +14,10 @@ import AppNavigator from './src/navigators/AppNavigator'
 import NavigationService from './src/utils/navigation-service'
 import * as actions from './src/actions'
 import { setBibleVersion } from './src/store/Bible/actions'
-import { fetchData } from "./src/services"
-import { Endpoints, Bibles } from "./src/constants"
+import { fetchGraphQLData } from "./src/services"
+import { Bibles, Queries } from "./src/constants"
 import { parseRecording } from "./src/utils"
+import { legacyBibleIdsMap } from './src/constants/bibles'
 
 interface Props {
   store: any
@@ -43,16 +44,13 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
   }
 
   const openURL = async (url: string) => {
-    // TODO: redo this function
-
     if (url.match("/sermons/recordings/")) { // recording
       const urlMatch = url.match(/\d+/) || []
       const id = urlMatch[0]
-      const recordingsUrl = `${Endpoints.recordings}/${id}`
       
-      const { result } = await fetchData(recordingsUrl)
-      if (result && result.length) {
-        const item = parseRecording(result[0].recordings)
+      const { result } = await fetchGraphQLData(Queries.recording, { id }, (results) => ({ nodes: results.recording}))
+      if (result) {
+        const item = parseRecording(result)
         store.dispatch(actions.resetAndPlayTrack([item]))
       }
       return
@@ -67,19 +65,18 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
     } else if (url.match(/audiobibles\/books\/\w+\/\w+\/\w+\/\d+/)) { // Bible
       routeName = 'Chapters'
       const parts = url.split('/')
-      const versionId = parts[parts.length - 4] + parts[parts.length - 1]
+      const versionId = legacyBibleIdsMap[parts[parts.length - 4] + parts[parts.length - 1]]
       const version = Bibles.find(el => el.id === versionId)
-      const bookId = parts[parts.length - 2]
+      const bookId = versionId + '-' + parts[parts.length - 2]
       if (version && bookId) {
         store.dispatch(setBibleVersion(version, bookId))
-        // TODO: ensure this selects the right book
       }
     } else if (url.match("/audiobooks/books/")) { // book
       routeName = 'Book'
       const urlMatch = url.match(/\d+/) || []
       id = urlMatch[0]
       params = {
-        url: `${Endpoints.book}/${id}`,
+        url: id,
         id,
       }
     } else if (url.match("/audiobooks/books")) { // books
@@ -89,7 +86,7 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
       const urlMatch = url.match(/\d+/) || []
       id = urlMatch[0]
       params = {
-        url: `${Endpoints.conference}/${id}`,
+        url: id,
       }
     } else if (url.match("/conferences")) { // conferences
       routeName = 'Conferences'
@@ -98,7 +95,7 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
       const urlMatch = url.match(/\d+/) || []
       id = urlMatch[0]
       params = {
-        url: `${Endpoints.presenter}/${id}`,
+        url: id,
       }
     } else if (url.match("/presenters")) { // presenters
       routeName = 'Presenters'
@@ -107,7 +104,7 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
       const urlMatch = url.match(/\d+/) || []
       id = urlMatch[0]
       params = {
-        url: `${Endpoints.topic}/${id}`,
+        url: id,
       }
     } else if (url.match("/topics")) { // topics
       routeName = 'Topics'
@@ -116,7 +113,7 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
       const urlMatch = url.match(/\d+/) || []
       id = urlMatch[0]
       params = {
-        url: `${Endpoints.sponsor}/${id}`,
+        url: id,
       }
     } else if (url.match("/sponsors")) { // sponsors
       routeName = 'Sponsors'
@@ -125,7 +122,7 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
       const urlMatch = url.match(/\d+/) || []
       id = urlMatch[0]
       params = {
-        url: `${Endpoints.serie}/${id}`,
+        url: id,
       }
     } else if (url.match("/seriess")) { // series
       routeName = 'Series'

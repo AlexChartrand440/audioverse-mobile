@@ -20,9 +20,8 @@ import InViewPort from './InViewPort'
 import SliderEntry from './SliderEntry'
 import Entry from './Entry'
 import { sliderWidth, itemWidth } from './SliderEntry'
-import { fetchData, fetchGraphQLData } from '../../services'
-import { Endpoints, ContentTypes, Queries } from '../../constants'
-import { parseRecording } from '../../utils'
+import { fetchGraphQLData } from '../../services'
+import { ContentTypes, Queries } from '../../constants'
 import { resetAndPlayTrack } from '../../actions'
 import {LANGUAGE_MAP} from '../../sagas/api'
 
@@ -101,27 +100,11 @@ const Discover: React.FC<Props> = ({ navigation, history, actions, language }) =
   }, [])
 
   const loadStories = async (isVisible: boolean) => {
-    if (!wasStoriesVisible && isVisible) {
-      setWasStoriesVisible(true)
-      const { result } = await fetchData(
-        `${Endpoints.presentationsByContentType}/${ContentTypes.story}?random`
-      )
-      if (result.length) {
-        setStories(result.map((el: Item) => parseRecording(el.recordings)))
-      }
-    }
+    return;
   }
 
   const loadSongs = async (isVisible: boolean) => {
-    if (!wasSongsVisible && isVisible) {
-      setWasSongsVisible(true)
-      const { result } = await fetchData(
-        `${Endpoints.presentationsByContentType}/${ContentTypes.scriptureSong}?random`
-      )
-      if (result.length) {
-        setSongs(result.map((el: Item) => parseRecording(el.recordings)))
-      }
-    }
+    return;
   }
 
   const renderList = (data: Track[], title: string) => {

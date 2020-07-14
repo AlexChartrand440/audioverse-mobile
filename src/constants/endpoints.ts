@@ -9,11 +9,5 @@ export default {
   deletePlaylists: 'playlist/0',
   playlistItems: 'playlist',
   postPlaylistItems: 'playlist/recording',
-  deletePlaylistItems: 'playlist/recording/0',
-  loginSocial: 'user/account/loginsocial',
-  login: 'auth/login',
-  signup: 'auth/signup',
-  search: 'search?query=',
-  postsFeatured: 'posts/featured',
-  presentationsByContentType: 'recordings/content-type',
+  deletePlaylistItems: 'playlist/recording/0'
 }

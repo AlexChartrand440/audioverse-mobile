@@ -1,12 +1,8 @@
 import {
   BASE_URL,
   BASIC_TOKEN,
-  API_URL,
-  BEARER_TOKEN,
   GRAPHQL_URL,
 } from 'react-native-dotenv'
-import { Track } from 'react-native-track-player'
-import { parseRecording } from '../utils'
 
 /**
  * Fetches an API response and parses the result
@@ -40,22 +36,6 @@ async function callApi(endpoint: string, parse: ((json: {[key: string]: any}) =>
   }
 }
 
-/**
- * Fetches an API response
- * @param {string} endpoint 
- */
-async function callApi2(endpoint: string) {
-  const fullUrl = !endpoint.match('^http') ? API_URL + endpoint : endpoint
-  const response = await fetch(fullUrl, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${BEARER_TOKEN}`
-    }
-  })
-
-  return await response.json()
-}
-
 export const fetchData = (url: string) => callApi(url, (json: {[key: string]: any}) => json.result)
 
 export const fetchGraphQLData = async (query: string, variables: { [key: string]: any}, keyMapper: (results: any) => any) => {
@@ -65,11 +45,14 @@ export const fetchGraphQLData = async (query: string, variables: { [key: string]
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query, variables })
     // headers: {
-    //   Authorization: `Bearer ${BEARER_TOKEN}`
+    //   'x-av-session': `${sessionToken}`
     // }
     // ^ TODO: handle session token
   })
   return response.json().then(json => {
+    if(json.errors) {
+      console.log('GraphQL errors', json.errors)
+    }
     const results = keyMapper(json.data);
     return { result: results.nodes, nextAfterCursor: results.pageInfo?.endCursor };
   });
@@ -88,7 +71,3 @@ export const deletePlaylists = (url: string) => callApi(url, null, 'DELETE')
 export const fetchPlaylistItems = (url: string) => callApi(url, null)
 export const postPlaylistItems = (url: string, body: {}) => callApi(url, null, 'POST', body)
 export const deletePlaylistItems = (url: string) => callApi(url, null, 'DELETE')
-export const search = (url: string) => callApi(url, json => json.result)
-
-export const signIn = (url: string) => callApi2(url)
-export const signUp = (url: string) => callApi2(url)
