@@ -24,6 +24,7 @@ import { fetchGraphQLData } from '../../services'
 import { ContentTypes, Queries } from '../../constants'
 import { resetAndPlayTrack } from '../../actions'
 import {LANGUAGE_MAP} from '../../sagas/api'
+import { parseRecording } from '../../utils'
 
 interface Item {
   [key: string]: any
@@ -100,11 +101,23 @@ const Discover: React.FC<Props> = ({ navigation, history, actions, language }) =
   }, [])
 
   const loadStories = async (isVisible: boolean) => {
-    return;
+    if (!wasStoriesVisible && isVisible) {
+      setWasStoriesVisible(true)
+      const { result } = await fetchGraphQLData( Queries.stories, { language: LANGUAGE_MAP[language] }, (results) => results.stories)
+      if (result.length) {
+        setStories(result.map((el: any) => parseRecording(el)))
+      }
+    }
   }
 
   const loadSongs = async (isVisible: boolean) => {
-    return;
+    if (!wasSongsVisible && isVisible) {
+      setWasSongsVisible(true)
+      const { result } = await fetchGraphQLData( Queries.musicTagRecordings, { language: LANGUAGE_MAP[language] }, (results) => results.musicTracks)
+      if (result.length) {
+        setSongs(result.map((el: any) => parseRecording(el)))
+      }
+    }
   }
 
   const renderList = (data: Track[], title: string) => {
@@ -194,7 +207,7 @@ const Discover: React.FC<Props> = ({ navigation, history, actions, language }) =
             carouselRef={sliderRef.current}
             tappableDots={!!sliderRef}
           />
-          {renderList(history, 'history')}
+          {renderList([...history].reverse(), 'history')}
           <InViewPort
             disabled={!navigation.isFocused() || wasStoriesVisible}
             onChange={loadStories}>
