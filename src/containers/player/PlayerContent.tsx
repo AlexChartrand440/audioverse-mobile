@@ -107,7 +107,7 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
   }
 
   const handleOnPressSponsor = () => {
-    navigation.navigate({ routeName: 'Sponsor', params: { url: sponsor.recordingsURI, title: sponsor.title } })
+    navigation.navigate({ routeName: 'Sponsor', params: { url: sponsor.id, title: sponsor.title } })
   }
 
   const handleOnPressSlide = (slide: Item) => {

@@ -6,6 +6,7 @@ import audiobooks from './audiobooks';
 import blogPost from './blogPost';
 import conferences from './conferences';
 import collectionRecordings from './collectionRecordings';
+import favoriteRecording from './favoriteRecording';
 import featuredBlogPosts from './featuredBlogPosts';
 import featuredRecordings from './featuredRecordings';
 import login from './login';
@@ -32,6 +33,8 @@ import stories from './stories';
 import storySeasons from './storySeasons';
 import tagRecordings from './tagRecordings';
 import trendingRecordings from './trendingRecordings';
+import unfavoriteRecording from './unfavoriteRecording';
+import userFavoriteRecordings from './userFavoriteRecordings';
 
 export default {
   audiobible,
@@ -42,6 +45,7 @@ export default {
   blogPost,
   conferences,
   collectionRecordings,
+  favoriteRecording,
   featuredBlogPosts,
   featuredRecordings,
   login,
@@ -68,4 +72,6 @@ export default {
   storySeasons,
   tagRecordings,
   trendingRecordings,
+  unfavoriteRecording,
+  userFavoriteRecordings,
 }

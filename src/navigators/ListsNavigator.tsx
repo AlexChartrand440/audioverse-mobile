@@ -11,6 +11,7 @@ import Favorites from '../containers/lists/favorites'
 import Playlists from '../containers/lists/playlists'
 import History from '../containers/lists/history'
 import PlaylistItems from '../containers/lists/playlists/playlistitems'
+import I18n from '../../locales'
 
 interface TabBarLabelProps {
   tintColor: string
@@ -55,6 +56,7 @@ const Navigator = createStackNavigator({
   PlaylistItems: {
     screen: PlaylistItems,
     navigationOptions: ({ navigation }: NavigationInjectedProps) => ({
+      headerBackTitle: I18n.t('playlists'),
       title: navigation.state.params ? navigation.state.params.title : '',
     }),
   },

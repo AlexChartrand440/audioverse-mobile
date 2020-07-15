@@ -3,6 +3,10 @@ import {
   BASIC_TOKEN,
   GRAPHQL_URL,
 } from 'react-native-dotenv'
+import * as selectors from '../reducers/selectors'
+import { getState } from 'redux'
+import { select } from 'redux-saga/effects'
+import { UserState } from '../store/user/types';
 
 /**
  * Fetches an API response and parses the result
@@ -38,16 +42,18 @@ async function callApi(endpoint: string, parse: ((json: {[key: string]: any}) =>
 
 export const fetchData = (url: string) => callApi(url, (json: {[key: string]: any}) => json.result)
 
-export const fetchGraphQLData = async (query: string, variables: { [key: string]: any}, keyMapper: (results: any) => any) => {
+export const fetchGraphQLData = async (query: string, variables: { [key: string]: any}, keyMapper: (results: any) => any, user?: UserState) => {
   console.log('GraphQL variables:', variables, query)
+  const headers: any = {
+    'Content-Type': 'application/json',
+   }
+  if(user) {
+    headers['x-av-session'] = user.sessionToken;
+  }
   const response = await fetch(GRAPHQL_URL, {
     method: 'POST',
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables })
-    // headers: {
-    //   'x-av-session': `${sessionToken}`
-    // }
-    // ^ TODO: handle session token
+    headers,
+    body: JSON.stringify({ query, variables }),
   })
   return response.json().then(json => {
     if(json.errors) {
