@@ -1,5 +1,5 @@
 import NetInfo from "@react-native-community/netinfo"
-import { Endpoints, ContentTypes } from '../constants'
+import { ContentTypes } from '../constants'
 import { defaultImage } from '../styles'
 import { Track } from 'react-native-track-player'
 
@@ -83,8 +83,10 @@ export const getPresenterName = (item: {[key: string]: any}) => {
 export const getPresenterPicture = (item: {[key: string]: any}) => {
   if (item.presenters && item.presenters.length == 1 && item.presenters[0].photo) {
     return item.presenters[0].photo.url
-  } else if (item.conference && item.conference.length && item.conference[0].photo) {
-    return item.conference[0].photo.url
+  } else if (item.sequence && item.sequence.logoImage) {
+    return item.sequence.logoImage.url
+  } else if (item.collection && item.collection.logoImage) {
+    return item.collection.logoImage.url
   }
   return defaultImage
 }

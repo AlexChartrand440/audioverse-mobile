@@ -1,7 +1,7 @@
 import recordingFragment from './fragments/recording'
 
 export default
-`query trendingRecordings {
+`query userFavoriteRecordings {
   me {
     user {
       favoriteRecordings {

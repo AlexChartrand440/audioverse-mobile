@@ -18,6 +18,10 @@ import musicMoodTags from './musicMoodTags';
 import musicTagRecordings from './musicTagRecordings';
 import musicTracks from './musicTracks';
 import newRecordings from './newRecordings';
+import playlistAdd from './playlistAdd';
+import playlistDelete from './playlistDelete';
+import playlistRecordingAdd from './playlistRecordingAdd';
+import playlistRecordingRemove from './playlistRecordingRemove';
 import presenters from './presenters';
 import presenterRecordings from './presenterRecordings';
 import recording from './recording';
@@ -35,6 +39,8 @@ import tagRecordings from './tagRecordings';
 import trendingRecordings from './trendingRecordings';
 import unfavoriteRecording from './unfavoriteRecording';
 import userFavoriteRecordings from './userFavoriteRecordings';
+import userPlaylists from './userPlaylists';
+import userPlaylistItems from './userPlaylistItems';
 
 export default {
   audiobible,
@@ -57,6 +63,10 @@ export default {
   musicTagRecordings,
   musicTracks,
   newRecordings,
+  playlistAdd,
+  playlistDelete,
+  playlistRecordingAdd,
+  playlistRecordingRemove,
   presenters,
   presenterRecordings,
   recording,
@@ -74,4 +84,6 @@ export default {
   trendingRecordings,
   unfavoriteRecording,
   userFavoriteRecordings,
+  userPlaylists,
+  userPlaylistItems,
 }

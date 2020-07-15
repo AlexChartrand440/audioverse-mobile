@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from 'react-native'
 import { Track } from 'react-native-track-player'
+import HTML from 'react-native-render-html'
 import Swiper from 'react-native-swiper'
 import MarqueeText from 'react-native-marquee'
 import { NavigationInjectedProps } from 'react-navigation'
@@ -16,6 +17,7 @@ import I18n from '../../../locales'
 import { ContentTypes } from '../../constants'
 import AVLogo from '../../../assets/av-logo.png'
 import Slide from './Slide'
+import { HTMLStyles } from '../../styles'
 
 interface Item {
   [key: string]: any
@@ -51,7 +53,7 @@ const getSlides = (data: Track) => {
   if ( data.contentType === ContentTypes.sermon && data.presenters && data.presenters.length === 1 ) {
     presenter.route = 'Presenter'
     presenter.params = {
-      url: data.presenters[0].recordingsURI,
+      url: data.presenters[0].id,
       title: data.artist,
       description: data.presenters[0].description,
       image: data.presenters[0].photo.url
@@ -71,7 +73,7 @@ const getSlides = (data: Track) => {
       title: collection.title,
       route: 'Conference',
       params: {
-        url: collection.recordingsURI,
+        url: collection.id,
         title: collection.title
       }
     })
@@ -87,7 +89,7 @@ const getSlides = (data: Track) => {
       title: sequence.title,
       route: 'Serie',
       params: {
-        url: sequence.recordingsURI,
+        url: sequence.id,
         title: sequence.title
       }
     })
@@ -142,7 +144,9 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
             return (
               <ScrollView style={styles.descriptionContainer} contentContainerStyle={styles.descriptionContentContainer} key={slide.type}>
                 <Text style={styles.descriptionTitle}>{I18n.t('Description', {locale: language})}</Text>
-                <Text style={styles.description}>{slide.description}</Text>
+                <HTML
+                  html={slide.description}
+                  tagsStyles={HTMLStyles} />
               </ScrollView>
             )
           } else {
@@ -176,10 +180,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 10
-  },
-  description: {
-    fontSize: 18,
-    textAlign: 'center'
   },
   content: {
     flexDirection: 'row',

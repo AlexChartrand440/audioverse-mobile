@@ -25,7 +25,7 @@ import firebase from 'react-native-firebase'
 import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../../locales'
-import { Endpoints, Queries } from '../../../constants'
+import { Queries } from '../../../constants'
 import * as api from '../../../services'
 import logo from '../../../../assets/av-logo-red-gray.png'
 import { setUser } from '../../../store/user/actions'

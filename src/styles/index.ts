@@ -20,3 +20,18 @@ export const GlobalStyles = StyleSheet.create({
 
 export const headerTintColor = '#FFFFFF'
 export const defaultImage = image
+
+const htmlTextStyle = {
+  fontSize: 18,
+  textAlign: 'center',
+}
+export const HTMLStyles =  {
+  p: {
+    ...htmlTextStyle,
+    marginBottom: 20,
+  },
+  div: htmlTextStyle,
+  li: {
+    fontSize: 20,
+  },
+}

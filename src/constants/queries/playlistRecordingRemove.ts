@@ -1,0 +1,4 @@
+export default
+`mutation($playlistId: ID!, $recordingId: ID!) {
+  playlistRecordingRemove(playlistId: $playlistId, recordingId: $recordingId)
+}`

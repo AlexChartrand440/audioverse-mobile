@@ -2,13 +2,14 @@ export default
 `query presenters($language: Language!, $afterCursor: String) {
   presenters(
     language: $language
-    first: 1000
+    first: 1500
     after: $afterCursor
     orderBy: [{ field: NAME, direction: ASC }]
   ) {
     nodes {
       id
       name
+      description
       photo86: photo {
         url(size: 86)
       }

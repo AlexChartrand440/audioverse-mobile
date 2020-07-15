@@ -1,12 +1,13 @@
-import { put, select, call } from 'redux-saga/effects'
+import { put, select, call, all } from 'redux-saga/effects'
 import { Track } from 'react-native-track-player'
 
-import { Endpoints } from '../constants'
+import { Queries } from '../constants'
 import * as api from '../services'
 import { setPlaylists, addPlaylists, removePlaylists, setPlaylistsItems } from '../store/lists/actions'
 import * as selectors from '../reducers/selectors'
 import { netInfoIsConnected } from '../utils'
 import { UserState } from '../store/user/types'
+import { LANGUAGE_MAP } from './api'
 
 interface Playlist {
   [key: string]: any
@@ -18,39 +19,12 @@ interface PlaylistsIds {
 
 function* syncLocalToServer(user: UserState) {
   const local: Playlist[] = yield select(selectors.getLocalPlaylists)
-
-  if (local.length) {
-    const fd = new FormData()
-    const data = local.map(el => ({
-      playlistTitle: el.title,
-      playlistSummary: '',
-      visibility: el.visibility,
-      lang: el.lang
-    }))
-    fd.append('bulk', JSON.stringify(data))
-    fd.append('userId', user!.userId)
-    fd.append('sessionToken', user!.sessionToken)
-
-    yield call(api.postPlaylists, Endpoints.postPlaylists, fd)
-  }
+  yield all(local.map(p => call(api.fetchGraphQLData, Queries.playlistAdd, p, (results) => ({ nodes: results.playlistAdd }), user)))
 }
 
 function* syncDeletedToServer(user: UserState) {
   const deleted: Playlist[] = yield select(selectors.getDeletedPlaylists)
-
-  if (deleted.length) {
-    const playlistsIds: PlaylistsIds = {}
-    const ids = deleted.reduce((acc, cur) => {
-      playlistsIds[cur.id] = 1
-      return `${acc}&id[]=${cur.id}`
-    }, '')
-
-    const url = `${Endpoints.deletePlaylists}?userId=${user!.userId}&sessionToken=${user!.sessionToken}${ids}`
-    const response = yield call(api.deletePlaylists, url)
-    if (response && response.result.code === 200) {
-      yield call(deletePlaylistItems, playlistsIds)
-    }
-  }
+  yield all(deleted.map(p => call(api.fetchGraphQLData, Queries.playlistDelete, { id: p.id }, (results) => ({ nodes: results.playlistDelete }), user)))
 }
 
 export function* deletePlaylistItems(playlistsIds: PlaylistsIds) {
@@ -70,11 +44,11 @@ export function* sync() {
       // sync deleted to server
       yield call(syncDeletedToServer, user)
       // fetch all
-      const url = `${Endpoints.playlists}?userId=${user.userId}&sessionToken=${user.sessionToken}`
-      const response = yield call(api.fetchPlaylists, url)
+      const language: keyof typeof LANGUAGE_MAP = yield select(selectors.getLanguage);
+      const {result} = yield call(api.fetchGraphQLData, Queries.userPlaylists, { language: LANGUAGE_MAP[language] }, (results) => results.me.user.playlists, user)
       // add to the store
-      if (response && response.result.code === 200) {
-        yield put(setPlaylists(response.result.result))
+      if (result && result.length) {
+        yield put(setPlaylists(result))
       }
     } catch (e) {
       console.log(e)
@@ -83,31 +57,21 @@ export function* sync() {
 }
 
 export function* add({ item }: { type: string, item: Playlist }) {
-  const lang = yield select(selectors.getLanguage)
+  const lang: keyof typeof LANGUAGE_MAP = yield select(selectors.getLanguage)
   const playlist = {
     title: item.title,
-    visibility: item.public ? 1 : 0,
-    lang
+    isPublic: !!item.public,
+    language: LANGUAGE_MAP[lang]
   }
   
   const isConnected = yield call(netInfoIsConnected)
   if (isConnected) {
     try {
       const user = yield select(selectors.getUser)
-      const fd = new FormData()
-      fd.append('playlistTitle', playlist.title)
-      fd.append('playlistSummary', '')
-      fd.append('visibility', playlist.visibility)
-      fd.append('lang', lang)
-      fd.append('userId', user.userId)
-      fd.append('sessionToken', user.sessionToken)
-      
-      const response = yield call(api.postPlaylists, Endpoints.postPlaylists, fd)
-      if (response && response.result.result.playlistId) {
-        yield put(addPlaylists([{
-          ...playlist,
-          id: response.result.result.playlistId
-        }]))
+      const {result} = yield call(api.fetchGraphQLData, Queries.playlistAdd, playlist, (results) => ({ nodes: results.playlistAdd }), user)
+      if (result) {
+        yield put(addPlaylists([result]))
+        // TODO: If provided, add item to new playlist
       } else {
         yield call(addLocally, playlist)
       }
@@ -141,9 +105,8 @@ export function* remove({ item }: { type: string, item: Playlist }) {
   if (isConnected) {
     try {
       const user = yield select(selectors.getUser)
-      const url = `${Endpoints.deletePlaylists}?userId=${user.userId}&sessionToken=${user.sessionToken}&id[]=${item.id}`
-      const response = yield call(api.deletePlaylists, url)
-      if (response && response.result.code === 200) {
+      const {result} = yield call(api.fetchGraphQLData, Queries.playlistDelete, { id: item.id }, (results) => ({ nodes: results }), user)
+      if (result) {
         yield put(removePlaylists(item))
         const playlistsIds: PlaylistsIds = {}
         playlistsIds[item.id] = 1

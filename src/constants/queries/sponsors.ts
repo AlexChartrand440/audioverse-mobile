@@ -9,8 +9,12 @@ export default
     nodes {
       id
       title
+      description
       logoImage {
         url(size: 86)
+      }
+      logoImage256: logoImage {
+        url(size: 256)
       }
     }
     pageInfo {

@@ -1,7 +1,7 @@
-import { put, select, call } from 'redux-saga/effects'
+import { put, select, call, all } from 'redux-saga/effects'
 import { Track } from 'react-native-track-player'
 
-import { Endpoints } from '../constants'
+import { Queries } from '../constants'
 import * as api from '../services'
 import {
   setPlaylistsItems,
@@ -14,33 +14,12 @@ import { UserState } from '../store/user/types'
 
 function* syncLocalToServer(user: UserState, playlistId: string) {
   const local: Track[] = yield select(selectors.getLocalPlaylistItems, playlistId)
-
-  if (local.length) {
-    const fd = new FormData()
-    const data = local.map(el => ({
-      playlistId: el.playlistId,
-      id: el.id
-    }))
-    fd.append('bulk', JSON.stringify(data))
-    fd.append('userId', user!.userId)
-    fd.append('sessionToken', user!.sessionToken)
-
-    yield call(api.postPlaylistItems, Endpoints.postPlaylistItems, fd)
-  }
+  yield all(local.map(el => call(api.fetchGraphQLData, Queries.playlistRecordingAdd, { playlistId, recordingId: el.id }, (results) => ({ nodes: results.playlistRecordingAdd }), user)))
 }
 
 function* syncDeletedToServer(user: UserState, playlistId: string) {
   const deleted: Track[] = yield select(selectors.getDeletedPlaylistItems, playlistId)
-
-  if (deleted.length) {
-    const bulk = deleted.map(el => ({
-      playlistId: el.playlistId,
-      id: el.id
-    }))
-
-    const url = `${Endpoints.deletePlaylistItems}?userId=${user!.userId}&sessionToken=${user!.sessionToken}&bulk=${JSON.stringify(bulk)}`
-    yield call(api.deletePlaylistItems, url)
-  }
+  yield all(deleted.map(el => call(api.fetchGraphQLData, Queries.playlistRecordingRemove, { playlistId, recordingId: el.id }, (results) => ({ nodes: results.playlistRecordingRemove }), user)))
 }
 
 export function* sync({ playlistId }: { type: string, playlistId: string }) {
@@ -54,15 +33,14 @@ export function* sync({ playlistId }: { type: string, playlistId: string }) {
       // sync deleted to server
       yield call(syncDeletedToServer, user, playlistId)
       // fetch all
-      const url = `${Endpoints.playlistItems}/${playlistId}?userId=${user.userId}&sessionToken=${user.sessionToken}`
-      const response = yield call(api.fetchPlaylistItems, url)
+      const {result} = yield call(api.fetchGraphQLData, Queries.userPlaylistItems, { id: playlistId }, (results) => results.me.user.playlist.recordings, user)
       // add to the store
-      if (response && response.result.code === 200) {
+      if (result && result.length) {
         const allPlaylistsItems: Track[] = yield select(selectors.getAllPlaylistsItems)
         const otherPlaylistsItems = allPlaylistsItems.filter(el => el.playlistId !== playlistId)
         const newPlaylistsItems = [
           ...otherPlaylistsItems,
-          ...response.result.result.recordings.reverse().map((el: Track) => ({
+          ...result.reverse().map((el: Track) => ({
             ...el,
             playlistId: playlistId
           }))
@@ -81,15 +59,8 @@ export function* add({ playlistId, item }: { type: string, playlistId: string, i
   if (isConnected) {
     try {
       const user: UserState = yield select(selectors.getUser)
-
-      const fd = new FormData()
-      fd.append('recordingId', item.id)
-      fd.append('playlistId', playlistId)
-      fd.append('userId', user!.userId)
-      fd.append('sessionToken', user!.sessionToken)
-
-      const response = yield call(api.postPlaylistItems, Endpoints.postPlaylistItems, fd)
-      if (response && response.result.code === 200) {
+      const {result} = yield call(api.fetchGraphQLData, Queries.playlistRecordingAdd, { playlistId, recordingId: item.id }, (results) => results.playlistRecordingAdd, user)
+      if (result) {
         yield put(addPlaylistsItems([item]))
       } else {
         yield call(addLocally, item)
@@ -121,10 +92,8 @@ export function* remove({ playlistId, id }: { type: string, playlistId: string, 
   if (isConnected) {
     try {
       const user: UserState = yield select(selectors.getUser)
-      const bulk = [{ playlistId: playlistId, id: id }]
-      const url = `${Endpoints.deletePlaylistItems}?userId=${user!.userId}&sessionToken=${user!.sessionToken}&bulk=${JSON.stringify(bulk)}`
-      const response = yield call(api.deletePlaylistItems, url)
-      if (response && response.result.code === 200) {
+      const {result} = yield call(api.fetchGraphQLData, Queries.playlistRecordingRemove, { playlistId, recordingId: id }, (results) => results.playlistRecordingRemove, user)
+      if (result) {
         yield put(removePlaylistsItems(item))
       } else {
         yield call(markAsRemoved, item.playlistId, item.id)

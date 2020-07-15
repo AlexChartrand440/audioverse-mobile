@@ -2,7 +2,7 @@ import { put, select, call, all } from 'redux-saga/effects'
 import firebase from 'react-native-firebase'
 import { Track } from 'react-native-track-player'
 
-import { Endpoints, ContentTypes, Queries } from '../constants'
+import { ContentTypes, Queries } from '../constants'
 import * as api from '../services'
 import { setFavorites, addFavorites, removeFavorites } from '../store/lists/actions'
 import * as selectors from '../reducers/selectors'

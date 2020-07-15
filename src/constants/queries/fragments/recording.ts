@@ -34,6 +34,7 @@ export default
     logUrl
   }
   presenters {
+    id
     name
     description
     photo {

@@ -10,9 +10,10 @@ import {
 } from 'react-native'
 import { NavigationInjectedProps } from 'react-navigation'
 import { ListItem } from 'react-native-elements'
+import HTML from 'react-native-render-html'
 import { Track } from 'react-native-track-player'
 
-import { defaultImage } from '../../styles'
+import { defaultImage, HTMLStyles } from '../../styles'
 import { PaginationState } from '../../store/paginate'
 
 interface Item {
@@ -141,15 +142,15 @@ export const List: React.FC<Props> = ({
 
   const { image, description } = navigation.state.params || { image: null, description: null }
   const Header =
-    image && description ?
+    image || description ?
       <View style={styles.headerContainer}>
         <View style={styles.headerImageContainer}>
-          <Image
+          {image ? <Image
             style={styles.headerImage}
             source={{uri: image}}
-          />
+          /> : null}
         </View>
-        { description ? <Text style={styles.headerText}>{description}</Text> : null }
+        { description ? <View style={styles.headerText}><HTML html={description} tagsStyles={HTMLStyles} /></View> : null }
       </View>
     : null
     

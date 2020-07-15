@@ -80,7 +80,7 @@ const Presenters: React.FC<Props> = ({ navigation, items, pagination, actions })
               url: item.id,
               title: item.name,
               description: item.description,
-              image: item.photo256
+              image: item.photo256 && item.photo256.url
             }
           })
         }
