@@ -10,7 +10,7 @@ export default
     nodes {
       id
       title
-      logoImage {
+      logoImage: logoImageWithFallback {
         url(size: 86)
       }
     }

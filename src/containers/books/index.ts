@@ -22,6 +22,8 @@ const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
     params: {
       url: item.id,
       title: item.title,
+      description: item.description,
+      image: item.logoImage256 && item.logoImage256.url,
     },
   }),
 })

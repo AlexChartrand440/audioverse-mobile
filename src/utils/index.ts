@@ -80,7 +80,7 @@ export const getPresenterName = (item: {[key: string]: any}) => {
  * @param {object} item 
  * @param {string} bitRate 
  */
-export const getPresenterPicture = (item: {[key: string]: any}) => {
+export const getRecordingPicture = (item: {[key: string]: any}) => {
   if (item.presenters && item.presenters.length == 1 && item.presenters[0].photo) {
     return item.presenters[0].photo.url
   } else if (item.sequence && item.sequence.logoImage) {
@@ -99,7 +99,7 @@ export const getPresenterPicture = (item: {[key: string]: any}) => {
 export const parseRecording = (item: Track): Track => ({
   ...item,
   artist: getPresenterName(item),
-  artwork: getPresenterPicture(item),
+  artwork: getRecordingPicture(item),
   durationFormatted: formatTime(item.duration)
 })
 
@@ -108,18 +108,16 @@ export const parseRecording = (item: Track): Track => ({
  * @param {object} item 
  * @param {object} bible 
  */
-export const parseBibleChapter = (item: {[key: string]: any}, bible: {[key: string]: any}) => {
-  return ({
-    id: item.id,
-    title: item.title,
-    url: item.url,
-    downloadURL: item.url,
-    artist: bible.version.name,
-    artwork: defaultImage,
-    fileName: (item.url || '').split('/').pop(),
-    contentType: ContentTypes.bible
-  })
-}
+export const parseBibleChapter = (item: {[key: string]: any}, bible: {[key: string]: any}) => ({
+  id: item.id,
+  title: item.title,
+  url: item.url,
+  downloadURL: item.url,
+  artist: bible.version.name,
+  artwork: defaultImage,
+  fileName: (item.url || '').split('/').pop(),
+  contentType: ContentTypes.bible
+})
 
 
 /**

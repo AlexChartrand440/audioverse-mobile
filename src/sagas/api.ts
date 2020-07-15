@@ -349,7 +349,7 @@ export function* loadBooks({ loadMore, refresh }: LoadAction) {
     // backwards compat the data should be in a result property
     const data = JSON.stringify({result: booksPagination.data})
     yield RNFetchBlob.fs.writeFile(file, data)
-  } else {
+  } else if(!loadMore) {
     let data = yield RNFetchBlob.fs.readFile(file, 'utf8')
     data = JSON.parse(data).result
     yield put(actions.books.success(null, {result: data}))

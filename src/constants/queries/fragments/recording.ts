@@ -10,7 +10,7 @@ export default
     id
     title
     logoImage {
-      url(size: 86)
+      url(size: 256)
     }
   }
   attachments {
@@ -45,7 +45,7 @@ export default
     id
     title
     logoImage {
-      url(size: 86)
+      url(size: 256)
     }
   }
   sponsor {
@@ -53,7 +53,7 @@ export default
     title
     location
     logoImage {
-      url(size: 86)
+      url(size: 256)
     }
   }
 }`

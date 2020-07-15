@@ -10,7 +10,7 @@ export default
       id
       name
       description
-      photo86: photo {
+      photo86: photoWithFallback {
         url(size: 86)
       }
       photo256: photo {

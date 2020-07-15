@@ -10,7 +10,7 @@ export default
       id
       title
       description
-      logoImage {
+      logoImage: logoImageWithFallback {
         url(size: 86)
       }
       logoImage256: logoImage {

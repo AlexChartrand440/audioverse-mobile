@@ -78,12 +78,7 @@ export const getConferences = (state: AppState) => state.conferences.data
 export const getConferencesPagination = (state: AppState) => state.conferences
 export const getConference = (state: AppState) => state.conference.data.map((item: any) => parseRecording(item))
 export const getConferencePagination = (state: AppState) => state.conference
-export const getSponsors = (state: AppState) => state.sponsors.data.map(item =>  (
-  {
-    ...item,
-    photo86: item.logoImage ? item.logoImage.url : defaultImage
-  }
-))
+export const getSponsors = (state: AppState) => state.sponsors.data
 export const getSponsorsPagination = (state: AppState) => state.sponsors
 export const getSponsor = (state: AppState) => state.sponsor.data.map((item: any) => parseRecording(item))
 export const getSponsorPagination = (state: AppState) => state.sponsor
@@ -103,12 +98,7 @@ export const getTagsAlbums = (state: AppState) => state.tagsAlbums.data
 export const getTagsAlbumsPagination = (state: AppState) => state.tagsAlbums
 export const getTagAlbum = (state: AppState) => state.tagAlbum.data.map((item: any) => parseRecording(item))
 export const getTagAlbumPagination = (state: AppState) => state.tagAlbum
-export const getTagsSponsors = (state: AppState) => state.tagsSponsors.data.map(item => (
-  {
-    ...item,
-    photo86: item.logoImage ? item.logoImage.url : defaultImage
-  }
-))
+export const getTagsSponsors = (state: AppState) => state.tagsSponsors.data
 export const getTagsSponsorsPagination = (state: AppState) => state.tagsSponsors
 export const getTagSponsor = (state: AppState) => state.tagSponsor.data.map((item: any) => parseRecording(item))
 export const getTagSponsorPagination = (state: AppState) => state.tagSponsor

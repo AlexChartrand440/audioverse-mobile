@@ -15,7 +15,7 @@ interface Item {
 const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
   items: getSponsors(state),
   pagination: getSponsorsPagination(state),
-  avatarExtractor: (item: Item) => item.photo86,
+  avatarExtractor: (item: Item) => item.photo86.url,
   subtitleExtractor: () => '',
   onPress: (item: Item) => props.navigation.navigate({
     routeName: 'Sponsor',

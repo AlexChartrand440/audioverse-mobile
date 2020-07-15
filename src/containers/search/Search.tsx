@@ -20,7 +20,6 @@ import * as services from '../../services'
 import { resetAndPlayTrack } from '../../actions'
 import { GlobalStyles, primaryColor } from '../../styles'
 import { parseRecording } from '../../utils'
-import { defaultImage } from '../../styles'
 import TabBarLabel from '../../navigators/tabbarlabel'
 import {LANGUAGE_MAP} from '../../sagas/api'
 
@@ -139,7 +138,7 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderPresenterItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.photo ? {uri: item.photo.url} : defaultImage
+        source: {uri: item.photo.url}
       }}
       title={item.name}
       onPress={() => {
@@ -160,7 +159,7 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderConferenceItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.logoImage ? {uri: item.logoImage.url} : defaultImage
+        source: {uri: item.logoImage.url}
       }}
       title={item.title}
       onPress={() => navigation.navigate({ routeName: 'Conference', params: { url: item.id, title: item.title } })}
@@ -171,7 +170,7 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderSerieItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.logoImage ? {uri: item.logoImage.url} : defaultImage
+        source: {uri: item.logoImage.url}
       }}
       title={item.title}
       onPress={() => navigation.navigate({ routeName: 'Serie', params: { url: item.id, title: item.title } })}
@@ -182,7 +181,7 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
   const renderSponsorItem: ListRenderItem<Item> = ({ item }) => (
     <ListItem
       leftAvatar={{
-        source: item.logoImage ? {uri: item.logoImage.url} : defaultImage
+        source: {uri: item.logoImage.url}
       }}
       title={item.title}
       onPress={() => navigation.navigate({ routeName: 'Sponsor', params: { url: item.id, title: item.title } })}

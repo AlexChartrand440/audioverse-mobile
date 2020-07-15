@@ -68,8 +68,7 @@ const Presenters: React.FC<Props> = ({ navigation, items, pagination, actions })
     return (
       <ListItem
         leftAvatar={{
-          source: item.photo86 ? 
-          { uri: item.photo86.url } : item.photo86
+          source: { uri: item.photo86.url }
         }}
         title={item.name}
         titleProps={{numberOfLines: 1}}

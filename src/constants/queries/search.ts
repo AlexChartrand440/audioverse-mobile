@@ -6,7 +6,7 @@ export default
     nodes {
       id
       title
-      logoImage {
+      logoImage: logoImageWithFallback {
         url(size: 86)
       }
     }
@@ -20,7 +20,7 @@ export default
       id
       name
       description
-      photo {
+      photo: photoWithFallback {
         url(size: 86)
       }
     }
@@ -42,7 +42,7 @@ export default
     nodes {
       id
       title
-      logoImage {
+      logoImage: logoImageWithFallback {
         url(size: 86)
       }
     }
@@ -55,7 +55,7 @@ export default
     nodes {
       id
       title
-      logoImage {
+      logoImage: logoImageWithFallback {
         url(size: 86)
       }
     }

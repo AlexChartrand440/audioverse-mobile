@@ -15,7 +15,7 @@ const initialState: BibleState = {
   },
   book: {
     name: 'Genesis',
-    id: 'Gen',
+    id: 'ENGESVC-Gen',
     testament: 'O',
   },
   chapter: 'ENGESVC-Gen-1',

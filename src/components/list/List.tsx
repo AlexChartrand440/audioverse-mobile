@@ -142,7 +142,7 @@ export const List: React.FC<Props> = ({
 
   const { image, description } = navigation.state.params || { image: null, description: null }
   const Header =
-    image || description ?
+    description ?
       <View style={styles.headerContainer}>
         <View style={styles.headerImageContainer}>
           {image ? <Image
@@ -150,7 +150,7 @@ export const List: React.FC<Props> = ({
             source={{uri: image}}
           /> : null}
         </View>
-        { description ? <View style={styles.headerText}><HTML html={description} tagsStyles={HTMLStyles} /></View> : null }
+        <View style={styles.headerText}><HTML html={description} tagsStyles={HTMLStyles} /></View>
       </View>
     : null
     

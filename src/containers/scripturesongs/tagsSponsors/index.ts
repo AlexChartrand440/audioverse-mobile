@@ -16,7 +16,7 @@ const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
   items: getTagsSponsors(state),
   pagination: getTagsSponsorsPagination(state),
   subtitleExtractor: () => '',
-  avatarExtractor: (item: Item) => item.photo86,
+  avatarExtractor: (item: Item) => item.logoImage.url,
   onPress: (item: Item) => props.navigation.navigate({
     routeName: 'TagSponsor',
     params: {
