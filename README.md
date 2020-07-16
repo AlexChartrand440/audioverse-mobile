@@ -106,13 +106,16 @@ docker-compose run --rm node npm test
 
 ## Deployment
 
-These instructions are for use by the AudioVerse internal team.
+These instructions are for use by the AudioVerse internal team. To setup a build folder:
 
-1. Copy the av-upload-key.keystore to android/app
+1. Android: Copy the av-upload-key.keystore to android/app
+1. iOS: Follow the prompts when running Fastlane (`npm run ios:beta`) below.
 
 When deploying a new version:
 
+1. Run `npm ci`
+1. Run `cd ios && pod install`
 1. Run `npm version patch`
-2. Run `npm run ios:beta`
-3. Run `npm run android:beta`
-4. Handle final steps in iTunes Connect/Google Play Console.
+1. Run `npm run ios:beta` and follow the authentication prompts.
+1. Run `npm run android:beta`
+1. Handle final steps in App Store Connect/Google Play Console.

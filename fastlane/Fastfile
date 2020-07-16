@@ -21,7 +21,6 @@ platform :ios do
     get_certificates
     get_provisioning_profile(app_identifier: "org.audioverse.mobile")
     
-    increment_build_number(xcodeproj: "ios/AudioVerse.xcodeproj")
     build_app(workspace: "ios/AudioVerse.xcworkspace", scheme: "AudioVerse", include_bitcode: true, include_symbols: true)
     
     if changelog
