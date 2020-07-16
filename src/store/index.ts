@@ -289,13 +289,15 @@ const migrations: any = {
     const BIBLE_AND_BOOKS_DIR = Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir : `${RNFetchBlob.fs.dirs.MainBundleDir}/app_appdata`
     for(const folder of [Dirs.bible, Dirs.audiobooks]) {
       const currentFolder = `${BIBLE_AND_BOOKS_DIR}/${folder}/`;
+      if(!(await RNFetchBlob.fs.isDir(currentFolder))) {
+        continue;
+      }
       const files = await RNFetchBlob.fs.ls(currentFolder);
       for(const filename of files) {
         await RNFetchBlob.fs.unlink(`${currentFolder}/${filename}`);
       }
     }
     return {...state, bible: undefined, presenters: undefined}
-    // TODO: test this correctly clears bible and presenters from previous version
   }
 }
 

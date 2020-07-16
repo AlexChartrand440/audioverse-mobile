@@ -109,3 +109,10 @@ docker-compose run --rm node npm test
 These instructions are for use by the AudioVerse internal team.
 
 1. Copy the av-upload-key.keystore to android/app
+
+When deploying a new version:
+
+1. Run `npm version patch`
+2. Run `npm run ios:beta`
+3. Run `npm run android:beta`
+4. Handle final steps in iTunes Connect/Google Play Console.

@@ -1,7 +1,6 @@
 import { Track } from 'react-native-track-player'
 import { ContentTypes } from '../constants'
 import { parseRecording, parseBibleChapter } from '../utils'
-import { defaultImage } from '../styles'
 import { AppState } from '../store'
 import { legacyBibleIdsMap } from '../constants/bibles'
 

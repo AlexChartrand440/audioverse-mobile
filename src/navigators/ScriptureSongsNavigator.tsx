@@ -13,12 +13,21 @@ import TagsAlbums from '../containers/scripturesongs/tagsAlbums'
 import TagAlbum from '../containers/scripturesongs/tagsAlbums/tagAlbum'
 import TagsSponsors from '../containers/scripturesongs/tagsSponsors'
 import TagSponsor from '../containers/scripturesongs/tagsSponsors/tagSponsor'
-import { navigationOptionsFunction } from './MenuNavigator'
 import I18n from '../../locales'
+import { Platform } from 'react-native'
 
 interface TabBarLabelProps {
   tintColor: string
 }
+
+const navigationOptionsFunction = ({ navigation }: NavigationInjectedProps) => ({
+  title: navigation.state.params ? navigation.state.params.title  : '',
+  headerTitleContainerStyle: {
+    width: Platform.OS === 'ios' ? '60%' : '75%',
+    alignItems: Platform.OS === 'ios' ? 'center' : 'flex-start',
+  }
+  // WORKAROUND: https://github.com/react-navigation/react-navigation/issues/7057#issuecomment-593086348
+})
 
 const ScriptureSongsTab = createMaterialTopTabNavigator({
   TagsBooks: {
@@ -58,7 +67,7 @@ const ScriptureSongsStack = createStackNavigator({
   ScriptureSongsTab,
   TagBook: {
     screen: TagBook,
-    navigationOptions: navigationOptionsFunction
+    navigationOptions: navigationOptionsFunction,
   },
   TagAlbum: {
     screen: TagAlbum,
