@@ -67,7 +67,9 @@ export const getMediaFile = (mediaFiles: MediaFile[], bitRate: string) => {
 export const getPresenterName = (item: {[key: string]: any}) => {
   if (item.presenters && item.presenters.length) {
     if (item.presenters.length === 1) {
-      return item.presenters[0].name
+      const presenter = item.presenters[0]
+      return presenter.name || `${presenter.givenName} ${presenter.surname}`.trim() || 'Presenter'
+      // Handle legacy name formats
     } else {
       return 'Various Presenters'
     }
@@ -81,12 +83,14 @@ export const getPresenterName = (item: {[key: string]: any}) => {
  * @param {string} bitRate 
  */
 export const getRecordingPicture = (item: {[key: string]: any}) => {
-  if (item.presenters && item.presenters.length == 1 && item.presenters[0].photo) {
+  if (item.presenters && item.presenters.length == 1 && item.presenters[0].photo && typeof item.presenters[0].photo !== 'string') {
     return item.presenters[0].photo.url
   } else if (item.sequence && item.sequence.logoImage) {
     return item.sequence.logoImage.url
   } else if (item.collection && item.collection.logoImage) {
     return item.collection.logoImage.url
+  } else if(item.artwork) {
+    return item.artwork // Legacy downloads
   }
   return defaultImage
 }

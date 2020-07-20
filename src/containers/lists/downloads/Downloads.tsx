@@ -70,7 +70,7 @@ const Downloads: React.FC<Props> = ({ items, actions }) => {
       <FlatList
         data={[...items].reverse()}
         renderItem={renderItem}
-        keyExtractor={item => item.fileName}
+        keyExtractor={(item: any) => item.fileName}
       />
     </View>
   )

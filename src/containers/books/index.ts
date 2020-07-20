@@ -15,7 +15,7 @@ interface Item {
 const mapStateToProps = (state: AppState, props: NavigationInjectedProps) => ({
   items: getBooks(state),
   pagination: getBooksPagination(state),
-  avatarExtractor: (item: Item) => item.logoImage.url,
+  avatarExtractor: (item: Item) => item.logoImage && item.logoImage.url,
   subtitleExtractor: () => '',
   onPress: (item: Item) => props.navigation.navigate({
     routeName: 'Book',

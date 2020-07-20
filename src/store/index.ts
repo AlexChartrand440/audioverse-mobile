@@ -247,7 +247,7 @@ const rootReducer = combineReducers({
 export type AppState = ReturnType<typeof rootReducer>
 
 const migrations: any = {
-  1: (state: {[key: string]: any}) => {
+  1: async (state: {[key: string]: any}) => {
     // migration to add contentType since it was not coming on the API before
     const lists = Object.keys(state.lists).reduce((acc, curr) => {
       if (state.lists[curr] === 'playlists') {
@@ -273,7 +273,7 @@ const migrations: any = {
       lists: lists,
     }
   },
-  2: (state: {[key: string]: any}) => { // change the default bitRate
+  2: async (state: {[key: string]: any}) => { // change the default bitRate
     return {
       ...state,
       settings: {
@@ -294,10 +294,30 @@ const migrations: any = {
       }
       const files = await RNFetchBlob.fs.ls(currentFolder);
       for(const filename of files) {
+        if(filename.split('.').pop() === 'mp3') {
+          continue;
+        }
         await RNFetchBlob.fs.unlink(`${currentFolder}/${filename}`);
       }
     }
     return {...state, bible: undefined, presenters: undefined}
+  },
+  4: async (state: {[key: string]: any}) => { // reformat pre-graphql download data
+    const oldDownloads = state.lists && state.lists.downloads ? state.lists.downloads : [];
+    const downloads = oldDownloads.map((d: any) => ({
+      ...d,
+      description: d.description && !d.description.includes('<') ? `<p>${d.description}</p>` : d.description,
+      collection: (d.conference && d.conference.length !== undefined ? d.conference.pop() : d.conference) || d.collection,
+      sequence: (d.series && d.series.length !== undefined ? d.series.pop() : d.series) || d.sequence, 
+      sponsor: d.sponsor && d.sponsor.length !== undefined ? d.sponsor.pop() : d.sponsor, 
+    }))
+    return {
+      ...state,
+      lists: {
+        ...state.lists,
+        downloads 
+      }
+    }
   }
 }
 
@@ -307,7 +327,7 @@ const persistConfig = {
   storage: AsyncStorage,
   whitelist: ['settings', 'playback', 'bible', 'user', 'lists', 'presenters'],
   timeout: 0, // disable timeout https://github.com/rt2zz/redux-persist/issues/717
-  version: 3,
+  version: 4,
   migrate: customCreateMigrate(migrations, {
     debug: true,
     asyncMigrations: true,

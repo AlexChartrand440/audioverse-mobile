@@ -339,7 +339,7 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNCAsyncStorage (1.8.0):
+  - RNCAsyncStorage (1.8.1):
     - React
   - RNCMaskedView (0.1.6):
     - React
@@ -566,7 +566,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   react-native-simple-toast: 6c376bd79b1e255a4bee90a72ead6447f96ea10d
   react-native-slider: 3a1cfd00c9c31068251b536822f7192e8d1d6b6f
-  react-native-track-player: ae3ffb3aa756148d456f946dc070767c8dc218df
+  react-native-track-player: f99b7f08a0039ae0ad4ca649f210bbad85b35f0a
   react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
   react-native-viewpager: a7b438ca32c57b2614ece2a123e7fe116f743131
   react-native-webview: fcb5f377aadc216273300f452ee0d321fb85809b
@@ -581,7 +581,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNCAsyncStorage: 5d83b49070d41fd72906a116c5e7bdac4ea3a814
+  RNCAsyncStorage: 00bdf63f7f1e0f11d3323533dba4f222e58bf092
   RNCMaskedView: a88953beefbd347a29072d9eba90e42945fe291e
   RNFirebase: 37daa9a346d070f9f6ee1f3b4aaf4c8e3b1d5d1c
   RNGestureHandler: dde546180bf24af0b5f737c8ad04b6f3fa51609a
