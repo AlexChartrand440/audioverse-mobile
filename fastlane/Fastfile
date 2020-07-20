@@ -29,7 +29,7 @@ platform :ios do
       upload_to_testflight(skip_submission: true, skip_waiting_for_build_processing: true)
     end    
     
-    version = get_version_number(xcodeproj: "ios/AudioVerse.xcodeproj")
+    version = get_version_number(target: "AudioVerse", xcodeproj: "ios/AudioVerse.xcodeproj")
     slack(
       message: "AudioVerse for iOS #{version} – #{lane_context[SharedValues::BUILD_NUMBER]} uploaded to TestFlight",
       channel: "#development",
