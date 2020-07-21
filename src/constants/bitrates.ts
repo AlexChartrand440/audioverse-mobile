@@ -1,5 +1,1 @@
-export default [
-  '16',
-  '48',
-  '96',
-]
+export default ['16', '48', '96'];

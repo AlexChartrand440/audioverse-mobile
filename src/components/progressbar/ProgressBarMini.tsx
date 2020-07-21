@@ -1,26 +1,25 @@
-import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { useProgress } from 'react-native-track-player'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useProgress } from 'react-native-track-player';
 
 const styles = StyleSheet.create({
-  container: {
-    height: 2,
-    backgroundColor: '#E53935',
-  },
-})
+	container: {
+		height: 2,
+		backgroundColor: '#E53935',
+	},
+});
 
 const ProgressBarMini: React.FC<{}> = () => {
-  const progress = useProgress()
+	const progress = useProgress();
 
-  return (
-    <View
-      style={[
-        {width: (progress.duration > 0 ? (progress.position / progress.duration * 100) : 0) + '%'},
-        styles.container
-      ]}
-    />
-  )
+	return (
+		<View
+			style={[
+				{ width: (progress.duration > 0 ? (progress.position / progress.duration) * 100 : 0) + '%' },
+				styles.container,
+			]}
+		/>
+	);
+};
 
-}
-
-export default ProgressBarMini
+export default ProgressBarMini;

@@ -1,14 +1,17 @@
-import { bindActionCreators, Dispatch } from 'redux'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
-import { resetAndPlayTrack } from '../../actions'
+import { resetAndPlayTrack } from '../../actions';
 
-import List from './List'
+import List from './List';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  localActions: bindActionCreators({
-    resetAndPlayTrack,
-  }, dispatch),
-})
+	localActions: bindActionCreators(
+		{
+			resetAndPlayTrack,
+		},
+		dispatch
+	),
+});
 
-export default connect(null, mapDispatchToProps)(List)
+export default connect(null, mapDispatchToProps)(List);

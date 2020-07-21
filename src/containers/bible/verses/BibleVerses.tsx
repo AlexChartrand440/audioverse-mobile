@@ -1,41 +1,35 @@
-import React, { useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { WebView } from 'react-native-webview'
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { WebView } from 'react-native-webview';
 
-import { BibleState } from '../../../store/Bible/types'
-import {
-  loadBibleVerses
-} from '../../../actions'
+import { loadBibleVerses } from '../../../actions';
+import { BibleState } from '../../../store/Bible/types';
 
 interface Props {
-  bible: BibleState
-  actions: {
-    loadBibleVerses: typeof loadBibleVerses
-  }
+	bible: BibleState;
+	actions: {
+		loadBibleVerses: typeof loadBibleVerses;
+	};
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-})
+	container: {
+		flex: 1,
+	},
+});
 
 const BibleVerses: React.FC<Props> = ({ bible, actions }) => {
+	useEffect(() => {
+		if (bible.verses === '') {
+			actions.loadBibleVerses();
+		}
+	}, []);
 
-  useEffect(() => {
-    if (bible.verses === '') {
-      actions.loadBibleVerses()
-    }
-  }, [])
+	return (
+		<View style={styles.container}>
+			<WebView originWhitelist={['*']} source={{ html: bible.verses }} />
+		</View>
+	);
+};
 
-  return (
-    <View style={styles.container}>
-      <WebView
-        originWhitelist={['*']}
-        source={{ html: bible.verses }} />
-    </View>
-  )
-
-}
-
-export default BibleVerses
+export default BibleVerses;

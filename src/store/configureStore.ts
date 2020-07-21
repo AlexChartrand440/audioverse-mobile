@@ -1,21 +1,22 @@
-import { createStore, applyMiddleware } from 'redux'
-import createSagaMiddleware from 'redux-saga'
-import { persistStore } from 'redux-persist'
+import { applyMiddleware, createStore } from 'redux';
+import { persistStore } from 'redux-persist';
+import createSagaMiddleware from 'redux-saga';
 
-import reducer from './index'
-import mySaga from '../sagas'
+import mySaga from '../sagas';
+
+import reducer from './index';
 
 export default () => {
-  // create the saga middleware
-  const sagaMiddleware = createSagaMiddleware()
+	// create the saga middleware
+	const sagaMiddleware = createSagaMiddleware();
 
-  const store = createStore(reducer, applyMiddleware(sagaMiddleware))
+	const store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
-  // persistor
-  const persistor = persistStore(store)
+	// persistor
+	const persistor = persistStore(store);
 
-  // run the saga
-  sagaMiddleware.run(mySaga)
+	// run the saga
+	sagaMiddleware.run(mySaga);
 
-  return { store, persistor }
-}
+	return { store, persistor };
+};

@@ -1,13 +1,8 @@
-import Endpoints from './endpoints'
-import ContentTypes from './contentTypes'
-import Dirs from './dirs'
-import Bitrates from './bitrates'
-import Bibles from './bibles'
+import Bibles from './bibles';
+import Bitrates from './bitrates';
+import ContentTypes from './contentTypes';
+import Dirs from './dirs';
+import Endpoints from './endpoints';
+import Queries from './queries';
 
-export {
-  Endpoints,
-  ContentTypes,
-  Dirs,
-  Bitrates,
-  Bibles,
-}
+export { Endpoints, ContentTypes, Dirs, Bitrates, Bibles, Queries };
