@@ -2,8 +2,8 @@ import {
   PLAYBACK_INIT,
   PLAYBACK_POSITION,
   PLAYBACK_RATE,
-  PLAYBACK_TRACKS,
   PLAYBACK_TRACK_ID,
+  PLAYBACK_TRACKS,
   PlaybackActionTypes,
   PlaybackState,
 } from './types'

@@ -1,12 +1,14 @@
-import { call, put, select } from 'redux-saga/effects'
 import TrackPlayer from 'react-native-track-player'
+import { call, put, select } from 'redux-saga/effects'
 
-import { bibleVersion } from '../store/Bible/actions'
+import ContentTypes from '../constants/contentTypes'
 import * as selectors from '../reducers/selectors'
+import { bibleVersion } from '../store/Bible/actions'
 import { BibleState, SetBibleVersionAction } from '../store/Bible/types'
+
 import * as api from './api'
 import * as player from './player'
-import ContentTypes from '../constants/contentTypes'
+
 
 /**
  * Set Bible version

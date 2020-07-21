@@ -1,14 +1,14 @@
-import { bindActionCreators, Dispatch } from 'redux'
-import { connect } from 'react-redux'
 import { NavigationInjectedProps } from 'react-navigation'
+import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../../store'
 import {
+  removePlaylistItem,
   resetAndPlayTrack,
   syncPlaylistItems,
-  removePlaylistItem,
 } from '../../../../actions'
 import { getPlaylistItems } from '../../../../reducers/selectors'
+import { AppState } from '../../../../store'
 
 import PlaylistItems from './PlaylistItems'
 

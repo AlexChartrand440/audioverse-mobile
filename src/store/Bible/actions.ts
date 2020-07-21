@@ -1,11 +1,11 @@
 import {
-  SET_BIBLE_VERSION,
   BIBLE_BOOK,
   BIBLE_CHAPTER,
   BIBLE_VERSES,
   BIBLE_VERSION,
-  BibleState,
   BibleActionTypes,
+  BibleState,
+  SET_BIBLE_VERSION,
 } from './types'
 
 export const setBibleVersion = (version: BibleState["version"], bookId?: string): BibleActionTypes => {

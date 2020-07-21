@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import { loadBibleBooks, loadBibleChapters } from '../../../actions'
 import { getBibleBooks, getBibleBooksPagination } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 import BibleBooks from './BibleBooks'
 

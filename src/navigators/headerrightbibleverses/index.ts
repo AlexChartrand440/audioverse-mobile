@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../store'
-import { getBible } from '../../reducers/selectors'
 import { resetAndPlayTrack } from '../../actions'
+import { getBible } from '../../reducers/selectors'
+import { AppState } from '../../store'
 import { setBibleVersion } from '../../store/Bible/actions'
 
 import HeaderRightBibleVerses from './HeaderRightBibleVerses'

@@ -1,13 +1,13 @@
 import React from 'react'
 import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
   Dimensions,
-  Platform,
+  Image,
   ImageSourcePropType,
+  Platform,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import {
   ParallaxImage,

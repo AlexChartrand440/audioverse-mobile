@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 import {
+  ActivityIndicator,
+  Dimensions,
   FlatList,
   ListRenderItem,
-  Dimensions,
-  ActivityIndicator,
 } from 'react-native'
 import {
   ListItem,
 } from 'react-native-elements'
 import firebase from 'react-native-firebase'
-import { NavigationNavigatorProps, NavigationInjectedProps } from 'react-navigation'
-import { TabView, TabBar } from 'react-native-tab-view'
-import SearchLayout from 'react-navigation-addon-search-layout'
+import { TabBar, TabView } from 'react-native-tab-view'
 import { Track } from 'react-native-track-player'
+import { NavigationInjectedProps, NavigationNavigatorProps } from 'react-navigation'
+import SearchLayout from 'react-navigation-addon-search-layout'
 
 import I18n from '../../../locales'
-import { Queries } from '../../constants'
-import * as services from '../../services'
 import { resetAndPlayTrack } from '../../actions'
-import { GlobalStyles, primaryColor } from '../../styles'
-import { parseRecording } from '../../utils'
+import { Queries } from '../../constants'
 import TabBarLabel from '../../navigators/tabbarlabel'
 import {LANGUAGE_MAP} from '../../sagas/api'
+import * as services from '../../services'
+import { GlobalStyles, primaryColor } from '../../styles'
+import { parseRecording } from '../../utils'
 
 interface Item {
   [key: string]: any

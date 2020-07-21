@@ -1,11 +1,13 @@
 import React from 'react'
 import {
-  View,
-  TouchableOpacity,
   Image,
   StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import MarqueeText from 'react-native-marquee'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MarqueeText: any = require('react-native-marquee').default
 
 interface Props {
   image: any

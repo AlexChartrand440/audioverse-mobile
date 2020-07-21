@@ -1,10 +1,10 @@
+import AsyncStorage from '@react-native-community/async-storage'
 import React, { useEffect } from 'react'
 import {
-  View,
   ActivityIndicator,
   StyleSheet,
+  View,
 } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
 import { NavigationInjectedProps } from 'react-navigation'
 
 import { UserState } from '../../../store/user/types'

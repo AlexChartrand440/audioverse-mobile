@@ -1,10 +1,12 @@
 import { Track } from 'react-native-track-player'
-import { ContentTypes } from '../constants'
-import { parseRecording, parseBibleChapter } from '../utils'
-import { AppState } from '../store'
-import { legacyBibleIdsMap } from '../constants/bibles'
 
-export const getLanguage = (state: AppState) => state.settings.language
+import { ContentTypes } from '../constants'
+import { legacyBibleIdsMap } from '../constants/bibles'
+import { LANGUAGE_MAP } from '../sagas/api'
+import { AppState } from '../store'
+import { parseBibleChapter, parseRecording } from '../utils'
+
+export const getLanguage = (state: AppState) => state.settings.language as keyof typeof LANGUAGE_MAP
 export const getBitRate = (state: AppState) => state.settings.bitRate
 export const getAutoPlay = (state: AppState) => state.settings.autoPlay
 

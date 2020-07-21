@@ -1,11 +1,10 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import { loadConference } from '../../../actions'
-import { getConference, getConferencePagination } from '../../../reducers/selectors'
-
 import List from '../../../components/list'
+import { getConference, getConferencePagination } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 const mapStateToProps = (state: AppState) => ({
   items: getConference(state),

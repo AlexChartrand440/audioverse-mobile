@@ -1,12 +1,11 @@
-import { bindActionCreators, Dispatch } from 'redux'
-import { connect } from 'react-redux'
 import { NavigationInjectedProps } from 'react-navigation'
+import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../store'
 import { loadBooks } from '../../actions'
-import { getBooks, getBooksPagination } from '../../reducers/selectors'
-
 import List from '../../components/list'
+import { getBooks, getBooksPagination } from '../../reducers/selectors'
+import { AppState } from '../../store'
 
 interface Item {
   [key: string]: any

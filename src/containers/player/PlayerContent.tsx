@@ -1,23 +1,27 @@
 import React from 'react'
 import {
-  View,
-  ScrollView,
-  Text,
   Image,
-  TouchableOpacity,
+  ScrollView,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import { Track } from 'react-native-track-player'
 import HTML from 'react-native-render-html'
 import Swiper from 'react-native-swiper'
-import MarqueeText from 'react-native-marquee'
+import { Track } from 'react-native-track-player'
 import { NavigationInjectedProps } from 'react-navigation'
 
+import AVLogo from '../../../assets/av-logo.png'
 import I18n from '../../../locales'
 import { ContentTypes } from '../../constants'
-import AVLogo from '../../../assets/av-logo.png'
-import Slide from './Slide'
 import { HTMLStyles } from '../../styles'
+
+import Slide from './Slide'
+
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MarqueeText: any = require('react-native-marquee').default
 
 interface Item {
   [key: string]: any

@@ -1,12 +1,11 @@
-import { bindActionCreators, Dispatch } from 'redux'
-import { connect } from 'react-redux'
 import { NavigationInjectedProps } from 'react-navigation'
+import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import { loadTagsAlbums } from '../../../actions'
-import { getTagsAlbums, getTagsAlbumsPagination } from '../../../reducers/selectors'
-
 import List from '../../../components/list'
+import { getTagsAlbums, getTagsAlbumsPagination } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 interface Item {
   [key: string]: any

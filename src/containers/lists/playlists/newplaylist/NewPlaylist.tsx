@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import {
-  View,
+  Button,
+  StyleSheet,
+  Switch,
   Text,
   TextInput,
-  Button,
   TouchableOpacity,
-  Switch,
-  StyleSheet,
+  View,
 } from 'react-native'
 import Toast from 'react-native-simple-toast'
 import { NavigationInjectedProps } from 'react-navigation'

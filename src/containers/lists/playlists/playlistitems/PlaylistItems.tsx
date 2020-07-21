@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react'
 import {
-  View,
-  FlatList,
   Alert,
+  FlatList,
   ListRenderItem,
   StyleSheet,
+  View,
 } from 'react-native'
 import {
-  ListItem,
   Button,
+  ListItem,
 } from 'react-native-elements'
 import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../../../locales'
 import {
+  removePlaylistItem,
   resetAndPlayTrack,
   syncPlaylistItems,
-  removePlaylistItem,
 } from '../../../../actions'
 
 interface Item {
@@ -24,7 +24,7 @@ interface Item {
 }
 
 interface Props extends NavigationInjectedProps {
-  items: {}[]
+  items: { [key: string]: any }[]
   actions: {
     resetAndPlayTrack: typeof resetAndPlayTrack
     sync: typeof syncPlaylistItems
@@ -49,7 +49,9 @@ const PlaylistItems: React.FC<Props> = ({ navigation, items, actions }) => {
       I18n.t('Are_you_sure_you_want_to_delete_this'),
       '',
       [
-        {text: I18n.t('Cancel'), onPress: () => {}, style: 'cancel'},
+        {text: I18n.t('Cancel'), onPress: () => {
+          //
+        }, style: 'cancel'},
         {text: I18n.t('Yes'), onPress: () => { actions.remove(item.playlistId, item.id) }}
       ]
     )

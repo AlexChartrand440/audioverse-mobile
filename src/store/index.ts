@@ -1,22 +1,23 @@
+import AsyncStorage from '@react-native-community/async-storage';
+import { Platform } from 'react-native';
+import { Track } from 'react-native-track-player'
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
-import AsyncStorage from '@react-native-community/async-storage';
-import { Track } from 'react-native-track-player'
 import RNFetchBlob from 'rn-fetch-blob'
 
 import * as ActionTypes from '../actions'
-import paginate from './paginate'
 import { ContentTypes, Dirs } from '../constants'
 
-import { settingsReducer as settings } from './settings/reducers'
-import { playbackReducer as playback } from './playback/reducers'
 import { BibleReducer as bible } from './Bible/reducers'
-import { userReducer as user } from './user/reducers'
-import { localFilesReducer as localFiles } from './localFiles/reducers'
-import { listsReducer as lists } from './lists/reducers'
-import { downloadsQueueReducer as downloadsQueue } from './downloadsQueue/reducers'
 import customCreateMigrate from './customCreateMigrate'
-import { Platform } from 'react-native';
+import { downloadsQueueReducer as downloadsQueue } from './downloadsQueue/reducers'
+import { listsReducer as lists } from './lists/reducers'
+import { localFilesReducer as localFiles } from './localFiles/reducers'
+import paginate from './paginate'
+import { playbackReducer as playback } from './playback/reducers'
+import { settingsReducer as settings } from './settings/reducers'
+import { userReducer as user } from './user/reducers'
+
 
 const rootReducer = combineReducers({
   settings,

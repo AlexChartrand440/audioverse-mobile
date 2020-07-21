@@ -1,19 +1,19 @@
+import Slider from '@react-native-community/slider'
 import React from 'react'
 import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
   Platform,
   StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from 'react-native'
-import Slider from '@react-native-community/slider'
 import TrackPlayer, {
   useProgress,
 } from 'react-native-track-player'
 
-import { formatTime } from '../../utils'
 import flatDot from '../../../assets/flat_dot.png'
 import I18n from '../../../locales'
+import { formatTime } from '../../utils'
 
 interface Props {
   rate: number

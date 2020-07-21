@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { WebView } from 'react-native-webview'
 
-import { BibleState } from '../../../store/Bible/types'
 import {
   loadBibleVerses
 } from '../../../actions'
+import { BibleState } from '../../../store/Bible/types'
 
 interface Props {
   bible: BibleState

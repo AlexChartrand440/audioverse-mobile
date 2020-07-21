@@ -1,27 +1,27 @@
+import throttle from 'lodash.throttle'
 import React from 'react'
 import {
-  View,
-  Text,
-  Share,
   Alert,
   Linking,
+  Share,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native'
-import firebase from 'react-native-firebase'
-import throttle from 'lodash.throttle'
 import ActionSheet from 'react-native-action-sheet'
 import { Button } from 'react-native-elements'
-import { NavigationInjectedProps } from 'react-navigation'
+import firebase from 'react-native-firebase'
 import { Track } from 'react-native-track-player'
+import { NavigationInjectedProps } from 'react-navigation'
 
-import { ContentTypes } from '../../constants'
 import I18n from '../../../locales'
-import { UserState } from '../../store/user/types'
 import {
   addFavorite,
   removeFavorite,
   setBitRateAndReset,
 } from '../../actions'
+import { ContentTypes } from '../../constants'
+import { UserState } from '../../store/user/types'
 import { typedKeys } from '../../utils'
 
 interface Props extends NavigationInjectedProps {
@@ -76,7 +76,9 @@ const PlayerOptions: React.FC<Props> = ({
       I18n.t('Would_you_like_to_log_in'),
       '',
       [
-        {text: I18n.t('Cancel'), onPress: () => {}, style: 'cancel'},
+        {text: I18n.t('Cancel'), onPress: () => {
+          //
+        }, style: 'cancel'},
         {text: I18n.t('Yes'), onPress: () => { navigation.navigate('Login', { screen: 'Player' }) }}
       ]
     )

@@ -1,11 +1,10 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import { loadPresenter } from '../../../actions'
-import { getPresenter, getPresenterPagination } from '../../../reducers/selectors'
-
 import List from '../../../components/list'
+import { getPresenter, getPresenterPagination } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 const mapStateToProps = (state: AppState) => ({
   items: getPresenter(state),

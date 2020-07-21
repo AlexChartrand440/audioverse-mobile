@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import { AppState } from '../../../store'
 import { getCurrentTrack } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 import Transcript from './Transcript'
 

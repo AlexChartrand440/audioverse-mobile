@@ -1,4 +1,5 @@
 import { GRAPHQL_URL } from 'react-native-dotenv'
+
 import { UserState } from '../store/user/types';
 
 /**

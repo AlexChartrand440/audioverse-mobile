@@ -1,9 +1,9 @@
 import I18n from '../../../locales'
 
 import {
-  CHANGE_LANGUAGE,
-  CHANGE_BITRATE,
   AUTOPLAY,
+  CHANGE_BITRATE,
+  CHANGE_LANGUAGE,
   SettingsActionTypes,
   SettingsState,
 } from './types'

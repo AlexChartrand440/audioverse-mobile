@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import { AppState } from '../../../store'
 import { getUser } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 import Loading from './Loading'
 

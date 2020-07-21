@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../store'
 import { playPause } from '../../actions'
 import { getCurrentTrack } from '../../reducers/selectors'
+import { AppState } from '../../store'
 
 import MiniPlayer from './MiniPlayer'
 

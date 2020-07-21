@@ -1,23 +1,23 @@
 import React from 'react'
 import {
-  View,
-  Switch,
   Alert,
   StyleSheet,
+  Switch,
+  View,
 } from 'react-native'
 import ActionSheet from 'react-native-action-sheet'
 import { ListItem } from 'react-native-elements'
 import { NavigationInjectedProps } from 'react-navigation'
 
-import { UserState } from '../../store/user/types'
 import I18n from '../../../locales'
 import { Bitrates } from '../../constants'
 import {
-  changeLanguage,
-  setAutoPlay,
-  logOut,
   changeBitRate,
+  changeLanguage,
+  logOut,
+  setAutoPlay,
 } from '../../store/settings/actions'
+import { UserState } from '../../store/user/types'
 
 interface Translation {
   [key: string]: any
@@ -101,7 +101,9 @@ const Settings: React.FC<Props> = ({
         I18n.t('Are_you_sure'),
         '',
         [
-          {text: I18n.t('Cancel'), onPress: () => {}, style: 'cancel'},
+          {text: I18n.t('Cancel'), onPress: () => {
+          //
+        }, style: 'cancel'},
           {text: I18n.t('Yes'), onPress: actions.logOut}
         ]
       )

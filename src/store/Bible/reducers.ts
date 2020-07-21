@@ -3,8 +3,8 @@ import {
   BIBLE_CHAPTER,
   BIBLE_VERSES,
   BIBLE_VERSION,
-  BibleState,
   BibleActionTypes,
+  BibleState,
 } from './types'
 
 const initialState: BibleState = {

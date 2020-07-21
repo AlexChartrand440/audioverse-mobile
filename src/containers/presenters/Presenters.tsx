@@ -1,21 +1,21 @@
 import React, {
-  useState,
   useEffect,
   useRef,
+  useState,
 } from 'react'
 import {
-  View,
-  FlatList,
   ActivityIndicator,
+  FlatList,
   ListRenderItem,
   StyleSheet,
+  View,
 } from 'react-native'
-import { SearchBar, ListItem } from 'react-native-elements'
+import { ListItem, SearchBar } from 'react-native-elements'
 import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../locales'
-import { PaginationState } from '../../store/paginate'
 import { LoadDataType } from '../../actions'
+import { PaginationState } from '../../store/paginate'
 
 interface Item {
   [key: string]: any

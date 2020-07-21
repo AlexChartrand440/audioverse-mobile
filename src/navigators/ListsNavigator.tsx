@@ -1,17 +1,19 @@
 import React from 'react'
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
-import { createStackNavigator } from 'react-navigation-stack'
 import { NavigationInjectedProps } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 
-import TabBarLabel from './tabbarlabel'
-import HeaderTitle from './headertitle'
-import HeaderRight from './HeaderRight'
-import { GlobalStyles, headerTintColor } from '../styles'
-import Favorites from '../containers/lists/favorites'
-import Playlists from '../containers/lists/playlists'
-import History from '../containers/lists/history'
-import PlaylistItems from '../containers/lists/playlists/playlistitems'
 import I18n from '../../locales'
+import Favorites from '../containers/lists/favorites'
+import History from '../containers/lists/history'
+import Playlists from '../containers/lists/playlists'
+import PlaylistItems from '../containers/lists/playlists/playlistitems'
+import { GlobalStyles, headerTintColor } from '../styles'
+
+import HeaderRight from './HeaderRight'
+import HeaderTitle from './headertitle'
+import TabBarLabel from './tabbarlabel'
+
 
 interface TabBarLabelProps {
   tintColor: string

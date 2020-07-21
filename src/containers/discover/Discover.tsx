@@ -1,30 +1,31 @@
 import React, {
-  useState,
   useEffect,
   useRef,
+  useState,
 } from 'react'
 import {
-  View,
-  Text,
   FlatList,
+  ListRenderItem,
   ScrollView,
   StyleSheet,
-  ListRenderItem,
+  Text,
+  View,
 } from 'react-native'
-import { NavigationInjectedProps } from 'react-navigation'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { Track } from 'react-native-track-player'
+import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../locales'
-import InViewPort from './InViewPort'
-import SliderEntry from './SliderEntry'
-import Entry from './Entry'
-import { sliderWidth, itemWidth } from './SliderEntry'
-import { fetchGraphQLData } from '../../services'
-import { ContentTypes, Queries } from '../../constants'
 import { resetAndPlayTrack } from '../../actions'
+import { ContentTypes, Queries } from '../../constants'
 import {LANGUAGE_MAP} from '../../sagas/api'
+import { fetchGraphQLData } from '../../services'
 import { parseRecording } from '../../utils'
+
+import Entry from './Entry'
+import InViewPort from './InViewPort'
+import { itemWidth, sliderWidth } from './SliderEntry'
+import SliderEntry from './SliderEntry'
 
 interface Item {
   [key: string]: any

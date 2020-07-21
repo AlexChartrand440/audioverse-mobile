@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../store'
 import { loadPresenters } from '../../actions'
 import { getPresenters, getPresentersPagination } from '../../reducers/selectors'
+import { AppState } from '../../store'
 
 import Presenters from './Presenters'
 

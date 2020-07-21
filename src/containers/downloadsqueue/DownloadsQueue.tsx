@@ -1,13 +1,13 @@
 import React from 'react'
 import {
-  View,
   FlatList,
-  StyleSheet,
   ListRenderItem,
+  StyleSheet,
+  View,
 } from 'react-native'
 import {
-  ListItem,
   Button,
+  ListItem,
 } from 'react-native-elements'
 
 import I18n from '../../../locales'
@@ -18,7 +18,7 @@ interface Item {
 }
 
 interface Props {
-  items: {}[]
+  items: { [key: string]: any }[]
   actions: {
     removeFromDownloadsQueue: typeof removeFromDownloadsQueue
   }

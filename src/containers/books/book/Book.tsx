@@ -4,22 +4,22 @@ import {
   ListRenderItem,
 } from 'react-native'
 import {
-  ListItem,
   Button,
+  ListItem,
 } from 'react-native-elements'
 import { NavigationInjectedProps } from 'react-navigation'
 
-import List from '../../../components/list'
 import I18n from '../../../../locales'
-import { Dirs } from '../../../constants'
-import { PaginationState } from '../../../store/paginate'
 import {
+  download,
   LoadBookType,
   removeLocalChapter,
-  download,
   resetAndPlayTrack,
 } from '../../../actions'
+import List from '../../../components/list'
+import { Dirs } from '../../../constants'
 import { addLocalFiles } from '../../../store/localFiles/actions'
+import { PaginationState } from '../../../store/paginate'
 
 interface Item {
   [key: string]: any
@@ -50,7 +50,9 @@ const Book: React.FC<Props> = ({
         I18n.t('Are_you_sure_you_want_to_delete_this'),
         '',
         [
-          {text: I18n.t('Cancel'), onPress: () => {}, style: 'cancel'},
+          {text: I18n.t('Cancel'), onPress: () => {
+            //
+          }, style: 'cancel'},
           {text: I18n.t('Yes'), onPress: () => { actions.removeLocalChapter(item) }}
         ]
       )

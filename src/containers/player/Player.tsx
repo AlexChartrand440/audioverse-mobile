@@ -1,41 +1,45 @@
 import React, { useState } from 'react'
 import {
   ImageBackground,
-  View,
   Platform,
   StatusBar,
   StyleSheet,
+  View,
 } from 'react-native'
 import ActionSheet from 'react-native-action-sheet'
-import MarqueeText from 'react-native-marquee'
 import {
-  ListItem,
   Button,
+  ListItem,
 } from 'react-native-elements'
 import { Track } from 'react-native-track-player'
 import { NavigationInjectedProps } from 'react-navigation'
 
-import PlayerContent from './PlayerContent'
-import ProgressBar from '../../components/progressbar/ProgressBar'
-import PlayerControls from './PlayerControls'
-import PlayerOptions from './PlayerOptions'
 import imageBg from '../../../assets/bg.png'
 import I18n from '../../../locales'
+import {
+  addFavorite,
+  download,
+  forward,
+  playPause,
+  playVideo,
+  removeFavorite,
+  replay,
+  setBitRateAndReset,
+  setRate,
+  skipToNext,
+  skipToPrevious,
+} from '../../actions'
+import ProgressBar from '../../components/progressbar/ProgressBar'
 import { Dirs } from '../../constants'
 import { UserState } from '../../store/user/types'
-import {
-  playPause,
-  skipToPrevious,
-  skipToNext,
-  replay,
-  forward,
-  download,
-  setRate,
-  addFavorite,
-  removeFavorite,
-  playVideo,
-  setBitRateAndReset,
-} from '../../actions'
+
+import PlayerContent from './PlayerContent'
+import PlayerControls from './PlayerControls'
+import PlayerOptions from './PlayerOptions'
+
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MarqueeText: any = require('react-native-marquee').default
 
 const getSize = (size: string) => (
   parseInt(size) > 0 ? `${Math.round((parseInt(size)/8)/100000)} MB` : ''
@@ -104,8 +108,8 @@ const Player: React.FC<Props> = ({
 
   const handleDownload = () => {
 	
-    let bitratesIndex: Bitrate[] = []
-    let options: string[] = []
+    const bitratesIndex: Bitrate[] = []
+    const options: string[] = []
     
     if (!track) return
     
@@ -165,8 +169,8 @@ const Player: React.FC<Props> = ({
   const [showLightStatusBar, setShowLightStatusBar] = useState(true)
 
   const leavePlayer = () => {
-    setShowLightStatusBar(false)
-    navigation.pop()
+    setShowLightStatusBar(false);
+    (navigation as any).pop()
   }
 
   if (!track) {
@@ -197,7 +201,7 @@ const Player: React.FC<Props> = ({
           leftAvatar={
             {
               source: track.artwork && track.artwork.toString().startsWith('http') ? 
-              { uri: track.artwork } : track.artwork
+              { uri: track.artwork } : track.artwork as any
             }
           }
           title={<MarqueeText marqueeOnStart duration={3500} loop style={styles.title} accessibilityHint={I18n.t("maximize_player")}>{track.title}</MarqueeText>}

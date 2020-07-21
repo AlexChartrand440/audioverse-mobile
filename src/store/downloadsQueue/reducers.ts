@@ -1,10 +1,10 @@
 import {
   ADD_TO_DOWNLOADS_QUEUE,
-  REMOVE_FROM_DOWNLOADS_QUEUE,
-  SET_DOWNLOADING,
   DOWNLOAD_PROGRESS,
   DownloadsQueueActionTypes,
   DownloadsQueueState,
+  REMOVE_FROM_DOWNLOADS_QUEUE,
+  SET_DOWNLOADING,
 } from './types'
 
 const initialState: DownloadsQueueState = {

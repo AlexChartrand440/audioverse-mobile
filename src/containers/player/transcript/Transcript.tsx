@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  View,
   ActivityIndicator,
   Platform,
   StyleSheet,
+  View,
 } from 'react-native'
-import { WebView } from 'react-native-webview'
 import { Track } from 'react-native-track-player'
+import { WebView } from 'react-native-webview'
 
 import I18n from '../../../../locales'
-import { fetchGraphQLData } from "../../../services"
 import { Queries } from "../../../constants"
+import { fetchGraphQLData } from "../../../services"
 
 interface Props {
   track: Track | undefined

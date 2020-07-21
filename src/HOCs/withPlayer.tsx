@@ -1,7 +1,7 @@
 import React from 'react'
 import {
-  View,
   StyleSheet,
+  View,
 } from 'react-native'
 import { NavigationInjectedProps } from 'react-navigation'
 

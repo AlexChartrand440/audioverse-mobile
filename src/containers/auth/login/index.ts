@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
+import { getLanguage } from '../../../reducers/selectors'
 import { AppState } from '../../../store'
 import { setUser } from '../../../store/user/actions'
-import { getLanguage } from '../../../reducers/selectors'
 
 import Login from './Login'
 const mapStateToProps = (state: AppState) => ({

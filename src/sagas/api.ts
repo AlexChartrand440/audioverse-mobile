@@ -1,18 +1,18 @@
 import { Platform } from 'react-native'
-import { put, select, call } from 'redux-saga/effects'
 import Toast from 'react-native-simple-toast'
+import { call, put, select } from 'redux-saga/effects'
 import RNFetchBlob from 'rn-fetch-blob'
 
-import { Endpoints, Dirs, Queries } from '../constants'
-import * as api from '../services'
+import I18n from '../../locales'
 import * as actions from '../actions'
 import { ApiActionType } from '../actions'
-import { bibleBook, bibleVerses } from '../store/Bible/actions'
-import { addLocalFiles, removeLocalFiles } from '../store/localFiles/actions'
+import { Dirs, Endpoints, Queries } from '../constants'
 import * as selectors from '../reducers/selectors'
-import I18n from '../../locales'
-import { PaginationState } from '../store/paginate'
+import * as api from '../services'
+import { bibleBook, bibleVerses } from '../store/Bible/actions'
 import { BibleState } from '../store/Bible/types'
+import { addLocalFiles, removeLocalFiles } from '../store/localFiles/actions'
+import { PaginationState } from '../store/paginate'
 
 const BIBLE_AND_BOOKS_DIR = Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir : `${RNFetchBlob.fs.dirs.MainBundleDir}/app_appdata`
 
@@ -124,7 +124,7 @@ const fetchTag = fetchGraphQLEntity.bind(null, actions.tag, api.fetchGraphQLData
  * @param {function} fetchFn 
  * @param {string}  url 
  */
-function* fetchData(loadMore: boolean = false, refresh: boolean = false, pagination: PaginationState, fetchFn: typeof fetchTopics, url: string) {
+function* fetchData(loadMore = false, refresh = false, pagination: PaginationState, fetchFn: typeof fetchTopics, url: string) {
   console.log('ACTION....', loadMore, refresh)
   if (!pagination || !pagination.pageCount || loadMore || refresh) {
     const nextAfterCursor = refresh ? null : pagination.nextAfterCursor
@@ -140,7 +140,7 @@ function* fetchData(loadMore: boolean = false, refresh: boolean = false, paginat
  * @param {function} fetchFn 
  * @param {string}  url 
  */
-function* fetchDataGraphQL(loadMore: boolean = false, refresh: boolean = false, pagination: PaginationState | undefined, fetchFn: typeof fetchNewRecordings, query: string, variables: { [key: string]: any} = {}) {
+function* fetchDataGraphQL(loadMore = false, refresh = false, pagination: PaginationState | undefined, fetchFn: typeof fetchNewRecordings, query: string, variables: { [key: string]: any} = {}) {
   console.log('ACTION GraphQL....', loadMore, refresh)
   if (!pagination || !pagination.pageCount || loadMore || refresh) {
     const nextAfterCursor = refresh ? null : pagination ? pagination.nextAfterCursor : null
@@ -233,7 +233,7 @@ export function* loadBibleChapters({ loadMore, refresh, book }: LoadBibleChapter
 
   const items = yield select(selectors.getBibleChapters)
   const ids = []
-  for (let item of items) {
+  for (const item of items) {
     const file = `${BIBLE_AND_BOOKS_DIR}/${Dirs.bible}/${encodeURIComponent(item.fileName)}`
     const exists = yield call(RNFetchBlob.fs.exists, file)
     if (exists) {
@@ -254,7 +254,7 @@ export function* loadBibleChapters({ loadMore, refresh, book }: LoadBibleChapter
 export function* removeLocalBibleChapter({ item }: {[key: string]: any}) {
   // remove mp3 file
   const file = `${BIBLE_AND_BOOKS_DIR}/${Dirs.bible}/${encodeURIComponent(item.fileName)}`
-  let exists = yield call(RNFetchBlob.fs.exists, file)
+  const exists = yield call(RNFetchBlob.fs.exists, file)
   if (exists) {
     try {
       yield call(RNFetchBlob.fs.unlink, file)
@@ -385,7 +385,7 @@ export function* loadBook({ loadMore, refresh, url: sequenceId }: LoadBookAction
 
   const items = yield select(selectors.getBook)
   const ids = []
-  for (let item of items) {
+  for (const item of items) {
     const file = `${BIBLE_AND_BOOKS_DIR}/${Dirs.audiobooks}/${encodeURIComponent(item.mediaFiles[0].filename)}`
     const exists = yield call(RNFetchBlob.fs.exists, file)
     if (exists) {

@@ -1,24 +1,24 @@
+import AsyncStorage from '@react-native-community/async-storage'
 import {
   Alert,
-  Platform,
   Linking,
+  Platform,
   Share,
 } from 'react-native'
+import firebase from 'react-native-firebase'
 import TrackPlayer, {
-  State as PlayerState,
   Event as PlayerEvent,
+  State as PlayerState,
   Track,
 } from 'react-native-track-player'
 import { Store } from 'redux'
-import AsyncStorage from '@react-native-community/async-storage'
-import firebase from 'react-native-firebase'
 
 import I18n from '../../locales'
 import * as actions from '../actions'
-import { playbackTrackId, playbackPosition } from '../store/playback/actions'
-import { bibleChapter } from '../store/Bible/actions'
-import prompts, { Prompt } from '../constants/prompts'
 import { ContentTypes } from '../constants'
+import prompts, { Prompt } from '../constants/prompts'
+import { bibleChapter } from '../store/Bible/actions'
+import { playbackPosition, playbackTrackId } from '../store/playback/actions'
 
 interface Data {
   position: number
@@ -88,7 +88,9 @@ async function eventHandler(store: Store, data: Data) {
   const showPromptMessage = (prompt: Prompt, prompts: Prompt[], track: Track) => {
     let message = ''
     let confirmText = ''
-    let action = () => {}
+    let action = () => {
+      //
+    }
 
     const updatePrompts = (confirmed: boolean) => {
       const updatedPrompts = prompts.map((el) => {
@@ -160,7 +162,7 @@ async function eventHandler(store: Store, data: Data) {
         return
       }
       
-      let promptsString = await AsyncStorage.getItem('prompts')
+      const promptsString = await AsyncStorage.getItem('prompts')
       let promptsData: Prompt[] = []
       if (!promptsString) {
         AsyncStorage.setItem('prompts', JSON.stringify(prompts))

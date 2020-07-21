@@ -1,10 +1,14 @@
 import React from 'react'
-import ImageButton from './ImageButton'
-import { defaultImage } from '../../styles'
-
 import renderer from 'react-test-renderer'
 
+import { defaultImage } from '../../styles'
+
+import ImageButton from './ImageButton'
+
+
 test('renders correctly', () => {
-  const tree = renderer.create(<ImageButton onPress={() => {}} source={defaultImage} />).toJSON()
+  const tree = renderer.create(<ImageButton onPress={() => {
+    //
+  }} source={defaultImage} />).toJSON()
   expect(tree).toMatchSnapshot()
 })

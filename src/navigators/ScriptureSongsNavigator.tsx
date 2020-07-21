@@ -1,20 +1,22 @@
 import React from 'react'
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
-import { createStackNavigator } from 'react-navigation-stack'
+import { Platform } from 'react-native'
 import { NavigationInjectedProps } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 
-import TabBarLabel from './tabbarlabel'
-import { GlobalStyles, headerTintColor } from '../styles'
+import I18n from '../../locales'
 import Tags from '../containers/scripturesongs/tags'
 import Tag from '../containers/scripturesongs/tags/tag'
-import TagsBooks from '../containers/scripturesongs/tagsBooks'
-import TagBook from '../containers/scripturesongs/tagsBooks/tagBook'
 import TagsAlbums from '../containers/scripturesongs/tagsAlbums'
 import TagAlbum from '../containers/scripturesongs/tagsAlbums/tagAlbum'
+import TagsBooks from '../containers/scripturesongs/tagsBooks'
+import TagBook from '../containers/scripturesongs/tagsBooks/tagBook'
 import TagsSponsors from '../containers/scripturesongs/tagsSponsors'
 import TagSponsor from '../containers/scripturesongs/tagsSponsors/tagSponsor'
-import I18n from '../../locales'
-import { Platform } from 'react-native'
+import { GlobalStyles, headerTintColor } from '../styles'
+
+import TabBarLabel from './tabbarlabel'
+
 
 interface TabBarLabelProps {
   tintColor: string

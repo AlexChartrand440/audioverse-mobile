@@ -1,15 +1,16 @@
 import React from 'react'
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
-import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack'
 import { NavigationInjectedProps } from 'react-navigation'
+import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack'
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs'
 
-import HeaderRightBibleVerses from './headerrightbibleverses'
-import TabBarLabel from './tabbarlabel'
-import HeaderTitle from './headertitle'
-import { GlobalStyles, headerTintColor } from '../styles'
 import Books from '../containers/bible/books'
 import Chapters from '../containers/bible/chapters'
 import Verses from '../containers/bible/verses'
+import { GlobalStyles, headerTintColor } from '../styles'
+
+import HeaderRightBibleVerses from './headerrightbibleverses'
+import HeaderTitle from './headertitle'
+import TabBarLabel from './tabbarlabel'
 
 interface TabBarLabelProps {
   tintColor: string
@@ -58,7 +59,7 @@ const Navigator = createStackNavigator({
       headerTintColor: headerTintColor,
     }
     if (navigation.state.params && navigation.state.params.showBackButton) {
-      options.headerLeft = () => <HeaderBackButton tintColor={headerTintColor} onPress={() => {navigation.pop()}} />
+      options.headerLeft = () => <HeaderBackButton tintColor={headerTintColor} onPress={() => {(navigation as any).pop()}} />
     }
     return options
   },

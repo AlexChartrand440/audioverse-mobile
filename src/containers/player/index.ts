@@ -1,28 +1,28 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../store'
 import {
-  playPause,
-  skipToPrevious,
-  skipToNext,
-  replay,
-  forward,
-  download,
-  setRate,
   addFavorite,
-  removeFavorite,
+  download,
+  forward,
+  playPause,
   playVideo,
+  removeFavorite,
+  replay,
   setBitRateAndReset,
+  setRate,
+  skipToNext,
+  skipToPrevious,
 } from '../../actions'
 import {
+  getBitRate,
   getCurrentTrack,
-  getRate,
   getLanguage,
+  getRate,
   getUser,
   isFavorite,
-  getBitRate,
 } from '../../reducers/selectors'
+import { AppState } from '../../store'
 
 import Player from './Player'
 

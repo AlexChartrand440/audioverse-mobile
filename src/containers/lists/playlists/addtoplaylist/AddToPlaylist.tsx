@@ -1,15 +1,15 @@
+import throttle from 'lodash.throttle'
 import React from 'react'
 import {
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Text,
   Button,
+  ScrollView,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import { Track } from 'react-native-track-player'
 import { Icon } from 'react-native-elements'
-import throttle from 'lodash.throttle'
+import { Track } from 'react-native-track-player'
 import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../../../locales'

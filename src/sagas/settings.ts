@@ -1,15 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage'
-import { all, put, call } from 'redux-saga/effects'
+import { all, call, put } from 'redux-saga/effects'
 
 import I18n from '../../locales'
 import * as actions from '../actions'
-import { setUser } from '../store/user/actions'
-import { ChangeLanguageAction } from '../store/settings/types'
 import {
   setFavorites,
   setPlaylists,
   setPlaylistsItems,
 } from '../store/lists/actions'
+import { ChangeLanguageAction } from '../store/settings/types'
+import { setUser } from '../store/user/actions'
 
 /**
  * Changes app language

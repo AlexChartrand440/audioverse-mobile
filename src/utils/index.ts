@@ -1,7 +1,8 @@
 import NetInfo from "@react-native-community/netinfo"
+import { Track } from 'react-native-track-player'
+
 import { ContentTypes } from '../constants'
 import { defaultImage } from '../styles'
-import { Track } from 'react-native-track-player'
 
 /**
  * Typed keys

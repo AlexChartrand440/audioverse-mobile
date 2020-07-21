@@ -1,24 +1,24 @@
 import { PermissionsAndroid, Platform } from 'react-native'
-import { call, put, select, take } from 'redux-saga/effects'
-import { eventChannel, buffers, END } from 'redux-saga'
-import RNFetchBlob from 'rn-fetch-blob'
-import Toast from 'react-native-simple-toast'
 import firebase from 'react-native-firebase'
+import Toast from 'react-native-simple-toast'
 import { Track } from 'react-native-track-player'
+import { buffers, END, eventChannel } from 'redux-saga'
+import { call, put, select, take } from 'redux-saga/effects'
+import RNFetchBlob from 'rn-fetch-blob'
 
+import I18n from '../../locales'
+import { ContentTypes } from '../constants'
+import * as selectors from '../reducers/selectors'
+import {
+  addToDownloadsQueue,
+  downloadProgress,
+  removeFromDownloadsQueue,
+  setDownloading,
+} from '../store/downloadsQueue/actions'
 import {
   addDownloads,
   removeDownloads,
 } from '../store/lists/actions'
-import {
-  addToDownloadsQueue,
-  removeFromDownloadsQueue,
-  setDownloading,
-  downloadProgress,
-} from '../store/downloadsQueue/actions'
-import * as selectors from '../reducers/selectors'
-import { ContentTypes } from '../constants'
-import I18n from '../../locales'
 import { typedKeys } from '../utils'
 
 const DOWNLOAD_DIR = Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir : RNFetchBlob.fs.dirs.DownloadDir

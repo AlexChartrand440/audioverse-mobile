@@ -1,20 +1,20 @@
 import React, { useEffect, useRef } from 'react'
 import {
-  View,
-  Text,
-  Image,
-  FlatList,
   ActivityIndicator,
-  StyleSheet,
+  FlatList,
+  Image,
   ListRenderItem,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native'
-import { NavigationInjectedProps } from 'react-navigation'
 import { ListItem } from 'react-native-elements'
 import HTML from 'react-native-render-html'
 import { Track } from 'react-native-track-player'
+import { NavigationInjectedProps } from 'react-navigation'
 
-import { defaultImage, HTMLStyles } from '../../styles'
 import { PaginationState } from '../../store/paginate'
+import { defaultImage, HTMLStyles } from '../../styles'
 
 interface Item {
   [key: string]: any

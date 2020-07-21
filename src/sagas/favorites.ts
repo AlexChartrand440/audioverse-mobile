@@ -1,13 +1,13 @@
-import { put, select, call, all } from 'redux-saga/effects'
 import firebase from 'react-native-firebase'
 import { Track } from 'react-native-track-player'
+import { all, call, put, select } from 'redux-saga/effects'
 
 import { ContentTypes, Queries } from '../constants'
-import * as api from '../services'
-import { setFavorites, addFavorites, removeFavorites } from '../store/lists/actions'
 import * as selectors from '../reducers/selectors'
-import { netInfoIsConnected, typedKeys } from '../utils'
+import * as api from '../services'
+import { addFavorites, removeFavorites, setFavorites } from '../store/lists/actions'
 import { UserState } from '../store/user/types'
+import { netInfoIsConnected, typedKeys } from '../utils'
 
 function* syncLocalToServer(user: UserState) {
   const local: Track[] = yield select(selectors.getLocalFavorites)

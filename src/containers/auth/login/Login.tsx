@@ -1,34 +1,34 @@
+import AsyncStorage from '@react-native-community/async-storage'
 import React, {
-  useState,
   useRef,
+  useState,
 } from 'react'
 import {
-  View,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Image,
   Linking,
   StatusBar,
   StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
-import { Icon, Button } from 'react-native-elements'
+import { Button, Icon } from 'react-native-elements'
 import {
-  LoginManager,
   GraphRequest,
   GraphRequestManager,
+  LoginManager,
 } from 'react-native-fbsdk'
-import Toast from 'react-native-simple-toast'
 import firebase from 'react-native-firebase'
+import Toast from 'react-native-simple-toast'
 import { NavigationInjectedProps } from 'react-navigation'
 
+import logo from '../../../../assets/av-logo-red-gray.png'
 import I18n from '../../../../locales'
 import { Queries } from '../../../constants'
 import * as api from '../../../services'
-import logo from '../../../../assets/av-logo-red-gray.png'
 import { setUser } from '../../../store/user/actions'
 import { UserState } from '../../../store/user/types'
 
@@ -135,6 +135,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
   }
 
   const setFormValid = () => {
+    // eslint-disable-next-line no-useless-escape
     const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     const passwordValidation = signin ? password !== '' : password.length >= 6
     if (reg.test(email) && passwordValidation) {

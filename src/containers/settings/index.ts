@@ -1,19 +1,19 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
+import {
+  getAutoPlay,
+  getBitRate,
+  getLanguage,
+  getUser,
+} from '../../reducers/selectors'
 import { AppState } from '../../store'
 import {
-  changeLanguage,
   changeBitRate,
-  setAutoPlay,
+  changeLanguage,
   logOut,
+  setAutoPlay,
 } from '../../store/settings/actions'
-import {
-  getLanguage,
-  getAutoPlay,
-  getUser,
-  getBitRate,
-} from '../../reducers/selectors'
 
 import Settings from './Settings'
 

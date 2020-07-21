@@ -1,26 +1,28 @@
 import React, { useState } from 'react'
 import {
-  View,
   ActivityIndicator,
   Platform,
   StyleSheet,
+  View,
 } from 'react-native'
+import { ListItem } from 'react-native-elements'
 import {
-  Track,
-  State as PlayerState,
   Event as PlayerEvent,
+  State as PlayerState,
+  Track,
   usePlaybackState,
   useTrackPlayerEvents,
 } from "react-native-track-player"
-import MarqueeText from 'react-native-marquee'
-import { ListItem } from 'react-native-elements'
 import { NavigationInjectedProps } from 'react-navigation'
 
-import ImageButton from '../buttons/ImageButton'
-import ProgressBarMini from '../progressbar/ProgressBarMini'
 import iconPlay from '../../../assets/ic_play.png'
 import iconPause from '../../../assets/pause.png'
 import I18n from '../../../locales'
+import ImageButton from '../buttons/ImageButton'
+import ProgressBarMini from '../progressbar/ProgressBarMini'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MarqueeText: any = require('react-native-marquee').default
 
 interface Props extends NavigationInjectedProps {
   track: Track | undefined
@@ -89,7 +91,7 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
         leftAvatar={
           {
             source: track.artwork && track.artwork.toString().startsWith('http') ? 
-            { uri: track.artwork } : track.artwork
+            { uri: track.artwork } : track.artwork as any
           }
         }
         title={

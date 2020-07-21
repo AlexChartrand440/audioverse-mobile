@@ -1,11 +1,11 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
 import { resetAndPlayTrack } from '../../actions'
+import { getLanguage } from '../../reducers/selectors'
 import { AppState } from '../../store'
 
 import Search from './Search'
-import { getLanguage } from '../../reducers/selectors'
 
 
 const mapStateToProps = (state: AppState) => ({

@@ -1,5 +1,5 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
 import { addPlaylist } from '../../../../actions'
 import { getPlaylists } from '../../../../reducers/selectors'

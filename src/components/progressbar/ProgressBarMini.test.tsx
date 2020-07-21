@@ -1,7 +1,8 @@
 import React from 'react'
+import renderer from 'react-test-renderer'
+
 import ProgressBarMini from './ProgressBarMini'
 
-import renderer from 'react-test-renderer'
 
 test('renders correctly', () => {
   const tree = renderer.create(<ProgressBarMini />).toJSON()

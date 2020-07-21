@@ -1,8 +1,8 @@
 import {
   ADD_LOCAL_FILES,
-  REMOVE_LOCAL_FILES,
-  LocalFilesState,
   LocalFilesActionTypes,
+  LocalFilesState,
+  REMOVE_LOCAL_FILES,
 } from './types'
 
 const initialState: LocalFilesState = []

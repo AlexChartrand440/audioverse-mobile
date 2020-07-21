@@ -1,19 +1,19 @@
 import React from 'react'
 import {
-  View,
-  Image,
-  Text,
-  Linking,
-  Share,
   FlatList,
+  Image,
+  Linking,
   Platform,
+  Share,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native'
 import { ListItem } from 'react-native-elements'
 
-import packageJson from '../../../package.json'
-import I18n from '../../../locales'
 import logo from '../../../assets/av-logo-red-gray.png'
+import I18n from '../../../locales'
+import packageJson from '../../../package.json'
 
 interface Props {
   language: string

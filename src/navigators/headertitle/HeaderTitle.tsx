@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-  Text,
   Platform,
   StyleSheet,
+  Text,
 } from 'react-native'
 
 import I18n from '../../../locales'

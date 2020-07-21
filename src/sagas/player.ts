@@ -1,30 +1,30 @@
 import { Platform } from 'react-native'
+import firebase from 'react-native-firebase'
 import TrackPlayer, {
-  Track,
-  State as PlayerState,
   Capability,
+  State as PlayerState,
+  Track,
 } from 'react-native-track-player'
 import { call, put, select } from 'redux-saga/effects'
 import RNFetchBlob from 'rn-fetch-blob'
-import firebase from 'react-native-firebase'
 
-import { ContentTypes, Dirs } from '../constants'
 import * as actions from '../actions'
+import { ContentTypes, Dirs } from '../constants'
+import * as selectors from '../reducers/selectors'
+import * as api from '../services'
+import { addHistory } from '../store/lists/actions'
 import {
   playbackInit,
+  playbackPosition,
+  playbackRate,
   playbackTrackId,
   playbackTracks,
-  playbackRate,
-  playbackPosition,
 } from '../store/playback/actions'
-import { addHistory } from '../store/lists/actions'
-import * as selectors from '../reducers/selectors'
-import { getMediaFile, typedKeys } from '../utils'
-import * as api from '../services'
-import NavigationService from '../utils/navigation-service'
+import { PlaybackRateAction } from '../store/playback/types'
 import { changeBitRate } from '../store/settings/actions'
 import { ChangeBitRateAction } from '../store/settings/types'
-import { PlaybackRateAction } from '../store/playback/types'
+import { getMediaFile, typedKeys } from '../utils'
+import NavigationService from '../utils/navigation-service'
 
 const DOWNLOAD_DIR = Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir : RNFetchBlob.fs.dirs.DownloadDir
 const BIBLE_AND_BOOKS_DIR = Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir : `${RNFetchBlob.fs.dirs.MainBundleDir}/app_appdata`
@@ -110,7 +110,7 @@ function* getSermonUrl(item: Track) {
   // if it doesn't exist, look for a different bit rate available
   if (!exists) {
     const others = downloads.filter( el => el.bitRate !== mediaFile.bitrate )
-    for (let i of others) {
+    for (const i of others) {
       currentUrl = `${Platform.OS === 'android' && download && download.recovered ? download.dir : DOWNLOAD_DIR}/${i.downloadPath}/${encodeURIComponent(i.fileName)}`
       exists = yield call(fileExists, currentUrl)
       if (exists) {
@@ -171,7 +171,7 @@ function* getVideoUrl(item: Track) {
   const downloads = yield select(selectors.getDownloadsById, item.id)
   let currentUrl = null, exists = false
 
-  for (let i of downloads) {
+  for (const i of downloads) {
     currentUrl = `${i.downloadPath}${encodeURIComponent(i.fileName)}`
     exists = yield call(fileExists, currentUrl)
     if (exists) {
@@ -258,7 +258,7 @@ export function* playTracks(autoPlay = true) {
   }
 
   const newTracks = []
-  for (let i of tracks) {
+  for (const i of tracks) {
     newTracks.push({
       ...i,
       url: yield call(getUrl, i)
@@ -403,6 +403,6 @@ export function* trackInitialized({ track }: { type: string, track: Track }) {
     content_type: typedKeys(ContentTypes).find(key => ContentTypes[key] === track.contentType),
     item_id: track.id,
     title: track.title,
-    remote_url: track.url!.startsWith('http') ? 1 : 0,
+    remote_url: typeof track.url === 'string' && track.url!.startsWith('http') ? 1 : 0,
   })
 }

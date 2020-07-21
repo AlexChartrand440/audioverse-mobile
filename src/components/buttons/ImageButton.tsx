@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-  TouchableOpacity,
   Image,
   ImageSourcePropType,
+  TouchableOpacity,
 } from 'react-native'
 
 interface Props {

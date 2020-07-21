@@ -1,8 +1,8 @@
-import Endpoints from './endpoints'
+import Bibles from './bibles'
+import Bitrates from './bitrates'
 import ContentTypes from './contentTypes'
 import Dirs from './dirs'
-import Bitrates from './bitrates'
-import Bibles from './bibles'
+import Endpoints from './endpoints'
 import Queries from './queries'
 
 export {

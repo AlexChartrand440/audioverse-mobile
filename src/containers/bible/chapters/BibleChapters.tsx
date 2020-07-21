@@ -1,25 +1,25 @@
 import React, { useEffect } from 'react'
 import {
-  View,
-  FlatList,
   Alert,
-  StyleSheet,
+  FlatList,
   ListRenderItem,
+  StyleSheet,
+  View,
 } from 'react-native'
 import {
-  ListItem,
   Button,
+  ListItem,
 } from 'react-native-elements'
 import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../../locales'
-import { Dirs } from '../../../constants'
 import {
-  LoadBibleChaptersType,
-  resetAndPlayTrack,
   download,
+  LoadBibleChaptersType,
   removeLocalBibleChapter,
+  resetAndPlayTrack,
 } from '../../../actions'
+import { Dirs } from '../../../constants'
 import { bibleChapter } from '../../../store/Bible/actions'
 import { BibleState } from '../../../store/Bible/types'
 import { addLocalFiles } from '../../../store/localFiles/actions'
@@ -81,7 +81,9 @@ const BibleChapters: React.FC<Props> = ({
         I18n.t('Are_you_sure_you_want_to_delete_this'),
         '',
         [
-          {text: I18n.t('Cancel'), onPress: () => {}, style: 'cancel'},
+          {text: I18n.t('Cancel'), onPress: () => {
+            //
+          }, style: 'cancel'},
           {text: I18n.t('Yes'), onPress: () => { actions.removeLocalBibleChapter(item) }}
         ]
       )

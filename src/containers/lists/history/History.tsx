@@ -1,22 +1,22 @@
 import React from 'react'
 import {
-  View,
-  FlatList,
   Alert,
+  FlatList,
   ListRenderItem,
   StyleSheet,
+  View,
 } from 'react-native'
 import {
-  ListItem,
   Button,
+  ListItem,
 } from 'react-native-elements'
+import { Track } from 'react-native-track-player'
 
 import I18n from '../../../../locales'
 import {
   resetAndPlayTrack,
 } from '../../../actions'
 import { removeHistory } from '../../../store/lists/actions'
-import { Track } from 'react-native-track-player'
 
 interface Props {
   items: Track[]
@@ -39,7 +39,9 @@ const History: React.FC<Props> = ({ items, actions }) => {
       I18n.t('Are_you_sure_you_want_to_delete_this'),
       '',
       [
-        {text: I18n.t('Cancel'), onPress: () => {}, style: 'cancel'},
+        {text: I18n.t('Cancel'), onPress: () => {
+          //
+        }, style: 'cancel'},
         {text: I18n.t('Yes'), onPress: () => { actions.remove(item) }}
       ]
     )
@@ -50,7 +52,7 @@ const History: React.FC<Props> = ({ items, actions }) => {
       <ListItem
         leftAvatar={{
           source: item.artwork && item.artwork.toString().startsWith('http') ? 
-          { uri: item.artwork } : item.artwork
+          { uri: item.artwork } : item.artwork as any
         }}
         title={item.title}
         titleProps={{numberOfLines: 1}}

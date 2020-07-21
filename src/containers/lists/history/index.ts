@@ -1,10 +1,10 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import { resetAndPlayTrack } from '../../../actions'
-import { removeHistory } from '../../../store/lists/actions'
 import { getHistory } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
+import { removeHistory } from '../../../store/lists/actions'
 
 import History from './History'
 

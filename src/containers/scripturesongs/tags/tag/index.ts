@@ -1,11 +1,10 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../../store'
 import { loadTag } from '../../../../actions'
-import { getTag, getTagPagination } from '../../../../reducers/selectors'
-
 import List from '../../../../components/list'
+import { getTag, getTagPagination } from '../../../../reducers/selectors'
+import { AppState } from '../../../../store'
 
 const mapStateToProps = (state: AppState) => ({
   items: getTag(state),

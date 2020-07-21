@@ -2,10 +2,10 @@ import React from 'react'
 import ActionSheet from 'react-native-action-sheet'
 import { Button } from 'react-native-elements'
 
-import { Dirs } from '../../constants'
 import I18n from '../../../locales'
-import { addLocalFiles } from '../../store/localFiles/actions'
 import { download } from '../../actions'
+import { Dirs } from '../../constants'
+import { addLocalFiles } from '../../store/localFiles/actions'
 
 interface Item {
   [key: string]: any

@@ -1,12 +1,12 @@
 import React from 'react'
-import { createStackNavigator } from 'react-navigation-stack'
 import { NavigationInjectedProps } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
 
-import Search from '../containers/search'
-import Presenter from '../containers/presenters/presenter'
 import Conference from '../containers/conferences/conference'
-import Sponsor from '../containers/sponsors/sponsor'
+import Presenter from '../containers/presenters/presenter'
+import Search from '../containers/search'
 import Serie from '../containers/series/serie'
+import Sponsor from '../containers/sponsors/sponsor'
 import { GlobalStyles, headerTintColor } from '../styles'
 
 const Navigator = createStackNavigator({

@@ -41,7 +41,7 @@ function paginate({ types }: { types: string[] }, filterUniq = false) {
           ...state,
           isFetching: true
         }
-      case successType:
+      case successType: {
         console.log('action success', action, state)
         const nextData = [
           ...state.data,
@@ -54,6 +54,7 @@ function paginate({ types }: { types: string[] }, filterUniq = false) {
           nextAfterCursor: action.response.nextAfterCursor,
           pageCount: state.pageCount + 1
         }
+      }
       case refreshType:
         console.log('action refresh', action, state)
         return {

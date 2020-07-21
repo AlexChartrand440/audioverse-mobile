@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+
 import image from '../../assets/default.png'
 
 export const primaryColor = '#E53935'

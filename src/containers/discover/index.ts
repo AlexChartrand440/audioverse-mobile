@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../store'
 import { resetAndPlayTrack } from '../../actions'
 import { getHistory, getLanguage } from '../../reducers/selectors'
+import { AppState } from '../../store'
 
 import Discover from './Discover'
 

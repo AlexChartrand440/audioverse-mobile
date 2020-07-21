@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
-import { syncPlaylists, removePlaylist } from '../../../actions'
+import { removePlaylist, syncPlaylists } from '../../../actions'
 import { getPlaylists } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 import Playlists from './Playlists'
 

@@ -1,8 +1,8 @@
-import { select } from 'redux-saga/effects'
 import firebase from 'react-native-firebase'
+import { select } from 'redux-saga/effects'
 
-import * as selectors from '../reducers/selectors'
 import I18n from '../../locales'
+import * as selectors from '../reducers/selectors'
 
 /**
  * Process startup action 

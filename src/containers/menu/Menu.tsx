@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  View,
   FlatList,
+  View,
 } from 'react-native'
-import { NavigationInjectedProps } from 'react-navigation'
 import { ListItem } from 'react-native-elements'
+import { NavigationInjectedProps } from 'react-navigation'
 
 import I18n from '../../../locales'
 

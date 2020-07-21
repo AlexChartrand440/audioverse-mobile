@@ -1,14 +1,13 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import { loadTrendingRecordings } from '../../../actions'
+import List from '../../../components/list'
 import {
   getTrendingRecordings,
   getTrendingRecordingsPagination,
 } from '../../../reducers/selectors'
-
-import List from '../../../components/list'
+import { AppState } from '../../../store'
 
 const mapStateToProps = (state: AppState) => ({
   items: getTrendingRecordings(state),

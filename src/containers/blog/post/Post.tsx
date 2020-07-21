@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  View,
-  ScrollView,
-  Text,
-  Image,
   ActivityIndicator,
-  Linking,
   Dimensions,
+  Image,
+  Linking,
+  ScrollView,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native'
 import HTML from 'react-native-render-html'
 import { NavigationInjectedProps } from 'react-navigation'
 
-import { fetchGraphQLData } from '../../../services'
 import { Queries } from '../../../constants'
+import { fetchGraphQLData } from '../../../services'
 
 interface Post {
   image: {

@@ -1,16 +1,16 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import {
-  loadBibleChapters,
   download,
+  loadBibleChapters,
   removeLocalBibleChapter,
   resetAndPlayTrack,
 } from '../../../actions'
+import { getBible, getBibleChapters, getBibleChaptersPagination } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 import { bibleChapter } from '../../../store/Bible/actions'
 import { addLocalFiles } from '../../../store/localFiles/actions'
-import { getBibleChapters, getBibleChaptersPagination, getBible } from '../../../reducers/selectors'
 
 import BibleChapters from './BibleChapters'
 

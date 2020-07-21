@@ -3,8 +3,8 @@ import { ListRenderItem } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import { NavigationInjectedProps } from 'react-navigation'
 
+import { LoadBibleChaptersType, LoadDataType } from '../../../actions'
 import List from '../../../components/list'
-import { LoadDataType, LoadBibleChaptersType } from '../../../actions'
 import { PaginationState } from '../../../store/paginate'
 
 interface Props extends NavigationInjectedProps {

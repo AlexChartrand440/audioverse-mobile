@@ -1,9 +1,10 @@
-import { createStore, applyMiddleware } from 'redux'
-import createSagaMiddleware from 'redux-saga'
+import { applyMiddleware, createStore } from 'redux'
 import { persistStore } from 'redux-persist'
+import createSagaMiddleware from 'redux-saga'
+
+import mySaga from '../sagas'
 
 import reducer from './index'
-import mySaga from '../sagas'
 
 export default () => {
   // create the saga middleware

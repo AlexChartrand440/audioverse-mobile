@@ -1,9 +1,9 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
+import { getDownloadsQueueItems } from '../../reducers/selectors'
 import { AppState } from '../../store'
 import { removeFromDownloadsQueue } from '../../store/downloadsQueue/actions'
-import { getDownloadsQueueItems } from '../../reducers/selectors'
 
 import DownloadsQueue from './DownloadsQueue'
 

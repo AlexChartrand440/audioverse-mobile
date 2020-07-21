@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import { AppState } from '../../store'
 import { getLanguage } from '../../reducers/selectors'
+import { AppState } from '../../store'
 
 import TabBarLabel from './TabBarLabel'
 

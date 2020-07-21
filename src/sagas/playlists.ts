@@ -1,12 +1,13 @@
-import { put, select, call, all } from 'redux-saga/effects'
 import { Track } from 'react-native-track-player'
+import { all, call, put, select } from 'redux-saga/effects'
 
 import { Queries } from '../constants'
-import * as api from '../services'
-import { setPlaylists, addPlaylists, removePlaylists, setPlaylistsItems } from '../store/lists/actions'
 import * as selectors from '../reducers/selectors'
-import { netInfoIsConnected } from '../utils'
+import * as api from '../services'
+import { addPlaylists, removePlaylists, setPlaylists, setPlaylistsItems } from '../store/lists/actions'
 import { UserState } from '../store/user/types'
+import { netInfoIsConnected } from '../utils'
+
 import { LANGUAGE_MAP } from './api'
 
 interface Playlist {
@@ -29,7 +30,7 @@ function* syncDeletedToServer(user: UserState) {
 
 export function* deletePlaylistItems(playlistsIds: PlaylistsIds) {
   const allPlaylistsItems: Track[] = yield select(selectors.getAllPlaylistsItems)
-  const playlistsItems = allPlaylistsItems.filter(el => !playlistsIds.hasOwnProperty(el.playlistId))
+  const playlistsItems = allPlaylistsItems.filter(el => !Object.prototype.hasOwnProperty.call(playlistsIds, el.playlistId))
   yield put(setPlaylistsItems(playlistsItems))
 }
 

@@ -1,14 +1,14 @@
+import randomColor from 'randomcolor'
 import React, { useState } from 'react'
 import {
-  View,
-  Text,
   Image,
-  TouchableOpacity,
   ImageSourcePropType,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 
-import randomColor from 'randomcolor'
 
 type ImageType = {
   uri: ImageSourcePropType

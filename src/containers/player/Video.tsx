@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import {
-  View,
   Dimensions,
   Platform,
   StyleSheet,
+  View,
 } from 'react-native'
 import VideoControls from 'react-native-video-controls'
 import { NavigationInjectedProps } from 'react-navigation'

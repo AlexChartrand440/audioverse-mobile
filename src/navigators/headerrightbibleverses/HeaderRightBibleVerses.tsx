@@ -1,18 +1,18 @@
 import React from 'react'
 import {
-  View,
-  TouchableOpacity,
-  Text,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import { Icon } from 'react-native-elements'
 import ActionSheet from 'react-native-action-sheet'
+import { Icon } from 'react-native-elements'
 
 import I18n from '../../../locales'
-import { Bibles } from '../../constants'
-import { BibleState } from '../../store/Bible/types'
-import { setBibleVersion } from '../../store/Bible/actions'
 import { resetAndPlayTrack } from '../../actions'
+import { Bibles } from '../../constants'
+import { setBibleVersion } from '../../store/Bible/actions'
+import { BibleState } from '../../store/Bible/types'
 
 interface Props {
   bible: BibleState

@@ -1,16 +1,16 @@
-import { put, select, call, all } from 'redux-saga/effects'
 import { Track } from 'react-native-track-player'
+import { all, call, put, select } from 'redux-saga/effects'
 
 import { Queries } from '../constants'
+import * as selectors from '../reducers/selectors'
 import * as api from '../services'
 import {
-  setPlaylistsItems,
   addPlaylistsItems,
   removePlaylistsItems,
+  setPlaylistsItems,
 } from '../store/lists/actions'
-import * as selectors from '../reducers/selectors'
-import { netInfoIsConnected } from '../utils'
 import { UserState } from '../store/user/types'
+import { netInfoIsConnected } from '../utils'
 
 function* syncLocalToServer(user: UserState, playlistId: string) {
   const local: Track[] = yield select(selectors.getLocalPlaylistItems, playlistId)

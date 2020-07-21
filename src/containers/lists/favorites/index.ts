@@ -1,13 +1,13 @@
-import { bindActionCreators, Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
-import { AppState } from '../../../store'
 import {
+  removeFavorite,
   resetAndPlayTrack,
   syncFavorites,
-  removeFavorite,
 } from '../../../actions'
 import { getFavorites } from '../../../reducers/selectors'
+import { AppState } from '../../../store'
 
 import Favorites from './Favorites'
 

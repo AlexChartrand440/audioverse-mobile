@@ -1,26 +1,26 @@
 import React, { useState } from 'react'
 import {
-  View,
   ActivityIndicator,
   Platform,
   StyleSheet,
+  View,
 } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  State as PlayerState,
   Event as PlayerEvent,
+  State as PlayerState,
   usePlaybackState,
   useTrackPlayerEvents,
 } from "react-native-track-player"
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import ImageButton from '../../components/buttons/ImageButton'
+import iconForward from '../../../assets/ic_forward_30.png'
 import iconPlay from '../../../assets/ic_play.png'
+import iconReplay from '../../../assets/ic_replay_10.png'
+import iconNext from '../../../assets/next.png'
 import iconPause from '../../../assets/pause.png'
 import iconPrevious from '../../../assets/previous.png'
-import iconNext from '../../../assets/next.png'
-import iconReplay from '../../../assets/ic_replay_10.png'
-import iconForward from '../../../assets/ic_forward_30.png'
 import I18n from '../../../locales'
+import ImageButton from '../../components/buttons/ImageButton'
 
 interface Props {
   playPause: () => void

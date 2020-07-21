@@ -1,17 +1,18 @@
-import { all, takeLatest, takeEvery } from 'redux-saga/effects'
+import { all, takeEvery, takeLatest } from 'redux-saga/effects'
 
 import * as actions from '../actions'
 import { SET_BIBLE_VERSION } from '../store/Bible/types'
 import { CHANGE_LANGUAGE, LOG_OUT } from '../store/settings/types'
-import { startup } from './startup'
-import * as settings from './settings'
-import * as player from './player'
+
 import * as api from './api'
+import * as bible from './bible'
 import * as downloads from './downloads'
 import * as favorites from './favorites'
-import * as playlists from './playlists'
+import * as player from './player'
 import * as playlistItems from './playlistItems'
-import * as bible from './bible'
+import * as playlists from './playlists'
+import * as settings from './settings'
+import { startup } from './startup'
 
 function* rootSaga() {
   yield all([

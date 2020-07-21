@@ -1,7 +1,7 @@
 import {
-  CHANGE_LANGUAGE,
-  CHANGE_BITRATE,
   AUTOPLAY,
+  CHANGE_BITRATE,
+  CHANGE_LANGUAGE,
   LOG_OUT,
   SettingsActionTypes,
 } from './types'
