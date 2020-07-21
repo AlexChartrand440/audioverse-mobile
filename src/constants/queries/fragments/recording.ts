@@ -5,6 +5,7 @@ export default `fragment recordingFragment on Recording {
   description
   duration
   recordingDate
+  shareUrl
   collection {
     id
     title
