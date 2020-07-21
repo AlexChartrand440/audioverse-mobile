@@ -11,7 +11,8 @@ module.exports = {
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/eslint-recommended',
-		'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
 		// 'prettier',
 		// 'prettier/@typescript-eslint',
     // 'plugin:prettier/recommended',
@@ -46,8 +47,8 @@ module.exports = {
 		'@typescript-eslint/interface-name-prefix': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'react/jsx-uses-react': 'error',
-    'react/jsx-uses-vars': 'error',
+    'react/display-name': 'off',
+    'react/prop-types': 'off', // BUG: https://github.com/yannickcr/eslint-plugin-react/issues/2719
 	},
 	settings: {
 		'import/parsers': {
@@ -57,6 +58,9 @@ module.exports = {
 			'typescript': {
 			  'alwaysTryTypes': true
 			},
-		}
+		},
+    'react': {
+      'version': 'detect'
+    }
 	}
 };
