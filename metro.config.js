@@ -5,13 +5,13 @@
  * @format
  */
 
- module.exports = {
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: true,
-        inlineRequires: true,
-      },
-    }),
-  },
+module.exports = {
+	transformer: {
+		getTransformOptions: async () => ({
+			transform: {
+				experimentalImportSupport: true,
+				inlineRequires: true,
+			},
+		}),
+	},
 };
