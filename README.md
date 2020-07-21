@@ -1,5 +1,7 @@
 # AudioVerse Mobile
 
+[![avorg](https://circleci.com/gh/avorg/audioverse-mobile.svg?style=shield)](<LINK>)
+
 This is the repository for the next-generation iOS and Android apps for AudioVerse in React Native.
 
 AudioVerse is a website dedicated to spreading God's word through free sermon audio and much more. If you would like to 
