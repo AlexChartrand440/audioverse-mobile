@@ -1,5 +1,4 @@
-export default
-`query sponsors($language: Language!, $afterCursor: String) {
+export default `query sponsors($language: Language!, $afterCursor: String) {
   sponsors(
     language: $language
     first: 25
@@ -23,4 +22,4 @@ export default
     }
   }
 }
-`
+`;

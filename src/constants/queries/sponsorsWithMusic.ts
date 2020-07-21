@@ -1,5 +1,4 @@
-export default
-`query sponsorsWithMusic($language: Language!, $afterCursor: String) {
+export default `query sponsorsWithMusic($language: Language!, $afterCursor: String) {
   sponsors(
     language: $language
     withMusic: true
@@ -19,4 +18,4 @@ export default
       endCursor
     }
   }
-}`
+}`;

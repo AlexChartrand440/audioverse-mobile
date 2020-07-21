@@ -1,7 +1,6 @@
-import recordingFragment from './fragments/recording'
+import recordingFragment from './fragments/recording';
 
-export default
-`query tagRecordings(
+export default `query tagRecordings(
   $language: Language!
   $tagName: String
   $afterCursor: String
@@ -24,4 +23,4 @@ export default
 }
 
 ${recordingFragment}
-`
+`;

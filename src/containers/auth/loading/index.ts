@@ -1,12 +1,12 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
-import { getUser } from '../../../reducers/selectors'
-import { AppState } from '../../../store'
+import { getUser } from '../../../reducers/selectors';
+import { AppState } from '../../../store';
 
-import Loading from './Loading'
+import Loading from './Loading';
 
 const mapStateToProps = (state: AppState) => ({
-  user: getUser(state),
-})
+	user: getUser(state),
+});
 
-export default connect(mapStateToProps)(Loading)
+export default connect(mapStateToProps)(Loading);

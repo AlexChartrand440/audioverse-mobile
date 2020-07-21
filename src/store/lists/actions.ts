@@ -1,141 +1,141 @@
-import { Track } from 'react-native-track-player'
+import { Track } from 'react-native-track-player';
 
 import {
-  DOWNLOADS_ADD,
-  DOWNLOADS_REMOVE,
-  DOWNLOADS_SET,
-  FAVORITES_ADD,
-  FAVORITES_REMOVE,
-  FAVORITES_SET,
-  HISTORY_ADD,
-  HISTORY_REMOVE,
-  HISTORY_SET,
-  ListsActionTypes,
-  PLAYLISTS_ADD,
-  PLAYLISTS_ITEMS_ADD,
-  PLAYLISTS_ITEMS_REMOVE,
-  PLAYLISTS_ITEMS_SET,
-  PLAYLISTS_REMOVE,
-  PLAYLISTS_SET,
-} from './types'
+	DOWNLOADS_ADD,
+	DOWNLOADS_REMOVE,
+	DOWNLOADS_SET,
+	FAVORITES_ADD,
+	FAVORITES_REMOVE,
+	FAVORITES_SET,
+	HISTORY_ADD,
+	HISTORY_REMOVE,
+	HISTORY_SET,
+	ListsActionTypes,
+	PLAYLISTS_ADD,
+	PLAYLISTS_ITEMS_ADD,
+	PLAYLISTS_ITEMS_REMOVE,
+	PLAYLISTS_ITEMS_SET,
+	PLAYLISTS_REMOVE,
+	PLAYLISTS_SET,
+} from './types';
 
 /**
- * 
+ *
  * Downloads
  */
 export const setDownloads = (items: Track[]): ListsActionTypes => {
-  return {
-    type: DOWNLOADS_SET,
-    items
-  }
-}
+	return {
+		type: DOWNLOADS_SET,
+		items,
+	};
+};
 
 export const addDownloads = (items: Track[]): ListsActionTypes => {
-  return {
-    type: DOWNLOADS_ADD,
-    items
-  }
-}
+	return {
+		type: DOWNLOADS_ADD,
+		items,
+	};
+};
 
 export const removeDownloads = (item: Track): ListsActionTypes => {
-  return {
-    type: DOWNLOADS_REMOVE,
-    item
-  }
-}
+	return {
+		type: DOWNLOADS_REMOVE,
+		item,
+	};
+};
 
 /**
  * Favorites
  */
 export const setFavorites = (items: Track[]): ListsActionTypes => {
-  return {
-    type: FAVORITES_SET,
-    items
-  }
-}
+	return {
+		type: FAVORITES_SET,
+		items,
+	};
+};
 
 export const addFavorites = (items: Track[]): ListsActionTypes => {
-  return {
-    type: FAVORITES_ADD,
-    items
-  }
-}
+	return {
+		type: FAVORITES_ADD,
+		items,
+	};
+};
 
 export const removeFavorites = (item: Track): ListsActionTypes => {
-  return {
-    type: FAVORITES_REMOVE,
-    item
-  }
-}
+	return {
+		type: FAVORITES_REMOVE,
+		item,
+	};
+};
 
 /**
  * Playlists
  */
 export const setPlaylists = (items: {}[]): ListsActionTypes => {
-  return {
-    type: PLAYLISTS_SET,
-    items
-  }
-}
+	return {
+		type: PLAYLISTS_SET,
+		items,
+	};
+};
 
 export const addPlaylists = (items: {}[]): ListsActionTypes => {
-  return {
-    type: PLAYLISTS_ADD,
-    items
-  }
-}
+	return {
+		type: PLAYLISTS_ADD,
+		items,
+	};
+};
 
 export const removePlaylists = (item: {}): ListsActionTypes => {
-  return {
-    type: PLAYLISTS_REMOVE,
-    item
-  }
-}
+	return {
+		type: PLAYLISTS_REMOVE,
+		item,
+	};
+};
 
 /**
  * Playlists items
  */
 export const setPlaylistsItems = (items: Track[]): ListsActionTypes => {
-  return {
-    type: PLAYLISTS_ITEMS_SET,
-    items
-  }
-}
+	return {
+		type: PLAYLISTS_ITEMS_SET,
+		items,
+	};
+};
 
 export const addPlaylistsItems = (items: Track[]): ListsActionTypes => {
-  return {
-    type: PLAYLISTS_ITEMS_ADD,
-    items
-  }
-}
+	return {
+		type: PLAYLISTS_ITEMS_ADD,
+		items,
+	};
+};
 
 export const removePlaylistsItems = (item: Track): ListsActionTypes => {
-  return {
-    type: PLAYLISTS_ITEMS_REMOVE,
-    item
-  }
-}
+	return {
+		type: PLAYLISTS_ITEMS_REMOVE,
+		item,
+	};
+};
 
 /**
  * History
  */
 export const setHistory = (items: Track[]): ListsActionTypes => {
-  return {
-    type: HISTORY_SET,
-    items
-  }
-}
+	return {
+		type: HISTORY_SET,
+		items,
+	};
+};
 
 export const addHistory = (items: Track[]): ListsActionTypes => {
-  return {
-    type: HISTORY_ADD,
-    items
-  }
-}
+	return {
+		type: HISTORY_ADD,
+		items,
+	};
+};
 
 export const removeHistory = (item: Track): ListsActionTypes => {
-  return {
-    type: HISTORY_REMOVE,
-    item
-  }
-}
+	return {
+		type: HISTORY_REMOVE,
+		item,
+	};
+};

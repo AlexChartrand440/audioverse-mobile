@@ -1,5 +1,4 @@
-export default
-`query serieses($language: Language!, $afterCursor: String) {
+export default `query serieses($language: Language!, $afterCursor: String) {
   serieses(
     language: $language
     first: 25
@@ -23,4 +22,4 @@ export default
     }
   }
 }
-`
+`;

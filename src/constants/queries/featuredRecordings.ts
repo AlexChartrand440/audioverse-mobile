@@ -1,7 +1,6 @@
-import recordingFragment from './fragments/recording'
+import recordingFragment from './fragments/recording';
 
-export default
-`query featuredRecordings($language: Language!, $afterCursor: String) {
+export default `query featuredRecordings($language: Language!, $afterCursor: String) {
   featuredRecordings(
     language: $language
     first: 25
@@ -18,4 +17,4 @@ export default
   }
 }
 ${recordingFragment}
-`
+`;

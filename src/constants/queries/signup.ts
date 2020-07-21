@@ -1,5 +1,4 @@
-export default
-`mutation($email: String!, $password: String!) {
+export default `mutation($email: String!, $password: String!) {
   signup(input: { email: $email, password: $password }) {
     authenticatedUser {
       user {
@@ -11,4 +10,4 @@ export default
       message
     }
   }
-}`
+}`;

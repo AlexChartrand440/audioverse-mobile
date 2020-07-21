@@ -1,7 +1,6 @@
-import recordingFragment from './fragments/recording'
+import recordingFragment from './fragments/recording';
 
-export default
-`query search($language: Language!, $term: String!) {
+export default `query search($language: Language!, $term: String!) {
   conferences(language: $language, search: $term) {
     nodes {
       id
@@ -66,4 +65,4 @@ export default
   }
 }
 ${recordingFragment}
-`
+`;

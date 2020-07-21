@@ -1,21 +1,21 @@
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 
-let navigator: {[key: string]: any}
+let navigator: { [key: string]: any };
 
 function setTopLevelNavigator(navigatorRef: {}) {
-  navigator = navigatorRef
+	navigator = navigatorRef;
 }
 
 function navigate(routeName: string, params?: {}) {
-  navigator.dispatch(
-    NavigationActions.navigate({
-      routeName,
-      params
-    })
-  )
+	navigator.dispatch(
+		NavigationActions.navigate({
+			routeName,
+			params,
+		})
+	);
 }
 
 export default {
-  setTopLevelNavigator,
-  navigate,
-}
+	setTopLevelNavigator,
+	navigate,
+};

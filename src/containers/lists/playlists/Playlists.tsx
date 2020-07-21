@@ -1,108 +1,100 @@
-import React, { useEffect } from 'react'
-import {
-  Alert,
-  FlatList,
-  ListRenderItem,
-  StyleSheet,
-  View,
-} from 'react-native'
-import {
-  Button,
-  ListItem,
-} from 'react-native-elements'
-import { NavigationInjectedProps } from 'react-navigation'
+import React, { useEffect } from 'react';
+import { Alert, FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
+import { Button, ListItem } from 'react-native-elements';
+import { NavigationInjectedProps } from 'react-navigation';
 
-import I18n from '../../../../locales'
-import {
-  removePlaylist,
-  syncPlaylists,
-} from '../../../actions'
+import I18n from '../../../../locales';
+import { removePlaylist, syncPlaylists } from '../../../actions';
 
 interface Item {
-  [key: string]: any
+	[key: string]: any;
 }
 
 interface Props extends NavigationInjectedProps {
-  items: { [key: string]: any }[]
-  actions: {
-    sync: typeof syncPlaylists
-    remove: typeof removePlaylist
-  }
+	items: { [key: string]: any }[];
+	actions: {
+		sync: typeof syncPlaylists;
+		remove: typeof removePlaylist;
+	};
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  listItem: {
-    height: 70,
-  },
-})
+	container: {
+		flex: 1,
+	},
+	listItem: {
+		height: 70,
+	},
+});
 
 const Playlists: React.FC<Props> = ({ items, actions, navigation }) => {
+	useEffect(() => {
+		actions.sync();
+	}, []);
 
-  useEffect(() => {
-    actions.sync()
-  }, [])
+	const handleRemove = (item: Item) => {
+		Alert.alert(I18n.t('Are_you_sure_you_want_to_delete_this'), '', [
+			{
+				text: I18n.t('Cancel'),
+				onPress: () => {
+					//
+				},
+				style: 'cancel',
+			},
+			{
+				text: I18n.t('Yes'),
+				onPress: () => {
+					actions.remove(item);
+				},
+			},
+		]);
+	};
 
-  const handleRemove = (item: Item) => {
-    Alert.alert(
-      I18n.t('Are_you_sure_you_want_to_delete_this'),
-      '',
-      [
-        {text: I18n.t('Cancel'), onPress: () => {
-          //
-        }, style: 'cancel'},
-        {text: I18n.t('Yes'), onPress: () => { actions.remove(item) }}
-      ]
-    )
-  }
+	const renderItem: ListRenderItem<Item> = ({ item }) => {
+		return (
+			<ListItem
+				containerStyle={styles.listItem}
+				leftIcon={{ type: 'feather', name: 'check' }}
+				title={item.title}
+				titleProps={{ numberOfLines: 1 }}
+				onPress={() => {
+					navigation.navigate({ routeName: 'PlaylistItems', params: { playlistId: item.id, title: item.title } });
+				}}
+				rightElement={<RightElement data={item} onPress={handleRemove} />}
+				bottomDivider
+			/>
+		);
+	};
 
-  const renderItem: ListRenderItem<Item> = ({ item }) => {
-    return (
-      <ListItem
-        containerStyle={styles.listItem}
-        leftIcon={{type: 'feather', name: 'check'}}
-        title={item.title}
-        titleProps={{numberOfLines: 1}}
-        onPress={() => { navigation.navigate({ routeName: 'PlaylistItems', params: { playlistId: item.id, title: item.title } }) }}
-        rightElement={<RightElement data={item} onPress={handleRemove} />}
-        bottomDivider
-      />
-    )
-  }
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
-    </View>
-  )
-
-}
+	return (
+		<View style={styles.container}>
+			<FlatList data={items} renderItem={renderItem} keyExtractor={(item) => item.id} />
+		</View>
+	);
+};
 
 interface RightElementProps {
-  data: {}
-  onPress: (data: {}) => void
-} 
-
-const RightElement: React.FC<RightElementProps> = ({ data, onPress }) => {
-  const _onPress = () => { onPress(data) }
-  return (
-    <Button
-      icon={{
-        type: 'feather',
-        name: 'x',
-        size: 24,
-      }}
-      buttonStyle={{padding: 0}}
-      type="clear"
-      onPress={_onPress} 
-      accessibilityLabel={I18n.t('delete')} />
-  )
+	data: {};
+	onPress: (data: {}) => void;
 }
 
-export default Playlists
+const RightElement: React.FC<RightElementProps> = ({ data, onPress }) => {
+	const _onPress = () => {
+		onPress(data);
+	};
+	return (
+		<Button
+			icon={{
+				type: 'feather',
+				name: 'x',
+				size: 24,
+			}}
+			buttonStyle={{ padding: 0 }}
+			type="clear"
+			onPress={_onPress}
+			accessibilityLabel={I18n.t('delete')}
+		/>
+	);
+};
+
+export default Playlists;

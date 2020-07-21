@@ -1,5 +1,4 @@
-export default
-`query conferences($language: Language!, $afterCursor: String) {
+export default `query conferences($language: Language!, $afterCursor: String) {
   conferences(
     language: $language
     first: 25
@@ -19,4 +18,4 @@ export default
     }
   }
 }
-`
+`;

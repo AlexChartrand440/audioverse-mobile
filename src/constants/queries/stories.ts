@@ -1,7 +1,6 @@
-import recordingFragment from './fragments/recording'
+import recordingFragment from './fragments/recording';
 
-export default
-`query stories($language: Language!, $sequenceId: ID, $afterCursor: String) {
+export default `query stories($language: Language!, $sequenceId: ID, $afterCursor: String) {
   stories(
     language: $language
     sequenceId: $sequenceId
@@ -19,4 +18,4 @@ export default
   }
 }
 ${recordingFragment}
-`
+`;

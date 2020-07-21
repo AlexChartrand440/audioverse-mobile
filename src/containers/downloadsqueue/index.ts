@@ -1,20 +1,23 @@
-import { connect } from 'react-redux'
-import { bindActionCreators, Dispatch } from 'redux'
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
-import { getDownloadsQueueItems } from '../../reducers/selectors'
-import { AppState } from '../../store'
-import { removeFromDownloadsQueue } from '../../store/downloadsQueue/actions'
+import { getDownloadsQueueItems } from '../../reducers/selectors';
+import { AppState } from '../../store';
+import { removeFromDownloadsQueue } from '../../store/downloadsQueue/actions';
 
-import DownloadsQueue from './DownloadsQueue'
+import DownloadsQueue from './DownloadsQueue';
 
 const mapStateToProps = (state: AppState) => ({
-  items: getDownloadsQueueItems(state),
-})
+	items: getDownloadsQueueItems(state),
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  actions: bindActionCreators({
-    removeFromDownloadsQueue,
-  }, dispatch),
-})
+	actions: bindActionCreators(
+		{
+			removeFromDownloadsQueue,
+		},
+		dispatch
+	),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(DownloadsQueue)
+export default connect(mapStateToProps, mapDispatchToProps)(DownloadsQueue);

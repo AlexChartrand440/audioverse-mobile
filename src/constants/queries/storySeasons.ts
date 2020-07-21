@@ -1,5 +1,4 @@
-export default
-`query storySeasons($language: Language!, $afterCursor: String) {
+export default `query storySeasons($language: Language!, $afterCursor: String) {
   storySeasons(
     language: $language
     first: 25
@@ -19,4 +18,4 @@ export default
     }
   }
 }
-`
+`;

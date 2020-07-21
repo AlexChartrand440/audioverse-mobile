@@ -1,7 +1,6 @@
-import recordingFragment from './fragments/recording'
+import recordingFragment from './fragments/recording';
 
-export default
-`query trendingRecordings($language: Language!, $afterCursor: String) {
+export default `query trendingRecordings($language: Language!, $afterCursor: String) {
   popularRecordings(
     language: $language
     first: 25
@@ -20,4 +19,4 @@ export default
   }
 }
 ${recordingFragment}
-`
+`;

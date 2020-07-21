@@ -1,7 +1,6 @@
-import recordingFragment from './fragments/recording'
+import recordingFragment from './fragments/recording';
 
-export default
-`query userFavoriteRecordings {
+export default `query userFavoriteRecordings {
   me {
     user {
       favoriteRecordings {
@@ -13,4 +12,4 @@ export default
   }
 }
 ${recordingFragment}
-`
+`;

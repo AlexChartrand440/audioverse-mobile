@@ -1,5 +1,4 @@
-export default
-`fragment recordingFragment on Recording {
+export default `fragment recordingFragment on Recording {
   id
   title
   contentType
@@ -56,4 +55,4 @@ export default
       url(size: 256)
     }
   }
-}`
+}`;

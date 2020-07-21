@@ -1,5 +1,4 @@
-export default
-`query musicAlbums($language: Language!, $afterCursor: String) {
+export default `query musicAlbums($language: Language!, $afterCursor: String) {
   musicAlbums(
     language: $language
     first: 25
@@ -19,4 +18,4 @@ export default
     }
   }
 }
-`
+`;

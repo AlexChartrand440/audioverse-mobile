@@ -1,5 +1,4 @@
-export default
-`query audiobible($id: ID!) {
+export default `query audiobible($id: ID!) {
   audiobible(id: $id) {
     books {
       id
@@ -7,4 +6,4 @@ export default
     }
   }
 }
-`
+`;

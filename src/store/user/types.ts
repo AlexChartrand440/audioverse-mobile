@@ -1,15 +1,15 @@
 interface User {
-  userId: number
-  sessionToken: string
+	userId: number;
+	sessionToken: string;
 }
 
-export type UserState = User | null
+export type UserState = User | null;
 
-export const USER = 'USER'
+export const USER = 'USER';
 
 interface SetUserAction {
-  type: typeof USER
-  user: UserState
+	type: typeof USER;
+	user: UserState;
 }
 
-export type UserActionTypes = SetUserAction
+export type UserActionTypes = SetUserAction;

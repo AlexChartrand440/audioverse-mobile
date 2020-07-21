@@ -1,13 +1,8 @@
-import {
-  USER,
-  UserActionTypes,
-  UserState,
-} from './types'
-
+import { USER, UserActionTypes, UserState } from './types';
 
 export const setUser = (user: UserState): UserActionTypes => {
-  return {
-    type: USER,
-    user,
-  }
-}
+	return {
+		type: USER,
+		user,
+	};
+};

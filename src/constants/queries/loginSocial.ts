@@ -1,5 +1,4 @@
-export default
-`mutation(
+export default `mutation(
   $email: String!
   $givenName: String!
   $socialId: String!
@@ -26,4 +25,4 @@ export default
     }
   }
 }
-`
+`;

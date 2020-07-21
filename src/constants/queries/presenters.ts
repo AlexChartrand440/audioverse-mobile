@@ -1,5 +1,4 @@
-export default
-`query presenters($language: Language!, $afterCursor: String) {
+export default `query presenters($language: Language!, $afterCursor: String) {
   presenters(
     language: $language
     first: 1500
@@ -23,4 +22,4 @@ export default
     }
   }
 }
-`
+`;

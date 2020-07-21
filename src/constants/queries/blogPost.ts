@@ -1,5 +1,4 @@
-export default
-`query blogPost($id: ID!) {
+export default `query blogPost($id: ID!) {
   blogPost(id: $id) {
     id
     title
@@ -9,4 +8,4 @@ export default
     }
   }  
 }
-`
+`;

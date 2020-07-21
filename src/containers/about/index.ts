@@ -1,12 +1,12 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
-import { getLanguage } from '../../reducers/selectors'
-import { AppState } from '../../store'
+import { getLanguage } from '../../reducers/selectors';
+import { AppState } from '../../store';
 
-import About from './About'
+import About from './About';
 
 const mapStateToProps = (state: AppState) => ({
-  language: getLanguage(state),
-})
+	language: getLanguage(state),
+});
 
-export default connect(mapStateToProps)(About)
+export default connect(mapStateToProps)(About);

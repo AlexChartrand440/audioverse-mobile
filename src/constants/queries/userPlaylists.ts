@@ -1,5 +1,4 @@
-export default
-`query userPlaylists($language: Language!) {
+export default `query userPlaylists($language: Language!) {
   me {
     user {
       playlists(language: $language) {
@@ -10,4 +9,4 @@ export default
       }
     }
   }
-}`
+}`;

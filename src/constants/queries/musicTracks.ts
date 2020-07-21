@@ -1,7 +1,6 @@
-import recordingFragment from './fragments/recording'
+import recordingFragment from './fragments/recording';
 
-export default
-`query musicTracks($language: Language!, $sponsorId: ID, $afterCursor: String) {
+export default `query musicTracks($language: Language!, $sponsorId: ID, $afterCursor: String) {
   musicTracks(
     language: $language
     sponsorId: $sponsorId
@@ -19,4 +18,4 @@ export default
   }
 }
 ${recordingFragment}
-`
+`;
