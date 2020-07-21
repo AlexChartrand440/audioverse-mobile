@@ -330,7 +330,7 @@ PODS:
     - React
   - react-native-netinfo (5.9.5):
     - React
-  - react-native-safe-area-context (0.7.3):
+  - react-native-safe-area-context (3.1.1):
     - React
   - react-native-simple-toast (1.1.2):
     - React
@@ -673,7 +673,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 2e28bb487e42dda6c94dbfa0c648d1343767a0fb
   react-native-fbsdk: c35d42169e64aaf66f01713c1e18d0674f7f6519
   react-native-netinfo: a53b00d949b6456913aaf507d9dba90c4008c611
-  react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
+  react-native-safe-area-context: 4c3249e4840225c61fcd215b136af0a737bccb79
   react-native-simple-toast: 58b71ef003f01d2c0bf5dcd2fdccc75861dabade
   react-native-slider: b733e17fdd31186707146debf1f04b5d94aa1a93
   react-native-track-player: f99b7f08a0039ae0ad4ca649f210bbad85b35f0a

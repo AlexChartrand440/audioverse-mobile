@@ -11,6 +11,7 @@ import {
   usePlaybackState,
   useTrackPlayerEvents,
 } from "react-native-track-player"
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import ImageButton from '../../components/buttons/ImageButton'
 import iconPlay from '../../../assets/ic_play.png'
@@ -81,8 +82,13 @@ const PlayerControls: React.FC<Props> = ({ playPause, skipToPrevious, skipToNext
     }
   })
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
+    <View style={{
+      ...styles.container,
+      paddingBottom: styles.container.paddingBottom + insets.bottom
+    }}>
       <ImageButton
         source={iconReplay}
         imageStyle={styles.icon}

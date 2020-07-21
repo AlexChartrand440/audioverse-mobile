@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
+  StatusBar,
   StyleSheet,
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -284,6 +285,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
   
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="default" animated />
       <Button
         icon={{
           type: 'feather',

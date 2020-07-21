@@ -6,6 +6,7 @@
 import React, { useEffect } from 'react'
 import {Linking, StatusBar} from 'react-native'
 import { NavigationState, NavigationRoute } from 'react-navigation'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import firebase from 'react-native-firebase'
@@ -153,25 +154,28 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
   }
 
   return (
-    <Provider store={store}>
-      {/* PersistGate delays the rendering of the UI until the persisted state has been retrieved and saved to redux */}
-      <PersistGate loading={null} persistor={persistor} onBeforeLift={onBeforeLift}>
-        <StatusBar
-          backgroundColor="#000000"
-          barStyle="light-content"
-        />
-        <AppNavigator
-          ref={(navigatorRef: any) => { NavigationService.setTopLevelNavigator(navigatorRef) }}
-          onNavigationStateChange={(prevState: NavigationState, currentState: NavigationState) => {
-            const currentScreen = getActiveRouteName(currentState)
-            const prevScreen = getActiveRouteName(prevState)
-            if (prevScreen !== currentScreen) {
-              firebase.analytics().setCurrentScreen(currentScreen)
-            }
-          }}
-        />
-      </PersistGate>
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        {/* PersistGate delays the rendering of the UI until the persisted state has been retrieved and saved to redux */}
+        <PersistGate loading={null} persistor={persistor} onBeforeLift={onBeforeLift}>
+          <StatusBar
+            backgroundColor="#000000"
+            barStyle="light-content"
+            animated
+          />
+          <AppNavigator
+            ref={(navigatorRef: any) => { NavigationService.setTopLevelNavigator(navigatorRef) }}
+            onNavigationStateChange={(prevState: NavigationState, currentState: NavigationState) => {
+              const currentScreen = getActiveRouteName(currentState)
+              const prevScreen = getActiveRouteName(prevState)
+              if (prevScreen !== currentScreen) {
+                firebase.analytics().setCurrentScreen(currentScreen)
+              }
+            }}
+          />
+        </PersistGate>
+      </Provider>
+    </SafeAreaProvider>
   )
 }
 

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   ImageBackground,
   View,
   Platform,
+  StatusBar,
   StyleSheet,
 } from 'react-native'
 import ActionSheet from 'react-native-action-sheet'
@@ -161,6 +162,13 @@ const Player: React.FC<Props> = ({
     }
   }
 
+  const [showLightStatusBar, setShowLightStatusBar] = useState(true)
+
+  const leavePlayer = () => {
+    setShowLightStatusBar(false)
+    navigation.pop()
+  }
+
   if (!track) {
     return <View />
   }
@@ -174,14 +182,16 @@ const Player: React.FC<Props> = ({
       }}
       buttonStyle={{padding: 0}}
       type="clear"
-      onPress={() => navigation.pop()}
+      onPress={leavePlayer}
       accessibilityLabel={I18n.t("minimize_player")} />
   )
+
 
   return (
     <ImageBackground
       source={imageBg}
       style={styles.container}>
+      {showLightStatusBar ? <StatusBar barStyle="default" animated /> : null}
       <View style={styles.bar}>
         <ListItem
           leftAvatar={
@@ -195,7 +205,7 @@ const Player: React.FC<Props> = ({
           subtitleProps={{numberOfLines: 1}}
           rightElement={rightElement}
           containerStyle={{backgroundColor: '#E0E0E080'}}
-          onPress={() => navigation.pop()}
+          onPress={leavePlayer}
           underlayColor="#E0E0E080"
         />
       </View>
