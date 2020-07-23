@@ -1,16 +1,16 @@
 export default `mutation(
-  $email: String!
-  $givenName: String!
+  $givenName: String
   $socialId: String!
-  $socialName: String!
-  $surname: String!
+  $socialName: UserSocialServiceName!
+  $socialToken: String!
+  $surname: String
 ) {
   loginSocial(
     input: {
-      email: $email
       givenName: $givenName
       socialId: $socialId
       socialName: $socialName
+      socialToken: $socialToken
       surname: $surname
     }
   ) {

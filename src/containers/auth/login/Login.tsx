@@ -1,3 +1,9 @@
+import appleAuth, {
+	AppleAuthCredentialState,
+	AppleAuthRequestOperation,
+	AppleAuthRequestScope,
+	AppleButton,
+} from '@invertase/react-native-apple-authentication';
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { useRef, useState } from 'react';
 import {
@@ -13,7 +19,7 @@ import {
 	View,
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import { GraphRequest, GraphRequestManager, LoginManager } from 'react-native-fbsdk';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import firebase from 'react-native-firebase';
 import Toast from 'react-native-simple-toast';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -70,8 +76,15 @@ const styles = StyleSheet.create({
 		backgroundColor: '#D73352',
 	},
 	button: {
+		paddingVertical: 11,
+		marginTop: 15,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	signinButton: {
 		backgroundColor: '#D73352',
-		paddingVertical: 10,
+	},
+	appleButton: {
 		marginTop: 15,
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -151,15 +164,19 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 		}
 	};
 
-	const loginSocial = async (data: { [key: string]: any }, socialName: string) => {
+	const loginSocial = async (
+		data: { socialId: string; socialToken: string; givenName?: string | null; surname?: string | null },
+		socialName: 'APPLE' | 'FACEBOOK'
+	) => {
+		const { socialId, socialToken, givenName, surname } = data;
 		const { result } = await api.fetchGraphQLData(
 			Queries.loginSocial,
 			{
-				socialId: data.id,
+				socialId,
 				socialName: socialName,
-				givenName: data.first_name,
-				surname: data.last_name,
-				email: data.email,
+				socialToken,
+				givenName,
+				surname,
 			},
 			(results) => ({
 				nodes: results.loginSocial,
@@ -182,20 +199,18 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 			LoginManager.logOut();
 			const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
 			if (!result.isCancelled) {
-				const infoRequest = new GraphRequest(
-					'/me',
-					{ parameters: { fields: { string: 'name,email,first_name,last_name' } } },
-					(error, result) => {
-						if (error) {
-							console.log('Error fetching data: ' + error.toString());
-						} else {
-							console.log('Success fetching data: ', result);
-							loginSocial(result || {}, 'Facebook');
-						}
-					}
+				const accessToken = await AccessToken.getCurrentAccessToken();
+				if (!accessToken) {
+					console.log('Unable to get Facebook Access Token', result);
+					return;
+				}
+				loginSocial(
+					{
+						socialId: accessToken.getUserId(),
+						socialToken: accessToken.accessToken,
+					},
+					'FACEBOOK'
 				);
-				// Start the graph request
-				new GraphRequestManager().addRequest(infoRequest).start();
 			}
 		} catch (err) {
 			Toast.show(err);
@@ -287,6 +302,30 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 		Linking.openURL(`https://www.audioverse.org/${language}/registrar/help`).catch((err) => console.error(err));
 	};
 
+	const onAppleButtonPress = async () => {
+		const appleAuthRequestResponse = await appleAuth.performRequest({
+			requestedOperation: AppleAuthRequestOperation.LOGIN,
+			requestedScopes: [AppleAuthRequestScope.EMAIL, AppleAuthRequestScope.FULL_NAME],
+		});
+
+		// This method must be tested on a real device. On the iOS simulator it always throws an error.
+		const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+		if (credentialState === AppleAuthCredentialState.AUTHORIZED) {
+			const { user: socialId, fullName, authorizationCode } = appleAuthRequestResponse;
+			if (authorizationCode) {
+				loginSocial(
+					{
+						socialId,
+						socialToken: authorizationCode,
+						givenName: fullName?.givenName,
+						surname: fullName?.familyName,
+					},
+					'APPLE'
+				);
+			}
+		}
+	};
+
 	return (
 		<View style={styles.container}>
 			<StatusBar barStyle="default" animated />
@@ -335,11 +374,25 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 					/>
 				</View>
 				<TouchableOpacity activeOpacity={isFormValid ? 1 : 0.5} onPress={handleSignInUp}>
-					<View style={[styles.button, !isFormValid ? styles.buttonDisabled : {}]}>
+					<View style={[styles.button, styles.signinButton, !isFormValid ? styles.buttonDisabled : {}]}>
 						{!loading && <Text style={styles.buttonText}>{I18n.t(signin ? 'Sign_in' : 'Sign_up')}</Text>}
 						{loading && <ActivityIndicator color="#FFF" />}
 					</View>
 				</TouchableOpacity>
+				{appleAuth.isSupported ? (
+					<View style={styles.appleButton}>
+						<AppleButton
+							buttonStyle={AppleButton.Style.BLACK}
+							buttonType={AppleButton.Type.SIGN_IN}
+							cornerRadius={0}
+							style={{
+								width: '100%',
+								height: 40,
+							}}
+							onPress={onAppleButtonPress}
+						/>
+					</View>
+				) : null}
 				<TouchableOpacity activeOpacity={0.5} onPress={handleLoginWithFB}>
 					<View style={[styles.button, styles.fb]}>
 						<Text style={styles.buttonText}>{I18n.t(signin ? 'Sign_in_with_facebook' : 'Sign_up_with_facebook')}</Text>
