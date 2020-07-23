@@ -1,16 +1,19 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { useProgress } from 'react-native-track-player';
 
-const styles = StyleSheet.create({
+import { styleSheetFactory, useTheme } from '../../styles/theme';
+
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		height: 2,
-		backgroundColor: '#E53935',
+		backgroundColor: theme.primary,
 	},
-});
+}));
 
-const ProgressBarMini: React.FC<{}> = () => {
+const ProgressBarMini: React.FC = () => {
 	const progress = useProgress();
+	const { styles } = useTheme(stylesheet);
 
 	return (
 		<View

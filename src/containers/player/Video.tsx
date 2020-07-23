@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { Dimensions, Platform, StyleSheet, View } from 'react-native';
+import { Dimensions, Platform, View } from 'react-native';
 import VideoControls from 'react-native-video-controls';
 import { NavigationInjectedProps } from 'react-navigation';
 
-const styles = StyleSheet.create({
+import { styleSheetFactory, useTheme } from '../../styles/theme';
+
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		flex: 1,
-		backgroundColor: '#000',
+		backgroundColor: theme.black,
 	},
-});
+}));
 
 const VideoPlayer: React.FC<NavigationInjectedProps> = ({ navigation }) => {
+	const { styles } = useTheme(stylesheet);
 	const [paddingTop, setPaddingTop] = useState(0);
 
-	const onLayout = (e: {}) => {
+	const onLayout = () => {
 		const { width, height } = Dimensions.get('window');
 		if (Platform.OS === 'ios' && height > width) {
 			// on iOS when is in portrait mode

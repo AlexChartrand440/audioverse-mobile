@@ -2,24 +2,41 @@ import { StyleSheet } from 'react-native';
 
 import image from '../../assets/default.png';
 
-export const primaryColor = '#E53935';
+import { globalColors, styleSheetFactory } from './theme';
+
+export const primaryColor = globalColors.brandPrimary;
 
 export const GlobalStyles = StyleSheet.create({
 	header: {
-		backgroundColor: primaryColor,
+		backgroundColor: globalColors.grey950,
 		elevation: 0,
 		borderBottomWidth: 0,
 		shadowOpacity: 0,
 	},
 	tab: {
-		backgroundColor: primaryColor,
+		backgroundColor: globalColors.grey950,
 	},
 	tabIndicator: {
-		backgroundColor: '#FFFFFF',
+		backgroundColor: globalColors.brandPrimaryDark,
 	},
 });
 
-export const headerTintColor = '#FFFFFF';
+export const GlobalStylesheet = styleSheetFactory((theme) => ({
+	header: {
+		backgroundColor: theme.isDark ? theme.grey950 : theme.brandPrimary,
+		elevation: 0,
+		borderBottomWidth: 0,
+		shadowOpacity: 0,
+	},
+	tab: {
+		backgroundColor: theme.isDark ? theme.grey950 : theme.brandPrimary,
+	},
+	tabIndicator: {
+		backgroundColor: theme.isDark ? theme.brandPrimaryDark : theme.white,
+	},
+}));
+
+export const headerTintColor = globalColors.white;
 export const defaultImage = image;
 
 const htmlTextStyle = {

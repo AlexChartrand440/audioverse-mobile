@@ -18,7 +18,8 @@ import Presenter from '../containers/presenters/presenter';
 import Serie from '../containers/series/serie';
 import Sponsor from '../containers/sponsors/sponsor';
 import withPlayer from '../HOCs/withPlayer';
-import { GlobalStyles, headerTintColor, primaryColor } from '../styles';
+import { GlobalStyles, headerTintColor } from '../styles';
+import { globalColors } from '../styles/theme';
 
 import BibleNavigator from './BibleNavigator';
 import BooksNavigator from './BooksNavigator';
@@ -89,7 +90,11 @@ const BottomTabNavigator = createBottomTabNavigator(
 	},
 	{
 		tabBarOptions: {
-			activeTintColor: primaryColor,
+			style: {
+				backgroundColor: globalColors.grey950,
+				borderTopWidth: 0,
+			},
+			activeTintColor: globalColors.brandPrimaryDark,
 		},
 	}
 );

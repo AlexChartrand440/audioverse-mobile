@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
 	Event as PlayerEvent,
@@ -16,6 +16,7 @@ import iconPause from '../../../assets/pause.png';
 import iconPrevious from '../../../assets/previous.png';
 import I18n from '../../../locales';
 import ImageButton from '../../components/buttons/ImageButton';
+import { styleSheetFactory, useTheme } from '../../styles/theme';
 
 interface Props {
 	playPause: () => void;
@@ -25,7 +26,7 @@ interface Props {
 	forward: () => void;
 }
 
-const styles = StyleSheet.create({
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		backgroundColor: '#E0E0E080',
 		width: '100%',
@@ -37,25 +38,26 @@ const styles = StyleSheet.create({
 	icon: {
 		width: 40,
 		height: 40,
-		tintColor: '#000000',
+		tintColor: theme.isDark ? theme.white : theme.black,
 		margin: 10,
 	},
 	playPauseButton: {
 		width: 50,
 		height: 50,
 		borderRadius: 25,
-		backgroundColor: '#E53935',
+		backgroundColor: theme.primary,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	playPauseIcon: {
 		width: 28,
 		height: 28,
-		tintColor: '#FFFFFF',
+		tintColor: theme.white,
 	},
-});
+}));
 
 const PlayerControls: React.FC<Props> = ({ playPause, skipToPrevious, skipToNext, replay, forward }) => {
+	const { styles } = useTheme(stylesheet);
 	const playbackState = usePlaybackState();
 	console.log('playbackState', playbackState, PlayerState);
 	const [loading, setLoading] = useState(false);

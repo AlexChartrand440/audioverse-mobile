@@ -13,7 +13,8 @@ import { Queries } from '../../constants';
 import TabBarLabel from '../../navigators/tabbarlabel';
 import { LANGUAGE_MAP } from '../../sagas/api';
 import * as services from '../../services';
-import { GlobalStyles, primaryColor } from '../../styles';
+import { GlobalStylesheet } from '../../styles';
+import { useTheme } from '../../styles/theme';
 import { parseRecording } from '../../utils';
 
 interface Item {
@@ -64,6 +65,7 @@ const ResultsRoute: React.FC<ResultsRouteI> = ({ data, renderItem, onRefresh }) 
 };
 
 const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, actions, language }) => {
+	const { styles, theme } = useTheme(GlobalStylesheet);
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [presentations, setPresentations] = useState([] as Track[]);
@@ -177,11 +179,11 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 
 	return (
 		<SearchLayout
-			headerBackgroundColor={primaryColor}
+			headerBackgroundColor={theme.isDark ? theme.grey950 : theme.primary}
 			onChangeQuery={setSearch}
 			onSubmit={handleSearch}
 			cancelButtonText={I18n.t('Cancel')}
-			headerTintColor="#FFF"
+			headerTintColor={theme.white}
 		>
 			{loading && <ActivityIndicator size="large" color="#03A9F4" style={{ marginTop: 10 }} />}
 			{!loading && (
@@ -206,8 +208,8 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 					renderTabBar={(props) => (
 						<TabBar
 							{...props}
-							indicatorStyle={GlobalStyles.tabIndicator}
-							style={GlobalStyles.tab}
+							indicatorStyle={styles.tabIndicator}
+							style={styles.tab}
 							scrollEnabled={true}
 							renderLabel={({ route, focused, color }) => <TabBarLabel tintColor={color} title={route.title} />}
 						/>

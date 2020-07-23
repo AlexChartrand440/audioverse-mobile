@@ -8,7 +8,7 @@ exports[`renders correctly 1`] = `
         "width": "0%",
       },
       Object {
-        "backgroundColor": "#E53935",
+        "backgroundColor": "#B01F02",
         "height": 2,
       },
     ]

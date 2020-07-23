@@ -23,6 +23,7 @@ import {
 import ProgressBar from '../../components/progressbar/ProgressBar';
 import { Dirs } from '../../constants';
 import { UserState } from '../../store/user/types';
+import { styleSheetFactory, useTheme } from '../../styles/theme';
 
 import PlayerContent from './PlayerContent';
 import PlayerControls from './PlayerControls';
@@ -59,19 +60,19 @@ interface Props extends NavigationInjectedProps {
 	bitRate: string;
 }
 
-const styles = StyleSheet.create({
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		backgroundColor: '#DDDDDD',
+		backgroundColor: theme.grey400,
 	},
 	bar: {
 		elevation: 2,
 		borderTopWidth: Platform.OS === 'ios' ? 30 : 0,
 		borderTopColor: '#E0E0E080',
 		borderBottomWidth: 1,
-		borderBottomColor: '#CCCCCC',
+		borderBottomColor: theme.grey500,
 	},
 	title: {
 		fontSize: Platform.OS === 'ios' ? 17 : 16,
@@ -81,9 +82,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 	},
-});
+}));
 
 const Player: React.FC<Props> = ({ navigation, track, rate, language, user, actions, isFavorite, bitRate }) => {
+	const { styles } = useTheme(stylesheet);
 	const handleDownload = () => {
 		const bitratesIndex: Bitrate[] = [];
 		const options: string[] = [];

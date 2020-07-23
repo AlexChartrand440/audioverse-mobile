@@ -5,6 +5,7 @@ import TrackPlayer, { useProgress } from 'react-native-track-player';
 
 import flatDot from '../../../assets/flat_dot.png';
 import I18n from '../../../locales';
+import { primaryColor } from '../../styles';
 import { formatTime } from '../../utils';
 
 interface Props {
@@ -61,8 +62,8 @@ const ProgressBar: React.FC<Props> = ({ rate }) => {
 					minimumValue={0}
 					maximumValue={progress.duration}
 					step={1}
-					minimumTrackTintColor="#E53935"
-					thumbTintColor="#E53935"
+					minimumTrackTintColor={primaryColor}
+					thumbTintColor={primaryColor}
 					thumbImage={Platform.OS === 'ios' ? flatDot : null}
 					style={styles.slider}
 					onValueChange={handleValueChange}

@@ -9,6 +9,7 @@ import AVLogo from '../../../assets/av-logo.png';
 import I18n from '../../../locales';
 import { ContentTypes } from '../../constants';
 import { HTMLStyles } from '../../styles';
+import { styleSheetFactory, useTheme } from '../../styles/theme';
 
 import Slide from './Slide';
 
@@ -94,6 +95,7 @@ const getSlides = (data: Track) => {
 };
 
 const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
+	const { styles, theme } = useTheme(stylesheet);
 	const slides = getSlides(data);
 	const recordingDate =
 		!data.recordingDate || data.recordingDate == '0000-00-00 00:00:00'
@@ -138,7 +140,7 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
 					</TouchableOpacity>
 				</View>
 			)}
-			<Swiper activeDotColor="#FFF" removeClippedSubviews={false} loop={false}>
+			<Swiper activeDotColor={theme.white} removeClippedSubviews={false} loop={false}>
 				{slides.map((slide) => {
 					if (slide.type === 'description') {
 						return (
@@ -170,7 +172,7 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
 	);
 };
 
-const styles = StyleSheet.create({
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		flex: 1,
 	},
@@ -211,15 +213,15 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 	},
 	title: {
-		color: '#000000',
+		color: theme.isDark ? theme.white : theme.black,
 		fontSize: 16,
 		fontWeight: '500',
 	},
 	subtitle: {
-		color: '#212121',
+		color: theme.isDark ? theme.grey950 : theme.grey850,
 		fontSize: 14,
 		fontWeight: '300',
 	},
-});
+}));
 
 export default PlayerContent;

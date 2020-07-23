@@ -4,7 +4,8 @@
  */
 
 import React, { useEffect } from 'react';
-import { Linking, StatusBar } from 'react-native';
+import { Linking, StatusBar, useColorScheme } from 'react-native';
+import { ThemeProvider } from 'react-native-elements';
 import firebase from 'react-native-firebase';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationRoute, NavigationState } from 'react-navigation';
@@ -17,6 +18,7 @@ import { legacyBibleIdsMap } from './src/constants/bibles';
 import AppNavigator from './src/navigators/AppNavigator';
 import { fetchGraphQLData } from './src/services';
 import { setBibleVersion } from './src/store/Bible/actions';
+import { globalColors } from './src/styles/theme';
 import { parseRecording } from './src/utils';
 import NavigationService from './src/utils/navigation-service';
 
@@ -169,26 +171,48 @@ export const App: React.FC<Props> = ({ store, persistor }) => {
 		return route.routeName;
 	}
 
+	const useDarkMode = useColorScheme() === 'dark';
+	const theme = useDarkMode
+		? {
+				colors: {
+					divider: globalColors.grey700,
+				},
+				ListItem: {
+					containerStyle: {
+						backgroundColor: globalColors.black,
+					},
+					subtitleStyle: {
+						color: globalColors.grey250,
+					},
+					titleStyle: {
+						color: globalColors.grey250,
+					},
+				},
+		  }
+		: {};
+
 	return (
 		<SafeAreaProvider>
-			<Provider store={store}>
-				{/* PersistGate delays the rendering of the UI until the persisted state has been retrieved and saved to redux */}
-				<PersistGate loading={null} persistor={persistor} onBeforeLift={onBeforeLift}>
-					<StatusBar backgroundColor="#000000" barStyle="light-content" animated />
-					<AppNavigator
-						ref={(navigatorRef: any) => {
-							NavigationService.setTopLevelNavigator(navigatorRef);
-						}}
-						onNavigationStateChange={(prevState: NavigationState, currentState: NavigationState) => {
-							const currentScreen = getActiveRouteName(currentState);
-							const prevScreen = getActiveRouteName(prevState);
-							if (prevScreen !== currentScreen) {
-								firebase.analytics().setCurrentScreen(currentScreen);
-							}
-						}}
-					/>
-				</PersistGate>
-			</Provider>
+			<ThemeProvider theme={theme}>
+				<Provider store={store}>
+					{/* PersistGate delays the rendering of the UI until the persisted state has been retrieved and saved to redux */}
+					<PersistGate loading={null} persistor={persistor} onBeforeLift={onBeforeLift}>
+						<StatusBar backgroundColor={globalColors.black} barStyle="light-content" animated />
+						<AppNavigator
+							ref={(navigatorRef: any) => {
+								NavigationService.setTopLevelNavigator(navigatorRef);
+							}}
+							onNavigationStateChange={(prevState: NavigationState, currentState: NavigationState) => {
+								const currentScreen = getActiveRouteName(currentState);
+								const prevScreen = getActiveRouteName(prevState);
+								if (prevScreen !== currentScreen) {
+									firebase.analytics().setCurrentScreen(currentScreen);
+								}
+							}}
+						/>
+					</PersistGate>
+				</Provider>
+			</ThemeProvider>
 		</SafeAreaProvider>
 	);
 };

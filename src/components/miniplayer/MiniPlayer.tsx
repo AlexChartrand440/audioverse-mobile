@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, useColorScheme, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import {
 	Event as PlayerEvent,
@@ -13,6 +13,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import iconPlay from '../../../assets/ic_play.png';
 import iconPause from '../../../assets/pause.png';
 import I18n from '../../../locales';
+import { styleSheetFactory, useTheme } from '../../styles/theme';
 import ImageButton from '../buttons/ImageButton';
 import ProgressBarMini from '../progressbar/ProgressBarMini';
 
@@ -26,28 +27,34 @@ interface Props extends NavigationInjectedProps {
 	};
 }
 
-const styles = StyleSheet.create({
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		shadowOpacity: 0.75,
-		shadowRadius: 5,
-		shadowColor: '#000000',
+		shadowRadius: 3,
+		shadowColor: theme.black,
 		shadowOffset: { height: 0, width: 0 },
 		elevation: 2,
-		backgroundColor: '#E0E0E0',
+		backgroundColor: theme.isDark ? theme.grey800 : theme.grey250,
 	},
 	playPause: {
-		height: 42,
-		width: 42,
-		tintColor: '#000000',
+		paddingLeft: 8,
+		paddingRight: 8,
+		height: 24,
+		width: 24,
+		tintColor: theme.isDark ? theme.white : theme.black,
 	},
 	title: {
 		fontSize: Platform.OS === 'ios' ? 17 : 16,
+		color: theme.isDark ? theme.white : theme.black,
 	},
-});
+}));
 
 const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
 	const playbackState = usePlaybackState();
 	const [loading, setLoading] = useState(false);
+	const { styles } = useTheme(stylesheet);
+	const isDarkMode = useColorScheme() === 'dark';
+
 	// on iOS the Media Player library that we are using does not
 	// enter the loading state until it has loaded/buffered the mp3 file, however
 	// in order to let the user know that the file is being loaded we are
@@ -74,7 +81,7 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
 	};
 	const isLoading = loading || playbackState === PlayerState.Buffering;
 	const rightElement = isLoading ? (
-		<ActivityIndicator size="large" color="black" />
+		<ActivityIndicator size={24} color={isDarkMode ? 'white' : 'black'} />
 	) : (
 		<ImageButton
 			source={playbackState === PlayerState.Playing ? iconPause : iconPlay}
@@ -109,7 +116,7 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
 				onPress={handlePress}
 				rightElement={rightElement}
 				containerStyle={{ backgroundColor: 'transparent' }}
-				underlayColor="#E0E0E0"
+				underlayColor={styles.container.backgroundColor}
 			/>
 			<ProgressBarMini />
 		</View>

@@ -1,6 +1,6 @@
 import throttle from 'lodash.throttle';
 import React from 'react';
-import { Alert, Linking, Share, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Share, Text, View } from 'react-native';
 import ActionSheet from 'react-native-action-sheet';
 import { Button } from 'react-native-elements';
 import firebase from 'react-native-firebase';
@@ -11,6 +11,7 @@ import I18n from '../../../locales';
 import { addFavorite, removeFavorite, setBitRateAndReset } from '../../actions';
 import { ContentTypes } from '../../constants';
 import { UserState } from '../../store/user/types';
+import { styleSheetFactory, useTheme } from '../../styles/theme';
 import { typedKeys } from '../../utils';
 
 interface Props extends NavigationInjectedProps {
@@ -27,7 +28,7 @@ interface Props extends NavigationInjectedProps {
 	onSetBitRateAndReset: typeof setBitRateAndReset;
 }
 
-const styles = StyleSheet.create({
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -41,9 +42,9 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		width: 86,
 		textAlign: 'center',
-		color: '#FFFFFF',
+		color: theme.white,
 	},
-});
+}));
 
 const PlayerOptions: React.FC<Props> = ({
 	navigation,
@@ -59,6 +60,7 @@ const PlayerOptions: React.FC<Props> = ({
 	onPlayVideo,
 	onSetBitRateAndReset,
 }) => {
+	const { styles, theme } = useTheme(stylesheet);
 	const logIn = () => {
 		Alert.alert(I18n.t('Would_you_like_to_log_in'), '', [
 			{
@@ -201,7 +203,7 @@ const PlayerOptions: React.FC<Props> = ({
 						type: 'feather',
 						name: 'download',
 						size: 24,
-						color: '#FFFFFF',
+						color: theme.white,
 					}}
 					type="clear"
 					containerStyle={styles.icon}
@@ -215,7 +217,7 @@ const PlayerOptions: React.FC<Props> = ({
 						type: 'feather',
 						name: 'heart',
 						size: 24,
-						color: isFavorite ? '#E53935' : '#FFFFFF',
+						color: isFavorite ? theme.primary : theme.white,
 					}}
 					type="clear"
 					containerStyle={styles.icon}
@@ -229,7 +231,7 @@ const PlayerOptions: React.FC<Props> = ({
 						type: 'feather',
 						name: 'video',
 						size: 24,
-						color: '#FFFFFF',
+						color: theme.white,
 					}}
 					type="clear"
 					containerStyle={styles.icon}
@@ -246,7 +248,7 @@ const PlayerOptions: React.FC<Props> = ({
 						type: 'feather',
 						name: 'folder',
 						size: 24,
-						color: '#FFFFFF',
+						color: theme.white,
 					}}
 					type="clear"
 					containerStyle={styles.icon}
@@ -260,7 +262,7 @@ const PlayerOptions: React.FC<Props> = ({
 						type: 'feather',
 						name: 'share-2',
 						size: 24,
-						color: '#FFFFFF',
+						color: theme.white,
 					}}
 					type="clear"
 					containerStyle={styles.icon}
@@ -273,7 +275,7 @@ const PlayerOptions: React.FC<Props> = ({
 					type: 'feather',
 					name: 'more-vertical',
 					size: 24,
-					color: '#FFFFFF',
+					color: theme.white,
 				}}
 				type="clear"
 				containerStyle={styles.icon}

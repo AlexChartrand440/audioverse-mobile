@@ -6,7 +6,6 @@ import {
 	Image,
 	Linking,
 	StatusBar,
-	StyleSheet,
 	Text,
 	TextInput,
 	TouchableOpacity,
@@ -24,6 +23,7 @@ import { Queries } from '../../../constants';
 import * as api from '../../../services';
 import { setUser } from '../../../store/user/actions';
 import { UserState } from '../../../store/user/types';
+import { styleSheetFactory, useTheme } from '../../../styles/theme';
 
 interface Props extends NavigationInjectedProps {
 	language: string;
@@ -32,18 +32,19 @@ interface Props extends NavigationInjectedProps {
 	};
 }
 
-const styles = StyleSheet.create({
+const stylesheet = styleSheetFactory((theme) => ({
 	container: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#E9E9EF',
+		backgroundColor: theme.isDark ? theme.grey950 : theme.grey200,
 	},
 	close: {
 		zIndex: 10,
 		position: 'absolute',
 		left: 10,
 		top: 40,
+		color: theme.isDark ? theme.white : theme.black,
 	},
 	form: {
 		width: 300,
@@ -61,16 +62,17 @@ const styles = StyleSheet.create({
 	input: {
 		flex: 1,
 		paddingHorizontal: 10,
-		backgroundColor: '#FFF',
+		backgroundColor: theme.isDark ? theme.grey800 : theme.white,
+		color: theme.isDark ? theme.grey100 : theme.black,
 	},
 	iconWrap: {
 		paddingHorizontal: 7,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#D73352',
+		backgroundColor: theme.buttonPrimary,
 	},
 	button: {
-		backgroundColor: '#D73352',
+		backgroundColor: theme.buttonPrimary,
 		paddingVertical: 10,
 		marginTop: 15,
 		alignItems: 'center',
@@ -80,10 +82,10 @@ const styles = StyleSheet.create({
 		opacity: 0.5,
 	},
 	fb: {
-		backgroundColor: '#4E64B2',
+		backgroundColor: theme.facebookBlue,
 	},
 	buttonText: {
-		color: '#FFF',
+		color: theme.white,
 		fontSize: 16,
 	},
 	options: {
@@ -91,12 +93,16 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		justifyContent: 'space-around',
 	},
-	forgotPassword: {
-		color: '#337AB7',
+	toggleActionType: {
+		color: theme.isDark ? theme.white : theme.black,
 	},
-});
+	forgotPassword: {
+		color: theme.linkColor,
+	},
+}));
 
 const Login: React.FC<Props> = ({ navigation, language, actions }) => {
+	const { styles, theme } = useTheme(stylesheet);
 	const [signin, setSignin] = useState(true);
 	const [loading, setLoading] = useState(false);
 	const [isFormValid, setIsFormValid] = useState(false);
@@ -295,6 +301,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 					type: 'feather',
 					name: 'x-circle',
 					size: 30,
+					color: styles.close.color,
 				}}
 				type="clear"
 				containerStyle={styles.close}
@@ -304,7 +311,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 				<Image source={logo} style={styles.logo} resizeMode="contain" />
 				<View style={styles.inputWrap}>
 					<View style={styles.iconWrap}>
-						<Icon type="feather" name="user" size={20} color="#FFF" />
+						<Icon type="feather" name="user" size={20} color={theme.white} />
 					</View>
 					<TextInput
 						placeholder={I18n.t('Email')}
@@ -320,7 +327,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 				</View>
 				<View style={styles.inputWrap}>
 					<View style={styles.iconWrap}>
-						<Icon type="feather" name="lock" size={20} color="#FFF" />
+						<Icon type="feather" name="lock" size={20} color={theme.white} />
 					</View>
 					<TextInput
 						placeholder={I18n.t('Password')}
@@ -337,7 +344,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 				<TouchableOpacity activeOpacity={isFormValid ? 1 : 0.5} onPress={handleSignInUp}>
 					<View style={[styles.button, !isFormValid ? styles.buttonDisabled : {}]}>
 						{!loading && <Text style={styles.buttonText}>{I18n.t(signin ? 'Sign_in' : 'Sign_up')}</Text>}
-						{loading && <ActivityIndicator color="#FFF" />}
+						{loading && <ActivityIndicator color={theme.white} />}
 					</View>
 				</TouchableOpacity>
 				<TouchableOpacity activeOpacity={0.5} onPress={handleLoginWithFB}>
@@ -347,7 +354,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 				</TouchableOpacity>
 				<View style={styles.options}>
 					<TouchableOpacity activeOpacity={0.5} onPress={handleCreateAccount}>
-						<Text>{I18n.t(signin ? 'Create_account' : 'Sign_in')}</Text>
+						<Text style={styles.toggleActionType}>{I18n.t(signin ? 'Create_account' : 'Sign_in')}</Text>
 					</TouchableOpacity>
 					<TouchableOpacity activeOpacity={0.5} onPress={handleForgotPassword}>
 						<Text style={styles.forgotPassword}>{I18n.t('Forgot_your_password')}</Text>

@@ -26,4 +26,11 @@ public class MainActivity extends ReactActivity {
       }
     };
   }
+
+  // WORKAROUND: https://github.com/facebook/react-native/issues/28823#issuecomment-642032481
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    getReactInstanceManager().onConfigurationChanged(this, newConfig);
+  }
 }
