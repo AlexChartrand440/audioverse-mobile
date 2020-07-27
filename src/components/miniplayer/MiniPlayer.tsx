@@ -13,6 +13,7 @@ import { NavigationInjectedProps } from 'react-navigation';
 import iconPlay from '../../../assets/ic_play.png';
 import iconPause from '../../../assets/pause.png';
 import I18n from '../../../locales';
+import data from '../../constants/prompts';
 import ImageButton from '../buttons/ImageButton';
 import ProgressBarMini from '../progressbar/ProgressBarMini';
 
@@ -53,8 +54,8 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
 	// in order to let the user know that the file is being loaded we are
 	// using our own loading state, it is set to true when the a track is changed
 	// and is set to false when the playback-state change.
-	useTrackPlayerEvents([PlayerEvent.PlaybackTrackChanged], () => {
-		if (Platform.OS === 'ios') {
+	useTrackPlayerEvents([PlayerEvent.PlaybackTrackChanged], (data) => {
+		if (Platform.OS === 'ios' && data.nextTrack) {
 			setLoading(true); // show activity indicator
 		}
 	});
