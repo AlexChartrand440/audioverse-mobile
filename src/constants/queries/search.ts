@@ -1,7 +1,7 @@
 import recordingFragment from './fragments/recording';
 
 export default `query search($language: Language!, $term: String!) {
-  conferences(language: $language, search: $term) {
+  conferences(language: $language, search: $term, first: 25) {
     nodes {
       id
       title
@@ -14,7 +14,7 @@ export default `query search($language: Language!, $term: String!) {
       hasNextPage
     }
   }
-  presenters(language: $language, search: $term) {
+  presenters(language: $language, search: $term, first: 25) {
     nodes {
       id
       name
@@ -28,7 +28,7 @@ export default `query search($language: Language!, $term: String!) {
       hasNextPage
     }
   }
-  sermons(language: $language, search: $term) {
+  sermons(language: $language, search: $term, first: 25) {
     nodes {
       ...recordingFragment
     }
@@ -37,7 +37,7 @@ export default `query search($language: Language!, $term: String!) {
       hasNextPage
     }
   }
-  serieses(language: $language, search: $term) {
+  serieses(language: $language, search: $term, first: 25) {
     nodes {
       id
       title
@@ -50,7 +50,7 @@ export default `query search($language: Language!, $term: String!) {
       hasNextPage
     }
   }
-  sponsors(language: $language, search: $term) {
+  sponsors(language: $language, search: $term, first: 25) {
     nodes {
       id
       title
