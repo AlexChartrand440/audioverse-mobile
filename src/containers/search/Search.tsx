@@ -124,7 +124,7 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 	const renderPresenterItem: ListRenderItem<Item> = ({ item }) => (
 		<ListItem
 			leftAvatar={{
-				source: { uri: item.photo.url },
+				source: { uri: item.photoWithFallback.url },
 			}}
 			title={item.name}
 			onPress={() => {

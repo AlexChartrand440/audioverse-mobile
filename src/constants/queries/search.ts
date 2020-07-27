@@ -9,32 +9,23 @@ export default `query search($language: Language!, $term: String!) {
         url(size: 86)
       }
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
   }
   presenters(language: $language, search: $term, first: 25) {
     nodes {
       id
       name
       description
-      photo: photoWithFallback {
+      photoWithFallback {
         url(size: 86)
       }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
+      photo {
+        url(size: 256)
+      }
     }
   }
   sermons(language: $language, search: $term, first: 25) {
     nodes {
       ...recordingFragment
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
   serieses(language: $language, search: $term, first: 25) {
@@ -45,10 +36,6 @@ export default `query search($language: Language!, $term: String!) {
         url(size: 86)
       }
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
   }
   sponsors(language: $language, search: $term, first: 25) {
     nodes {
@@ -57,10 +44,6 @@ export default `query search($language: Language!, $term: String!) {
       logoImage: logoImageWithFallback {
         url(size: 86)
       }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
 }
