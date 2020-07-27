@@ -141,7 +141,7 @@ export const List: React.FC<Props> = ({
 			<FlatList
 				ListHeaderComponent={Header}
 				data={items}
-				renderItem={renderItem ? renderItem : localRenderItem}
+				renderItem={renderItem || localRenderItem}
 				keyExtractor={keyExtractor}
 				refreshing={pagination.isFetching}
 				onRefresh={handleRefresh}

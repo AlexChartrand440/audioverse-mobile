@@ -51,7 +51,7 @@ const getSlides = (data: Track) => {
 			url: data.presenters[0].id,
 			title: data.artist,
 			description: data.presenters[0].description,
-			image: data.presenters[0].photo?.url || AVLogo,
+			image: data.presenters[0].photo?.url,
 		};
 	}
 
