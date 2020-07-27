@@ -60,7 +60,7 @@ module.exports = {
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
 		'react/display-name': 'off',
-		'react/prop-types': 'off', // BUG: https://github.com/yannickcr/eslint-plugin-react/issues/2719
+		'react/prop-types': 'off', // BUG: https://github.com/yannickcr/eslint-plugin-react/issues/2728
 	},
 	settings: {
 		'import/parsers': {
