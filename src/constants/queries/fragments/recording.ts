@@ -52,7 +52,7 @@ export default `fragment recordingFragment on Recording {
     id
     title
     location
-    logoImage {
+    logoImage: logoImageWithFallback {
       url(size: 256)
     }
   }

@@ -51,7 +51,7 @@ const getSlides = (data: Track) => {
 			url: data.presenters[0].id,
 			title: data.artist,
 			description: data.presenters[0].description,
-			image: data.presenters[0].photo.url,
+			image: data.presenters[0].photo?.url || AVLogo,
 		};
 	}
 
@@ -102,7 +102,7 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
 	let sponsor: { [key: string]: any } = {};
 	if (data.sponsor) {
 		sponsor = { ...data.sponsor };
-		sponsor.image = sponsor.logoImage ? sponsor.logoImage.url : AVLogo;
+		sponsor.image = sponsor.logoImage?.url || AVLogo;
 	}
 
 	const handleOnPressSponsor = () => {
