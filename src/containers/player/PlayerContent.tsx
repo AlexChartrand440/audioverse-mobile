@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import HTML from 'react-native-render-html';
@@ -11,6 +13,8 @@ import { ContentTypes } from '../../constants';
 import { HTMLStyles } from '../../styles';
 
 import Slide from './Slide';
+
+dayjs.extend(utc);
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const MarqueeText: any = require('react-native-marquee').default;
@@ -98,7 +102,7 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
 	const recordingDate =
 		!data.recordingDate || data.recordingDate == '0000-00-00 00:00:00'
 			? ''
-			: I18n.t('Recorded', { locale: language }) + ' ' + data.recordingDate;
+			: I18n.t('Recorded', { locale: language }) + ' ' + dayjs.utc(data.recordingDate).format('MMMM D, YYYY h:mm A');
 	let sponsor: { [key: string]: any } = {};
 	if (data.sponsor) {
 		sponsor = { ...data.sponsor };

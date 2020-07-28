@@ -25,7 +25,7 @@ function formatTwoDigits(n: number) {
  * Format seconds to hh:mm:ss
  * @param {int} seconds number
  */
-export const formatTime = (seconds: number | undefined) => {
+export const formatTime = (seconds: number | undefined): string => {
 	if (!seconds) return '';
 
 	const ss = Math.floor(seconds) % 60;
@@ -37,6 +37,21 @@ export const formatTime = (seconds: number | undefined) => {
 	} else {
 		return formatTwoDigits(mm) + ':' + formatTwoDigits(ss);
 	}
+};
+
+/**
+ * TODO: Use a simpler duration format
+ */
+export const formatDuration = (seconds: number | undefined): string => {
+	if (!seconds) {
+		return '';
+	}
+	if (seconds < 60) {
+		return `${Math.floor(seconds)} sec`;
+	}
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor(seconds / 60) % 60;
+	return `${hours ? hours + ' hr ' : ''}${minutes ? minutes + ' min' : ''}`;
 };
 
 interface MediaFile {
