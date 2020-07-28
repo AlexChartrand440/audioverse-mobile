@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { ActivityIndicator, FlatList, Image, ListRenderItem, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, FlatList, Image, ListRenderItem, StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import HTML from 'react-native-render-html';
 import { Track } from 'react-native-track-player';
@@ -68,6 +68,15 @@ export const List: React.FC<Props> = ({
 	actions,
 }) => {
 	const onEndReachedCalledDuringMomentumRef = useRef(true);
+	const _flatListRef = useRef<FlatList>(null);
+
+	const [isFetching, setIsFetching] = useState(pagination.isFetching);
+	if (pagination.isFetching !== isFetching) {
+		setIsFetching(pagination.isFetching);
+	}
+	if (!pagination.isFetching) {
+		setTimeout(() => _flatListRef.current?.flashScrollIndicators(), 0);
+	}
 
 	useEffect(() => {
 		const { url, id } = navigation.state.params || { url: null, id: null };
@@ -80,7 +89,8 @@ export const List: React.FC<Props> = ({
 
 	const handleEndReached = () => {
 		console.log('end reached!!', onEndReachedCalledDuringMomentumRef.current);
-		if (!onEndReachedCalledDuringMomentumRef.current && pagination && pagination.nextAfterCursor) {
+		const shouldLoadMore = !!(!onEndReachedCalledDuringMomentumRef.current && pagination && pagination.nextAfterCursor);
+		if (shouldLoadMore) {
 			onEndReachedCalledDuringMomentumRef.current = true;
 			const { url, id } = navigation.state.params || { url: null, id: null };
 			actions.loadData(true, false, url, id);
@@ -136,20 +146,32 @@ export const List: React.FC<Props> = ({
 		</View>
 	) : null;
 
+	const renderFooter = () => {
+		return (
+			<View>
+				{pagination.nextAfterCursor ? (
+					<ActivityIndicator color="black" style={{ margin: 15, marginBottom: 30 }} />
+				) : null}
+			</View>
+		);
+	};
+
 	return (
 		<View style={styles.container}>
 			<FlatList
+				ref={_flatListRef}
 				ListHeaderComponent={Header}
 				data={items}
 				renderItem={renderItem || localRenderItem}
 				keyExtractor={keyExtractor}
 				refreshing={pagination.isFetching}
 				onRefresh={handleRefresh}
-				onEndReachedThreshold={0.1}
+				onEndReachedThreshold={0.5}
 				onEndReached={handleEndReached}
 				onMomentumScrollBegin={() => {
 					onEndReachedCalledDuringMomentumRef.current = false;
 				}}
+				ListFooterComponent={renderFooter}
 			/>
 		</View>
 	);

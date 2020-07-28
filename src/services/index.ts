@@ -40,6 +40,9 @@ export const fetchGraphQLData = async (
 			console.log('GraphQL errors', json.errors);
 		}
 		const results = keyMapper(json.data);
-		return { result: results.nodes, nextAfterCursor: results.pageInfo?.endCursor };
+		return {
+			result: results.nodes,
+			nextAfterCursor: results.pageInfo?.hasNextPage ? results.pageInfo?.endCursor : undefined,
+		};
 	});
 };
