@@ -64,8 +64,8 @@ const PlayerControls: React.FC<Props> = ({ playPause, skipToPrevious, skipToNext
 	// in order to let the user know that the file is being loaded we are
 	// using our own loading state, it is set to true when the a track is changed
 	// and is set to false when the playback-state change.
-	useTrackPlayerEvents([PlayerEvent.PlaybackTrackChanged], () => {
-		if (Platform.OS === 'ios') {
+	useTrackPlayerEvents([PlayerEvent.PlaybackTrackChanged], (data) => {
+		if (Platform.OS === 'ios' && data.nextTrack) {
 			setLoading(true); // show activity indicator
 		}
 	});

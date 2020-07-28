@@ -317,7 +317,7 @@ export function* setBitRateAndReset({ bitRate }: ChangeBitRateAction) {
 }
 
 /**
- * Skip to the previous track unless it is not the first one
+ * Skip to the previous track if it is not the first one
  */
 export function* skipToPrevious() {
 	const queue: Track[] = yield call(TrackPlayer.getQueue);
@@ -330,7 +330,7 @@ export function* skipToPrevious() {
 }
 
 /**
- * Skip to the next track unless it is not the last one
+ * Skip to the next track if it is not the last one
  */
 export function* skipToNext() {
 	const queue: Track[] = yield call(TrackPlayer.getQueue);

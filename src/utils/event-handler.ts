@@ -216,7 +216,7 @@ async function eventHandler(store: Store, data: Data) {
 
 	TrackPlayer.addEventListener(PlayerEvent.PlaybackTrackChanged, (data) => {
 		console.log('playback-track-changed', data);
-		if (Platform.OS === 'ios' || (Platform.OS === 'android' && data.nextTrack)) {
+		if (data.nextTrack) {
 			playbackReady();
 		}
 	});
