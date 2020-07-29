@@ -14,7 +14,7 @@ query search($language: Language!, $term: String!) {
 		nodes {
 			id
 			name
-			descriptionn
+			description
 			photoWithFallback {
 				url(size: 86)
 			}
