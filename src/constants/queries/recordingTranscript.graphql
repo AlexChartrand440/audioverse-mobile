@@ -1,8 +1,7 @@
 query recordingTranscript($recordingId: ID!) {
-  recording(id: $recordingId) {
-    transcript {
-      text
-    }
-  }
+	recording(id: $recordingId) {
+		transcript {
+			text
+		}
+	}
 }
-

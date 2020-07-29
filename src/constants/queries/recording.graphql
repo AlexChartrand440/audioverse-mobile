@@ -1,10 +1,7 @@
 #import "./fragments/recording.graphql"
 
 query recording($id: ID!) {
-  recording(
-    id: $id) {
-      ...recordingFragment
-  }
+	recording(id: $id) {
+		...recordingFragment
+	}
 }
-
-

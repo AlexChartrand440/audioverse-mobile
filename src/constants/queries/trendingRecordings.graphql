@@ -1,22 +1,15 @@
 #import "./fragments/recording.graphql"
 
 query trendingRecordings($language: Language!, $afterCursor: String) {
-  popularRecordings(
-    language: $language
-    first: 25
-    after: $afterCursor
-    contentType: SERMON
-  ) {
-    nodes {
-      recording {
-        ...recordingFragment
-      }
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-  }
+	popularRecordings(language: $language, first: 25, after: $afterCursor, contentType: SERMON) {
+		nodes {
+			recording {
+				...recordingFragment
+			}
+		}
+		pageInfo {
+			hasNextPage
+			endCursor
+		}
+	}
 }
-
-

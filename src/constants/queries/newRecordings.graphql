@@ -1,20 +1,13 @@
 #import "./fragments/recording.graphql"
 
 query newRecordings($language: Language!, $afterCursor: String) {
-  sermons(
-    language: $language
-    first: 25
-    after: $afterCursor
-    orderBy: [{ field: CREATED_AT, direction: DESC }]
-  ) {
-    nodes {
-      ...recordingFragment
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-  }
+	sermons(language: $language, first: 25, after: $afterCursor, orderBy: [{ field: CREATED_AT, direction: DESC }]) {
+		nodes {
+			...recordingFragment
+		}
+		pageInfo {
+			hasNextPage
+			endCursor
+		}
+	}
 }
-
-

@@ -9,7 +9,7 @@
     "test:watch": "jest --watch",
     "lint": "tsc --noEmit && eslint --ext .js,.jsx,.json,.ts,.tsx ./src",
     "lint:fix": "eslint --ext .js,.jsx,.json,.ts,.tsx --fix ./src",
-    "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
+    "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json,graphql} && npx prettier --write *.{js,jsx,ts,tsx,json}",
     "postversion": "react-native-version",
     "ios:beta": "fastlane ios beta",
     "android:beta": "fastlane android beta"

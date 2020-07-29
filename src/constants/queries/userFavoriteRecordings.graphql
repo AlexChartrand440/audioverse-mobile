@@ -1,15 +1,13 @@
 #import "./fragments/recording.graphql"
 
 query userFavoriteRecordings {
-  me {
-    user {
-      favoriteRecordings {
-        nodes {
-          ...recordingFragment
-        }
-      }
-    }
-  }
+	me {
+		user {
+			favoriteRecordings {
+				nodes {
+					...recordingFragment
+				}
+			}
+		}
+	}
 }
-
-

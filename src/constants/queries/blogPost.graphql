@@ -1,11 +1,10 @@
 query blogPost($id: ID!) {
-  blogPost(id: $id) {
-    id
-    title
-    body
-    image {
-      url(size: 740)
-    }
-  }  
+	blogPost(id: $id) {
+		id
+		title
+		body
+		image {
+			url(size: 740)
+		}
+	}
 }
-

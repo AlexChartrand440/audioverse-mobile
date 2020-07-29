@@ -1,7 +1,7 @@
-import { NativeModules } from 'react-native'
+import { NativeModules } from 'react-native';
 
 NativeModules.RNCNetInfo = {
-  getCurrentState: jest.fn(() => Promise.resolve()),
-  addListener: jest.fn(),
-  removeListeners: jest.fn()
-}
+	getCurrentState: jest.fn(() => Promise.resolve()),
+	addListener: jest.fn(),
+	removeListeners: jest.fn(),
+};

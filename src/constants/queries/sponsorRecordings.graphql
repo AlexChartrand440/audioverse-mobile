@@ -1,21 +1,19 @@
 #import "./fragments/recording.graphql"
 
 query sponsorRecordings($language: Language!, $sponsorId: ID, $afterCursor: String) {
-  recordings(
-    language: $language
-    sponsorId: $sponsorId
-    first: 25
-    after: $afterCursor
-    orderBy: [{ field: CREATED_AT, direction: DESC }]
-  ) {
-    nodes {
-      ...recordingFragment
-    }
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-  }
+	recordings(
+		language: $language
+		sponsorId: $sponsorId
+		first: 25
+		after: $afterCursor
+		orderBy: [{ field: CREATED_AT, direction: DESC }]
+	) {
+		nodes {
+			...recordingFragment
+		}
+		pageInfo {
+			hasNextPage
+			endCursor
+		}
+	}
 }
-
-
