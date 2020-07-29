@@ -44,6 +44,11 @@ import userFavoriteRecordings from './userFavoriteRecordings.graphql';
 import userPlaylistItems from './userPlaylistItems.graphql';
 import userPlaylists from './userPlaylists.graphql';
 
+/**
+ * Changes to the .graphql files will not be picked up by babel-plugin-import-graphql until
+ * the server is restarted (`npm start`) again.
+ */
+
 export default {
 	audiobible: print(audiobible),
 	audiobibleChapters: print(audiobibleChapters),
