@@ -1,89 +1,91 @@
-import audiobible from './audiobible';
-import audiobibleChapters from './audiobibleChapters';
-import audiobibleChapterText from './audiobibleChapterText';
-import audiobookRecordings from './audiobookRecordings';
-import audiobooks from './audiobooks';
-import blogPost from './blogPost';
-import collectionRecordings from './collectionRecordings';
-import conferences from './conferences';
-import favoriteRecording from './favoriteRecording';
-import featuredBlogPosts from './featuredBlogPosts';
-import featuredRecordings from './featuredRecordings';
-import login from './login';
-import loginSocial from './loginSocial';
-import musicAlbumRecordings from './musicAlbumRecordings';
-import musicAlbums from './musicAlbums';
-import musicBookTags from './musicBookTags';
-import musicMoodTags from './musicMoodTags';
-import musicTagRecordings from './musicTagRecordings';
-import musicTracks from './musicTracks';
-import newRecordings from './newRecordings';
-import playlistAdd from './playlistAdd';
-import playlistDelete from './playlistDelete';
-import playlistRecordingAdd from './playlistRecordingAdd';
-import playlistRecordingRemove from './playlistRecordingRemove';
-import presenterRecordings from './presenterRecordings';
-import presenters from './presenters';
-import recording from './recording';
-import recordingTranscript from './recordingTranscript';
-import search from './search';
-import sequenceRecordings from './sequenceRecordings';
-import serieses from './serieses';
-import signup from './signup';
-import sponsorRecordings from './sponsorRecordings';
-import sponsors from './sponsors';
-import sponsorsWithMusic from './sponsorsWithMusic';
-import stories from './stories';
-import storySeasons from './storySeasons';
-import tagRecordings from './tagRecordings';
-import trendingRecordings from './trendingRecordings';
-import unfavoriteRecording from './unfavoriteRecording';
-import userFavoriteRecordings from './userFavoriteRecordings';
-import userPlaylistItems from './userPlaylistItems';
-import userPlaylists from './userPlaylists';
+import { print } from 'graphql';
+
+import audiobible from './audiobible.graphql';
+import audiobibleChapters from './audiobibleChapters.graphql';
+import audiobibleChapterText from './audiobibleChapterText.graphql';
+import audiobookRecordings from './audiobookRecordings.graphql';
+import audiobooks from './audiobooks.graphql';
+import blogPost from './blogPost.graphql';
+import collectionRecordings from './collectionRecordings.graphql';
+import conferences from './conferences.graphql';
+import favoriteRecording from './favoriteRecording.graphql';
+import featuredBlogPosts from './featuredBlogPosts.graphql';
+import featuredRecordings from './featuredRecordings.graphql';
+import login from './login.graphql';
+import loginSocial from './loginSocial.graphql';
+import musicAlbumRecordings from './musicAlbumRecordings.graphql';
+import musicAlbums from './musicAlbums.graphql';
+import musicBookTags from './musicBookTags.graphql';
+import musicMoodTags from './musicMoodTags.graphql';
+import musicTagRecordings from './musicTagRecordings.graphql';
+import musicTracks from './musicTracks.graphql';
+import newRecordings from './newRecordings.graphql';
+import playlistAdd from './playlistAdd.graphql';
+import playlistDelete from './playlistDelete.graphql';
+import playlistRecordingAdd from './playlistRecordingAdd.graphql';
+import playlistRecordingRemove from './playlistRecordingRemove.graphql';
+import presenterRecordings from './presenterRecordings.graphql';
+import presenters from './presenters.graphql';
+import recording from './recording.graphql';
+import recordingTranscript from './recordingTranscript.graphql';
+import search from './search.graphql';
+import sequenceRecordings from './sequenceRecordings.graphql';
+import serieses from './serieses.graphql';
+import signup from './signup.graphql';
+import sponsorRecordings from './sponsorRecordings.graphql';
+import sponsors from './sponsors.graphql';
+import sponsorsWithMusic from './sponsorsWithMusic.graphql';
+import stories from './stories.graphql';
+import storySeasons from './storySeasons.graphql';
+import tagRecordings from './tagRecordings.graphql';
+import trendingRecordings from './trendingRecordings.graphql';
+import unfavoriteRecording from './unfavoriteRecording.graphql';
+import userFavoriteRecordings from './userFavoriteRecordings.graphql';
+import userPlaylistItems from './userPlaylistItems.graphql';
+import userPlaylists from './userPlaylists.graphql';
 
 export default {
-	audiobible,
-	audiobibleChapters,
-	audiobibleChapterText,
-	audiobookRecordings,
-	audiobooks,
-	blogPost,
-	conferences,
-	collectionRecordings,
-	favoriteRecording,
-	featuredBlogPosts,
-	featuredRecordings,
-	login,
-	loginSocial,
-	musicAlbumRecordings,
-	musicAlbums,
-	musicBookTags,
-	musicMoodTags,
-	musicTagRecordings,
-	musicTracks,
-	newRecordings,
-	playlistAdd,
-	playlistDelete,
-	playlistRecordingAdd,
-	playlistRecordingRemove,
-	presenters,
-	presenterRecordings,
-	recording,
-	search,
-	sequenceRecordings,
-	recordingTranscript,
-	serieses,
-	signup,
-	sponsors,
-	sponsorRecordings,
-	sponsorsWithMusic,
-	stories,
-	storySeasons,
-	tagRecordings,
-	trendingRecordings,
-	unfavoriteRecording,
-	userFavoriteRecordings,
-	userPlaylists,
-	userPlaylistItems,
+	audiobible: print(audiobible),
+	audiobibleChapters: print(audiobibleChapters),
+	audiobibleChapterText: print(audiobibleChapterText),
+	audiobookRecordings: print(audiobookRecordings),
+	audiobooks: print(audiobooks),
+	blogPost: print(blogPost),
+	conferences: print(conferences),
+	collectionRecordings: print(collectionRecordings),
+	favoriteRecording: print(favoriteRecording),
+	featuredBlogPosts: print(featuredBlogPosts),
+	featuredRecordings: print(featuredRecordings),
+	login: print(login),
+	loginSocial: print(loginSocial),
+	musicAlbumRecordings: print(musicAlbumRecordings),
+	musicAlbums: print(musicAlbums),
+	musicBookTags: print(musicBookTags),
+	musicMoodTags: print(musicMoodTags),
+	musicTagRecordings: print(musicTagRecordings),
+	musicTracks: print(musicTracks),
+	newRecordings: print(newRecordings),
+	playlistAdd: print(playlistAdd),
+	playlistDelete: print(playlistDelete),
+	playlistRecordingAdd: print(playlistRecordingAdd),
+	playlistRecordingRemove: print(playlistRecordingRemove),
+	presenters: print(presenters),
+	presenterRecordings: print(presenterRecordings),
+	recording: print(recording),
+	search: print(search),
+	sequenceRecordings: print(sequenceRecordings),
+	recordingTranscript: print(recordingTranscript),
+	serieses: print(serieses),
+	signup: print(signup),
+	sponsors: print(sponsors),
+	sponsorRecordings: print(sponsorRecordings),
+	sponsorsWithMusic: print(sponsorsWithMusic),
+	stories: print(stories),
+	storySeasons: print(storySeasons),
+	tagRecordings: print(tagRecordings),
+	trendingRecordings: print(trendingRecordings),
+	unfavoriteRecording: print(unfavoriteRecording),
+	userFavoriteRecordings: print(userFavoriteRecordings),
+	userPlaylists: print(userPlaylists),
+	userPlaylistItems: print(userPlaylistItems),
 };

@@ -1,3 +1,8 @@
+declare module '*.graphql' {
+	import { DocumentNode } from 'graphql';
+	const value: DocumentNode;
+	export = value;
+}
 declare module '*.png';
 declare module '*.json';
 declare module 'react-native-render-html';
