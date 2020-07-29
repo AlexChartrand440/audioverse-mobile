@@ -1,0 +1,754 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------ 
+
+type Aggregate {
+  count: Int!
+}
+
+type Attachment implements Node {
+  filename: String!
+
+  """In bytes"""
+  filesize: String!
+  id: ID!
+  recording: Recording!
+  url: URL!
+}
+
+type AuthenticatedUser {
+  sessionToken: String!
+  user: User!
+}
+
+type AuthenticatedUserPayload {
+  authenticatedUser: AuthenticatedUser
+  errors: [InputValidationError!]!
+}
+
+type Bible implements Node {
+  book(id: ID!): BibleBook!
+  books: [BibleBook!]!
+  id: ID!
+  isDramatized: Boolean!
+  title: String!
+}
+
+type BibleBook implements Node {
+  chapter(id: ID!): BibleChapter!
+  chapterCount: Int!
+  chapters: [BibleChapter!]!
+  id: ID!
+  isDramatized: Boolean!
+  title: String!
+}
+
+type BibleChapter implements Node {
+  id: ID!
+  text: String!
+  title: String!
+  url: URL!
+}
+
+type BibleConnection {
+  aggregate: Aggregate
+  edges: [BibleEdge!]
+  nodes: [Bible!]
+  pageInfo: PageInfo!
+}
+
+type BibleEdge {
+  cursor: String!
+  node: Bible!
+}
+
+type BlogPost implements Node {
+  body: String!
+  id: ID!
+  image: Image
+  title: String!
+}
+
+type BlogPostConnection {
+  aggregate: Aggregate
+  edges: [BlogPostEdge!]
+  nodes: [BlogPost!]
+  pageInfo: PageInfo!
+}
+
+type BlogPostEdge {
+  cursor: String!
+  node: BlogPost!
+}
+
+type Collection implements Node {
+  contentType: CollectionContentType!
+  id: ID!
+  location: String
+  logoImage: Image
+  logoImageWithFallback: Image!
+  recordings(
+    after: String
+    first: Int
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  sequence(after: String, first: Int, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+  sponsor: Sponsor
+  title: String!
+}
+
+type CollectionConnection {
+  aggregate: Aggregate
+  edges: [CollectionEdge!]
+  nodes: [Collection!]
+  pageInfo: PageInfo!
+}
+
+"""The available types of collections."""
+enum CollectionContentType {
+  AUDIOBOOK_SERIES
+  CONFERENCE
+  STORY_PROGRAM
+}
+
+type CollectionEdge {
+  cursor: String!
+  node: Collection!
+}
+
+input CollectionsOrder {
+  direction: OrderByDirection!
+  field: CollectionsSortableField!
+}
+
+"""Properties by which collection connections can be ordered."""
+enum CollectionsSortableField {
+  CREATED_AT
+  ID
+  TITLE
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Image {
+  url(size: Int!): URL!
+}
+
+type InputValidationError {
+  message: String!
+}
+
+"""Supported languages"""
+enum Language {
+  CHINESE
+  ENGLISH
+  FRENCH
+  GERMAN
+  JAPANESE
+  RUSSIAN
+  SPANISH
+}
+
+type MediaFile implements Node {
+  bitrate: Int!
+  duration: Float!
+  filename: String!
+
+  """In bytes"""
+  filesize: String!
+  id: ID!
+  recording: Recording!
+  url: URL!
+}
+
+type Mutation {
+  favoriteRecording(id: ID!): Boolean!
+  login(input: UserLoginInput!): AuthenticatedUserPayload!
+  loginSocial(input: UserLoginSocialInput!): AuthenticatedUserPayload!
+  playlistAdd(input: UserPlaylistAddInput!): UserPlaylist!
+  playlistDelete(playlistId: ID!): Boolean!
+  playlistRecordingAdd(playlistId: ID!, recordingId: ID!): Boolean!
+  playlistRecordingRemove(playlistId: ID!, recordingId: ID!): Boolean!
+  playlistUpdate(input: UserPlaylistUpdateInput!, playlistId: ID!): UserPlaylist!
+  signup(input: UserSignupInput!): AuthenticatedUserPayload!
+  unfavoriteRecording(id: ID!): Boolean!
+  updateMyProfile(input: UserUpdateProfileInput!): AuthenticatedUserPayload!
+}
+
+interface Node {
+  id: ID!
+}
+
+"""
+Possible directions in which to order a list of items when provided an `orderBy` argument.
+"""
+enum OrderByDirection {
+  ASC
+  DESC
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+type Person implements Node {
+  description: String!
+  givenName: String!
+  id: ID!
+  name: String!
+  photo: Image
+  photoWithFallback: Image!
+  recordings(
+    after: String
+    collectionId: ID
+    first: Int
+    orderBy: [RecordingsOrder!]
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  summary: String!
+  surname: String!
+}
+
+type PersonConnection {
+  aggregate: Aggregate
+  edges: [PersonEdge!]
+  nodes: [Person!]
+  pageInfo: PageInfo!
+}
+
+type PersonEdge {
+  cursor: String!
+  node: Person!
+}
+
+input PersonsOrder {
+  direction: OrderByDirection!
+  field: PersonsSortableField!
+}
+
+"""Properties by which person connections can be ordered."""
+enum PersonsSortableField {
+  CREATED_AT
+  ID
+  NAME
+}
+
+type PopularRecording {
+  recording: Recording!
+  weight: Float!
+}
+
+type PopularRecordingConnection {
+  aggregate: Aggregate
+  edges: [PopularRecordingEdge!]
+  nodes: [PopularRecording!]
+  pageInfo: PageInfo!
+}
+
+type PopularRecordingEdge {
+  cursor: String!
+  node: PopularRecording!
+}
+
+type Query {
+  audiobible(id: ID!): Bible
+  audiobibles(after: String, first: Int): BibleConnection!
+
+  """Alias for `sequence(id: ID)`"""
+  audiobook(id: ID!): Sequence
+  audiobooks(after: String, collectionId: ID, first: Int, language: Language!, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+
+  """Alias for `collection(id: ID)`"""
+  audiobookSeries(id: ID!): Collection
+  audiobookSerieses(after: String, first: Int, language: Language!, orderBy: [CollectionsOrder!], search: String, sponsorId: ID): CollectionConnection!
+
+  """Alias for `recording(id: ID)`"""
+  audiobookTrack(id: ID!): Recording
+  audiobookTracks(
+    after: String
+    collectionId: ID
+    first: Int
+    language: Language!
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+
+    """
+    `search` will find matching recordings and order the recordings by relevance to the search term. Any `orderBy` arguments provided will be ignored.
+    """
+    search: String
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  blogPost(id: ID!): BlogPost
+  collection(id: ID!): Collection
+  collections(after: String, first: Int, language: Language!, orderBy: [CollectionsOrder!], search: String, sponsorId: ID): CollectionConnection!
+
+  """Alias for `collection(id: ID)`"""
+  conference(id: ID!): Collection
+  conferences(after: String, first: Int, language: Language!, orderBy: [CollectionsOrder!], search: String, sponsorId: ID): CollectionConnection!
+  featuredBlogPosts(after: String, first: Int, language: Language!): BlogPostConnection!
+  featuredRecordings(
+    after: String
+    collectionId: ID
+    contentType: RecordingContentType = SERMON
+    first: Int
+    language: Language!
+    presenterId: ID
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  me: AuthenticatedUser
+
+  """Alias for `sequence(id: ID)`"""
+  musicAlbum(id: ID!): Sequence
+  musicAlbums(after: String, collectionId: ID, first: Int, language: Language!, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+  musicBookTags(after: String, first: Int, language: Language!): TagConnection!
+  musicMoodTags(after: String, first: Int, language: Language!): TagConnection!
+
+  """Alias for `recording(id: ID)`"""
+  musicTrack(id: ID!): Recording
+  musicTracks(
+    after: String
+    collectionId: ID
+    first: Int
+    language: Language!
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+
+    """
+    `search` will find matching recordings and order the recordings by relevance to the search term. Any `orderBy` arguments provided will be ignored.
+    """
+    search: String
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  person(id: ID!): Person
+  popularRecordings(
+    after: String
+    collectionId: ID
+    contentType: RecordingContentType = SERMON
+    first: Int
+    language: Language!
+    presenterId: ID
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): PopularRecordingConnection!
+  presenters(after: String, first: Int, language: Language!, orderBy: [PersonsOrder!], search: String): PersonConnection!
+  recording(id: ID!): Recording
+  recordings(
+    after: String
+    collectionId: ID
+    first: Int
+    language: Language!
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+
+    """
+    `search` will find matching recordings and order the recordings by relevance to the search term. Any `orderBy` arguments provided will be ignored.
+    """
+    search: String
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  sequence(id: ID!): Sequence
+  sequences(after: String, collectionId: ID, first: Int, language: Language!, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+
+  """Alias for `sequence(id: ID)`"""
+  series(id: ID!): Sequence
+
+  """
+  Series is both a singular and plural form. `series` returns a single sequence. `serieses` is an archaic plural form of series used here to avoid `seriess` or some other ugly solution.
+  """
+  serieses(after: String, collectionId: ID, first: Int, language: Language!, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+
+  """Alias for `recording(id: ID)`"""
+  sermon(id: ID!): Recording
+  sermons(
+    after: String
+    collectionId: ID
+    first: Int
+    language: Language!
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+
+    """
+    `search` will find matching recordings and order the recordings by relevance to the search term. Any `orderBy` arguments provided will be ignored.
+    """
+    search: String
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  sponsor(id: ID!): Sponsor
+  sponsors(after: String, first: Int, language: Language!, orderBy: [SponsorsOrder!], search: String, withMusic: Boolean): SponsorConnection!
+  stories(
+    after: String
+    collectionId: ID
+    first: Int
+    language: Language!
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+
+    """
+    `search` will find matching recordings and order the recordings by relevance to the search term. Any `orderBy` arguments provided will be ignored.
+    """
+    search: String
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+
+  """Alias for `recording(id: ID)`"""
+  story(id: ID!): Recording
+
+  """Alias for `collection(id: ID)`"""
+  storyProgram(id: ID!): Collection
+  storyPrograms(after: String, first: Int, language: Language!, orderBy: [CollectionsOrder!], search: String, sponsorId: ID): CollectionConnection!
+
+  """Alias for `sequence(id: ID)`"""
+  storySeason(id: ID!): Sequence
+  storySeasons(after: String, collectionId: ID, first: Int, language: Language!, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+}
+
+type Recording implements Node {
+  attachments: [Attachment!]!
+  canonicalUrl: URL!
+  collection: Collection
+  contentType: RecordingContentType!
+  copyrightYear: Int
+  description: String
+  downloadDisabled: Boolean!
+  duration: Float!
+  id: ID!
+  mediaFiles: [MediaFile!]!
+  presenters: [Person!]!
+  recordingDate: Date
+  sequence: Sequence
+  shareUrl: URL
+  sponsor: Sponsor
+  title: String!
+  transcript: Transcript
+  videoFiles: [VideoFile!]!
+  viewerHasFavorited: Boolean!
+}
+
+type RecordingConnection {
+  aggregate: Aggregate
+  edges: [RecordingEdge!]
+  nodes: [Recording!]
+  pageInfo: PageInfo!
+}
+
+"""The available types of recordings."""
+enum RecordingContentType {
+  AUDIOBOOK_TRACK
+  MUSIC_TRACK
+  SERMON
+  STORY
+}
+
+type RecordingEdge {
+  cursor: String!
+  node: Recording!
+}
+
+input RecordingsOrder {
+  direction: OrderByDirection!
+  field: RecordingsSortableField!
+}
+
+"""Properties by which recording connections can be ordered."""
+enum RecordingsSortableField {
+  CREATED_AT
+  ID
+  TITLE
+}
+
+type Sequence implements Node {
+  collection: Collection
+  contentType: SequenceContentType!
+  description: String!
+  id: ID!
+  logoImage: Image
+  logoImageWithFallback: Image!
+  recordings(
+    after: String
+    collectionId: ID
+    first: Int
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  sponsor: Sponsor
+  summary: String!
+  title: String!
+}
+
+type SequenceConnection {
+  aggregate: Aggregate
+  edges: [SequenceEdge!]
+  nodes: [Sequence!]
+  pageInfo: PageInfo!
+}
+
+"""The available types of sequence."""
+enum SequenceContentType {
+  AUDIOBOOK
+  MUSIC_ALBUM
+  SERIES
+  STORY_SEASON
+}
+
+type SequenceEdge {
+  cursor: String!
+  node: Sequence!
+}
+
+input SequenceOrder {
+  direction: OrderByDirection!
+  field: SequenceSortableField!
+}
+
+"""Properties by which sequence connections can be ordered."""
+enum SequenceSortableField {
+  CREATED_AT
+  ID
+  TITLE
+}
+
+type Sponsor implements Node {
+  collections(after: String, contentType: CollectionContentType = CONFERENCE, first: Int, orderBy: [CollectionsOrder!], search: String): CollectionConnection!
+  description: String!
+  id: ID!
+  location: String
+  logoImage: Image
+  logoImageWithFallback: Image!
+  recordings(
+    after: String
+    collectionId: ID
+    contentType: RecordingContentType = SERMON
+    first: Int
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+    sequenceId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  sequences(after: String, collectionId: ID, contentType: SequenceContentType = SERIES, first: Int, orderBy: [SequenceOrder!], search: String): SequenceConnection!
+  title: String!
+  website: String
+}
+
+type SponsorConnection {
+  aggregate: Aggregate
+  edges: [SponsorEdge!]
+  nodes: [Sponsor!]
+  pageInfo: PageInfo!
+}
+
+type SponsorEdge {
+  cursor: String!
+  node: Sponsor!
+}
+
+input SponsorsOrder {
+  direction: OrderByDirection!
+  field: SponsorsSortableField!
+}
+
+"""Properties by which sponsor connections can be ordered."""
+enum SponsorsSortableField {
+  CREATED_AT
+  ID
+  TITLE
+}
+
+type Tag implements Node {
+  id: ID!
+  name: String!
+}
+
+type TagConnection {
+  aggregate: Aggregate
+  edges: [TagEdge!]
+  nodes: [Tag!]
+  pageInfo: PageInfo!
+}
+
+type TagEdge {
+  cursor: String!
+  node: Tag!
+}
+
+type Transcript implements Node {
+  id: ID!
+  text: String!
+}
+
+"""
+A field whose value conforms to the standard URL format as specified in RF3986: https://www.ietf.org/rfc/rfc3986.txt.
+"""
+scalar URL
+
+type User implements Node {
+  createdAt: Date!
+  favoriteRecordings(
+    after: String
+    collectionId: ID
+    first: Int
+    orderBy: [RecordingsOrder!]
+    presenterId: ID
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  givenName: String!
+  id: ID!
+  name: String!
+  playlist(id: ID!): UserPlaylist
+  playlists(after: String, first: Int, language: Language!, orderBy: [UserPlaylistsOrder!]): UserPlaylistConnection!
+  surname: String!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+}
+
+input UserLoginSocialInput {
+  givenName: String
+  socialId: String!
+  socialName: UserSocialServiceName!
+  socialToken: String!
+  surname: String
+}
+
+type UserPlaylist implements Node {
+  id: ID!
+  isPublic: Boolean!
+  language: Language!
+  recordings(
+    after: String
+    collectionId: ID
+    first: Int
+    presenterId: ID
+    sequenceId: ID
+    sponsorId: ID
+
+    """The name of the tag to filter the recordings by."""
+    tagName: String
+  ): RecordingConnection!
+  summary: String!
+  title: String!
+}
+
+input UserPlaylistAddInput {
+  isPublic: Boolean!
+  language: Language!
+  summary: String
+  title: String!
+}
+
+type UserPlaylistConnection {
+  aggregate: Aggregate
+  edges: [UserPlaylistEdge!]
+  nodes: [UserPlaylist!]
+  pageInfo: PageInfo!
+}
+
+type UserPlaylistEdge {
+  cursor: String!
+  node: UserPlaylist!
+}
+
+input UserPlaylistsOrder {
+  direction: OrderByDirection!
+  field: UserPlaylistsSortableField!
+}
+
+"""Properties by which a user's playlists connection can be ordered."""
+enum UserPlaylistsSortableField {
+  CREATED_AT
+  ID
+  TITLE
+}
+
+input UserPlaylistUpdateInput {
+  isPublic: Boolean!
+  summary: String
+  title: String!
+}
+
+input UserSignupInput {
+  email: String!
+  password: String!
+}
+
+"""The supported social login services."""
+enum UserSocialServiceName {
+  APPLE
+  FACEBOOK
+  GOOGLE
+}
+
+input UserUpdateProfileInput {
+  email: String!
+  givenName: String!
+  password: String
+  surname: String!
+}
+
+type VideoFile implements Node {
+  bitrate: Int!
+  container: String!
+  duration: Float!
+  filename: String!
+
+  """In bytes"""
+  filesize: String!
+  height: Int!
+  id: ID!
+  logUrl: URL
+  recording: Recording!
+  url: URL!
+  width: Int!
+}

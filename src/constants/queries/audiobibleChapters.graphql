@@ -1,4 +1,4 @@
-query audiobible($id: ID!, $bookId: ID!) {
+query audiobibleChapters($id: ID!, $bookId: ID!) {
 	audiobible(id: $id) {
 		book(id: $bookId) {
 			chapters {

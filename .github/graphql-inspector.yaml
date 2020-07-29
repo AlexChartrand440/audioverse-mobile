@@ -1,3 +1,4 @@
+schema: 'schema.graphql'
 branch: 'master'
 endpoint: 'https://graphql.audioverse.org/graphql'
 strictFragments: false
