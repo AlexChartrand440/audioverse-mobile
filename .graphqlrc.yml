@@ -11,7 +11,7 @@ extensions:
                 - '# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)'
                 - '# ------------------------------------------------------ '
           - schema-ast
-      src/contents/queries.types.ts:
+      src/constants/queries/types.ts:
         plugins:
           - add: '/* eslint-disable */'
           - typescript
