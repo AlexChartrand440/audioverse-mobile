@@ -11,8 +11,9 @@ jobs:
           steps:
             - run: npm ci
             - run: npm run lint
-            - run: npm audit
+            - run: npm audit --audit-level=moderate
             - run: npm test
+            - run: npm run graphql:validate
 workflows:
   build-and-test:
     jobs:

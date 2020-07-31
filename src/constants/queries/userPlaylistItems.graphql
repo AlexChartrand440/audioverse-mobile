@@ -1,0 +1,16 @@
+#import "./fragments/recording.graphql"
+
+query userPlaylistItems($id: ID!) {
+	me {
+		user {
+			playlist(id: $id) {
+				title
+				recordings {
+					nodes {
+						...recordingFragment
+					}
+				}
+			}
+		}
+	}
+}
