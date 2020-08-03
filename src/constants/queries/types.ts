@@ -26,6 +26,20 @@ export type Attachment = Node & {
   /** In bytes */
   filesize: Scalars['String'];
   id: Scalars['ID'];
+  mimeType: Scalars['String'];
+  recording: Recording;
+  url: Scalars['URL'];
+};
+
+export type AudioFile = Node & {
+  __typename?: 'AudioFile';
+  bitrate: Scalars['Int'];
+  duration: Scalars['Float'];
+  filename: Scalars['String'];
+  /** In bytes */
+  filesize: Scalars['String'];
+  id: Scalars['ID'];
+  mimeType: Scalars['String'];
   recording: Recording;
   url: Scalars['URL'];
 };
@@ -115,16 +129,32 @@ export type BlogPostEdge = {
   node: BlogPost;
 };
 
+export type BlogPostOrder = {
+  direction: OrderByDirection;
+  field: BlogPostSortableField;
+};
+
+/** Properties by which blog post connections can be ordered. */
+export enum BlogPostSortableField {
+  PublishedAt = 'PUBLISHED_AT'
+}
+
 export type Collection = Node & {
   __typename?: 'Collection';
   contentType: CollectionContentType;
+  endDate?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
+  image?: Maybe<Image>;
+  imageWithFallback: Image;
   location?: Maybe<Scalars['String']>;
+  /** @deprecated Collection.logoImage is replaced with Collection.image */
   logoImage?: Maybe<Image>;
+  /** @deprecated Collection.logoImageWithFallback is replaced with Collection.imageWithFallback */
   logoImageWithFallback: Image;
   recordings: RecordingConnection;
-  sequence: SequenceConnection;
+  sequences: SequenceConnection;
   sponsor?: Maybe<Sponsor>;
+  startDate?: Maybe<Scalars['Date']>;
   title: Scalars['String'];
 };
 
@@ -140,7 +170,7 @@ export type CollectionRecordingsArgs = {
 };
 
 
-export type CollectionSequenceArgs = {
+export type CollectionSequencesArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
@@ -216,6 +246,7 @@ export type MediaFile = Node & {
   /** In bytes */
   filesize: Scalars['String'];
   id: Scalars['ID'];
+  mimeType: Scalars['String'];
   recording: Recording;
   url: Scalars['URL'];
 };
@@ -316,12 +347,17 @@ export type Person = Node & {
   description: Scalars['String'];
   givenName: Scalars['String'];
   id: Scalars['ID'];
+  image?: Maybe<Image>;
+  imageWithFallback: Image;
   name: Scalars['String'];
+  /** @deprecated Person.photo is replaced with Person.image */
   photo?: Maybe<Image>;
+  /** @deprecated Person.photoWithFallback is replaced with Person.imageWithFallback */
   photoWithFallback: Image;
   recordings: RecordingConnection;
   summary: Scalars['String'];
   surname: Scalars['String'];
+  website?: Maybe<Scalars['String']>;
 };
 
 
@@ -353,6 +389,12 @@ export type PersonsOrder = {
   direction: OrderByDirection;
   field: PersonsSortableField;
 };
+
+/** The roles a Person can hold. */
+export enum PersonsRoleField {
+  Speaker = 'SPEAKER',
+  Writer = 'WRITER'
+}
 
 /** Properties by which person connections can be ordered. */
 export enum PersonsSortableField {
@@ -395,6 +437,7 @@ export type Query = {
   audiobookTrack?: Maybe<Recording>;
   audiobookTracks: RecordingConnection;
   blogPost?: Maybe<BlogPost>;
+  blogPosts: BlogPostConnection;
   collection?: Maybe<Collection>;
   collections: CollectionConnection;
   /** Alias for `collection(id: ID)` */
@@ -406,13 +449,16 @@ export type Query = {
   /** Alias for `sequence(id: ID)` */
   musicAlbum?: Maybe<Sequence>;
   musicAlbums: SequenceConnection;
+  /** @deprecated Query.musicBookTags will be replaced with a scriptural reference type. */
   musicBookTags: TagConnection;
   musicMoodTags: TagConnection;
   /** Alias for `recording(id: ID)` */
   musicTrack?: Maybe<Recording>;
   musicTracks: RecordingConnection;
   person?: Maybe<Person>;
+  persons: PersonConnection;
   popularRecordings: PopularRecordingConnection;
+  /** @deprecated Query.presenters is replaced with Query.persons(role: SPEAKER, withContentTypes: [SERMON, STORY]) */
   presenters: PersonConnection;
   recording?: Maybe<Recording>;
   recordings: RecordingConnection;
@@ -436,6 +482,7 @@ export type Query = {
   /** Alias for `sequence(id: ID)` */
   storySeason?: Maybe<Sequence>;
   storySeasons: SequenceConnection;
+  testimonies: TestimonyConnection;
 };
 
 
@@ -502,6 +549,14 @@ export type QueryAudiobookTracksArgs = {
 
 export type QueryBlogPostArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryBlogPostsArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  language: Language;
+  orderBy?: Maybe<Array<BlogPostOrder>>;
 };
 
 
@@ -606,6 +661,17 @@ export type QueryMusicTracksArgs = {
 
 export type QueryPersonArgs = {
   id: Scalars['ID'];
+};
+
+
+export type QueryPersonsArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  language: Language;
+  orderBy?: Maybe<Array<PersonsOrder>>;
+  role?: Maybe<PersonsRoleField>;
+  search?: Maybe<Scalars['String']>;
+  withContentTypes?: Maybe<Array<RecordingContentType>>;
 };
 
 
@@ -765,9 +831,18 @@ export type QueryStorySeasonsArgs = {
   sponsorId?: Maybe<Scalars['ID']>;
 };
 
+
+export type QueryTestimoniesArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  language: Language;
+  orderBy?: Maybe<Array<TestimoniesOrder>>;
+};
+
 export type Recording = Node & {
   __typename?: 'Recording';
   attachments: Array<Attachment>;
+  audioFiles: Array<AudioFile>;
   canonicalUrl: Scalars['URL'];
   collection?: Maybe<Collection>;
   contentType: RecordingContentType;
@@ -776,9 +851,14 @@ export type Recording = Node & {
   downloadDisabled: Scalars['Boolean'];
   duration: Scalars['Float'];
   id: Scalars['ID'];
+  imageWithFallback: Image;
+  /** @deprecated Recording.mediaFiles is replaced with Recording.audioFiles. */
   mediaFiles: Array<MediaFile>;
+  persons: Array<Person>;
+  /** @deprecated Recording.presenters is replaced with Recording.persons(role: SPEAKER) */
   presenters: Array<Person>;
   recordingDate?: Maybe<Scalars['Date']>;
+  recordingTags: RecordingTagConnection;
   sequence?: Maybe<Sequence>;
   shareUrl?: Maybe<Scalars['URL']>;
   sponsor?: Maybe<Sponsor>;
@@ -786,6 +866,17 @@ export type Recording = Node & {
   transcript?: Maybe<Transcript>;
   videoFiles: Array<VideoFile>;
   viewerHasFavorited: Scalars['Boolean'];
+};
+
+
+export type RecordingPersonsArgs = {
+  role?: Maybe<PersonsRoleField>;
+};
+
+
+export type RecordingRecordingTagsArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
 };
 
 export type RecordingConnection = {
@@ -822,13 +913,36 @@ export enum RecordingsSortableField {
   Title = 'TITLE'
 }
 
+export type RecordingTag = {
+  __typename?: 'RecordingTag';
+  tag: Tag;
+};
+
+export type RecordingTagConnection = {
+  __typename?: 'RecordingTagConnection';
+  aggregate?: Maybe<Aggregate>;
+  edges?: Maybe<Array<RecordingTagEdge>>;
+  nodes?: Maybe<Array<RecordingTag>>;
+  pageInfo: PageInfo;
+};
+
+export type RecordingTagEdge = {
+  __typename?: 'RecordingTagEdge';
+  cursor: Scalars['String'];
+  node: RecordingTag;
+};
+
 export type Sequence = Node & {
   __typename?: 'Sequence';
   collection?: Maybe<Collection>;
   contentType: SequenceContentType;
   description: Scalars['String'];
   id: Scalars['ID'];
+  image?: Maybe<Image>;
+  imageWithFallback: Image;
+  /** @deprecated Sequence.logoImage is replaced with Sequence.image */
   logoImage?: Maybe<Image>;
+  /** @deprecated Sequence.logoImageWithFallback is replaced with Sequence.imageWithFallback */
   logoImageWithFallback: Image;
   recordings: RecordingConnection;
   sponsor?: Maybe<Sponsor>;
@@ -841,7 +955,6 @@ export type SequenceRecordingsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   sponsorId?: Maybe<Scalars['ID']>;
   tagName?: Maybe<Scalars['String']>;
@@ -886,8 +999,12 @@ export type Sponsor = Node & {
   collections: CollectionConnection;
   description: Scalars['String'];
   id: Scalars['ID'];
+  image?: Maybe<Image>;
+  imageWithFallback: Image;
   location?: Maybe<Scalars['String']>;
+  /** @deprecated Sponsor.logoImage is replaced with Sponsor.image */
   logoImage?: Maybe<Image>;
+  /** @deprecated Sponsor.logoImageWithFallback is replaced with Sponsor.imageWithFallback */
   logoImageWithFallback: Image;
   recordings: RecordingConnection;
   sequences: SequenceConnection;
@@ -970,6 +1087,38 @@ export type TagEdge = {
   __typename?: 'TagEdge';
   cursor: Scalars['String'];
   node: Tag;
+};
+
+export type TestimoniesOrder = {
+  direction: OrderByDirection;
+  field: TestimoniesSortableField;
+};
+
+/** Properties by which testimony connections can be ordered. */
+export enum TestimoniesSortableField {
+  WrittenDate = 'WRITTEN_DATE'
+}
+
+export type Testimony = Node & {
+  __typename?: 'Testimony';
+  author: Scalars['String'];
+  body: Scalars['String'];
+  id: Scalars['ID'];
+  writtenDate: Scalars['Date'];
+};
+
+export type TestimonyConnection = {
+  __typename?: 'TestimonyConnection';
+  aggregate?: Maybe<Aggregate>;
+  edges?: Maybe<Array<TestimonyEdge>>;
+  nodes?: Maybe<Array<Testimony>>;
+  pageInfo: PageInfo;
+};
+
+export type TestimonyEdge = {
+  __typename?: 'TestimonyEdge';
+  cursor: Scalars['String'];
+  node: Testimony;
 };
 
 export type Transcript = Node & {
@@ -1119,6 +1268,7 @@ export type VideoFile = Node & {
   height: Scalars['Int'];
   id: Scalars['ID'];
   logUrl?: Maybe<Scalars['URL']>;
+  mimeType: Scalars['String'];
   recording: Recording;
   url: Scalars['URL'];
   width: Scalars['Int'];

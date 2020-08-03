@@ -6,10 +6,13 @@ fragment recordingFragment on Recording {
 	duration
 	recordingDate
 	shareUrl
+	imageWithFallback {
+		url(size: 256)
+	}
 	collection {
 		id
 		title
-		logoImage {
+		logoImage: image {
 			url(size: 256)
 		}
 	}
@@ -17,7 +20,7 @@ fragment recordingFragment on Recording {
 		filename
 		url
 	}
-	mediaFiles {
+	mediaFiles: audioFiles {
 		bitrate
 		duration
 		filename
@@ -33,18 +36,18 @@ fragment recordingFragment on Recording {
 		width
 		logUrl
 	}
-	presenters {
+	presenters: persons(role: SPEAKER) {
 		id
 		name
 		description
-		photo {
+		photo: image {
 			url(size: 256)
 		}
 	}
 	sequence {
 		id
 		title
-		logoImage {
+		logoImage: image {
 			url(size: 256)
 		}
 	}
@@ -52,7 +55,7 @@ fragment recordingFragment on Recording {
 		id
 		title
 		location
-		logoImage: logoImageWithFallback {
+		logoImage: imageWithFallback {
 			url(size: 256)
 		}
 	}

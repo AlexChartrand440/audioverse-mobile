@@ -4,10 +4,10 @@ query serieses($language: Language!, $afterCursor: String) {
 			id
 			title
 			description
-			logoImage: logoImageWithFallback {
+			logoImage: imageWithFallback {
 				url(size: 86)
 			}
-			logoImage256: logoImage {
+			logoImage256: image {
 				url(size: 256)
 			}
 		}

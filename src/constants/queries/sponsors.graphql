@@ -4,10 +4,10 @@ query sponsors($language: Language!, $afterCursor: String) {
 			id
 			title
 			description
-			photo86: logoImageWithFallback {
+			photo86: imageWithFallback {
 				url(size: 86)
 			}
-			logoImage256: logoImage {
+			logoImage256: image {
 				url(size: 256)
 			}
 		}
