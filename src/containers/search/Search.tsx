@@ -181,8 +181,7 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 			onChangeQuery={setSearch}
 			onSubmit={handleSearch}
 			cancelButtonText={I18n.t('Cancel')}
-			headerTintColor="#FFF"
-		>
+			headerTintColor="#FFF">
 			{loading && <ActivityIndicator size="large" color="#03A9F4" style={{ marginTop: 10 }} />}
 			{!loading && (
 				<TabView

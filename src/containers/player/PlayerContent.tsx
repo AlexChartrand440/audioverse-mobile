@@ -149,8 +149,7 @@ const PlayerContent: React.FC<Props> = ({ data, language, navigation }) => {
 							<ScrollView
 								style={styles.descriptionContainer}
 								contentContainerStyle={styles.descriptionContentContainer}
-								key={slide.type}
-							>
+								key={slide.type}>
 								<Text style={styles.descriptionTitle}>{I18n.t('Description', { locale: language })}</Text>
 								<HTML html={slide.description} tagsStyles={HTMLStyles} />
 							</ScrollView>

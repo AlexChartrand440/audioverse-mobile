@@ -83,8 +83,7 @@ const AddToPlaylist: React.FC<Props> = ({ track, playlists, actions, navigation 
 							key={el.id}
 							onPress={() => {
 								handleOnPressPlaylist(el);
-							}}
-						>
+							}}>
 							<Icon type="feather" name={!el.selected ? 'square' : 'check-square'} size={18} />
 							<Text style={styles.text}>{el.title}</Text>
 						</TouchableOpacity>

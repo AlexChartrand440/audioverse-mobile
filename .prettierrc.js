@@ -6,7 +6,6 @@ module.exports = {
 	semi: true,
 	bracketSpacing: true,
 	jsxBracketSameLine: true,
-	trailingComma: 'all',
 	overrides: [
 		{
 			files: ".prettierrc",

@@ -16,8 +16,7 @@ const TabBarLabel: React.FC<Props> = ({ language, tintColor, title }) => (
 			fontSize: 12,
 			color: tintColor,
 			textAlign: 'center',
-		}}
-	>
+		}}>
 		{I18n.t(title, { locale: language })}
 	</Text>
 );

@@ -172,8 +172,7 @@ const SliderEntry: React.FC<Props> = ({ data, onPress, even, parallax, parallaxP
 					styles.imageContainer,
 					even ? styles.imageContainerEven : {},
 					!title ? styles.imageContainerNoTitle : {},
-				]}
-			>
+				]}>
 				{image()}
 				{title && <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />}
 			</View>
