@@ -96,8 +96,10 @@ export const getPresenterName = (item: { [key: string]: any }) => {
  * @param {object} item
  * @param {string} bitRate
  */
-export const getRecordingPicture = (item: { [key: string]: any }) => {
-	if (
+export const getRecordingPicture = (item: { [key: string]: any }): string => {
+	if (item.imageWithFallback) {
+		return item.imageWithFallback.url;
+	} else if (
 		item.presenters &&
 		item.presenters.length == 1 &&
 		item.presenters[0].photo &&

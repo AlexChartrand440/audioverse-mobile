@@ -12,6 +12,20 @@ type Attachment implements Node {
   """In bytes"""
   filesize: String!
   id: ID!
+  mimeType: String!
+  recording: Recording!
+  url: URL!
+}
+
+type AudioFile implements Node {
+  bitrate: Int!
+  duration: Float!
+  filename: String!
+
+  """In bytes"""
+  filesize: String!
+  id: ID!
+  mimeType: String!
   recording: Recording!
   url: URL!
 }
@@ -81,12 +95,25 @@ type BlogPostEdge {
   node: BlogPost!
 }
 
+input BlogPostOrder {
+  direction: OrderByDirection!
+  field: BlogPostSortableField!
+}
+
+"""Properties by which blog post connections can be ordered."""
+enum BlogPostSortableField {
+  PUBLISHED_AT
+}
+
 type Collection implements Node {
   contentType: CollectionContentType!
+  endDate: Date
   id: ID!
+  image: Image
+  imageWithFallback: Image!
   location: String
-  logoImage: Image
-  logoImageWithFallback: Image!
+  logoImage: Image @deprecated(reason: "Collection.logoImage is replaced with Collection.image")
+  logoImageWithFallback: Image! @deprecated(reason: "Collection.logoImageWithFallback is replaced with Collection.imageWithFallback")
   recordings(
     after: String
     first: Int
@@ -98,8 +125,9 @@ type Collection implements Node {
     """The name of the tag to filter the recordings by."""
     tagName: String
   ): RecordingConnection!
-  sequence(after: String, first: Int, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+  sequences(after: String, first: Int, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
   sponsor: Sponsor
+  startDate: Date
   title: String!
 }
 
@@ -164,6 +192,7 @@ type MediaFile implements Node {
   """In bytes"""
   filesize: String!
   id: ID!
+  mimeType: String!
   recording: Recording!
   url: URL!
 }
@@ -205,9 +234,11 @@ type Person implements Node {
   description: String!
   givenName: String!
   id: ID!
+  image: Image
+  imageWithFallback: Image!
   name: String!
-  photo: Image
-  photoWithFallback: Image!
+  photo: Image @deprecated(reason: "Person.photo is replaced with Person.image")
+  photoWithFallback: Image! @deprecated(reason: "Person.photoWithFallback is replaced with Person.imageWithFallback")
   recordings(
     after: String
     collectionId: ID
@@ -221,6 +252,7 @@ type Person implements Node {
   ): RecordingConnection!
   summary: String!
   surname: String!
+  website: String
 }
 
 type PersonConnection {
@@ -238,6 +270,12 @@ type PersonEdge {
 input PersonsOrder {
   direction: OrderByDirection!
   field: PersonsSortableField!
+}
+
+"""The roles a Person can hold."""
+enum PersonsRoleField {
+  SPEAKER
+  WRITER
 }
 
 """Properties by which person connections can be ordered."""
@@ -297,6 +335,7 @@ type Query {
     tagName: String
   ): RecordingConnection!
   blogPost(id: ID!): BlogPost
+  blogPosts(after: String, first: Int, language: Language!, orderBy: [BlogPostOrder!]): BlogPostConnection!
   collection(id: ID!): Collection
   collections(after: String, first: Int, language: Language!, orderBy: [CollectionsOrder!], search: String, sponsorId: ID): CollectionConnection!
 
@@ -322,7 +361,7 @@ type Query {
   """Alias for `sequence(id: ID)`"""
   musicAlbum(id: ID!): Sequence
   musicAlbums(after: String, collectionId: ID, first: Int, language: Language!, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
-  musicBookTags(after: String, first: Int, language: Language!): TagConnection!
+  musicBookTags(after: String, first: Int, language: Language!): TagConnection! @deprecated(reason: "Query.musicBookTags will be replaced with a scriptural reference type.")
   musicMoodTags(after: String, first: Int, language: Language!): TagConnection!
 
   """Alias for `recording(id: ID)`"""
@@ -346,6 +385,19 @@ type Query {
     tagName: String
   ): RecordingConnection!
   person(id: ID!): Person
+  persons(
+    after: String
+    first: Int
+    language: Language!
+    orderBy: [PersonsOrder!]
+    role: PersonsRoleField
+    search: String
+
+    """
+    Filters persons by those with published recordings of any of the provided content types.
+    """
+    withContentTypes: [RecordingContentType!]
+  ): PersonConnection!
   popularRecordings(
     after: String
     collectionId: ID
@@ -359,7 +411,7 @@ type Query {
     """The name of the tag to filter the recordings by."""
     tagName: String
   ): PopularRecordingConnection!
-  presenters(after: String, first: Int, language: Language!, orderBy: [PersonsOrder!], search: String): PersonConnection!
+  presenters(after: String, first: Int, language: Language!, orderBy: [PersonsOrder!], search: String): PersonConnection! @deprecated(reason: "Query.presenters is replaced with Query.persons(role: SPEAKER, withContentTypes: [SERMON, STORY])")
   recording(id: ID!): Recording
   recordings(
     after: String
@@ -441,10 +493,12 @@ type Query {
   """Alias for `sequence(id: ID)`"""
   storySeason(id: ID!): Sequence
   storySeasons(after: String, collectionId: ID, first: Int, language: Language!, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+  testimonies(after: String, first: Int, language: Language!, orderBy: [TestimoniesOrder!]): TestimonyConnection!
 }
 
 type Recording implements Node {
   attachments: [Attachment!]!
+  audioFiles: [AudioFile!]!
   canonicalUrl: URL!
   collection: Collection
   contentType: RecordingContentType!
@@ -453,9 +507,12 @@ type Recording implements Node {
   downloadDisabled: Boolean!
   duration: Float!
   id: ID!
-  mediaFiles: [MediaFile!]!
-  presenters: [Person!]!
+  imageWithFallback: Image!
+  mediaFiles: [MediaFile!]! @deprecated(reason: "Recording.mediaFiles is replaced with Recording.audioFiles.")
+  persons(role: PersonsRoleField): [Person!]!
+  presenters: [Person!]! @deprecated(reason: "Recording.presenters is replaced with Recording.persons(role: SPEAKER)")
   recordingDate: Date
+  recordingTags(after: String, first: Int): RecordingTagConnection!
   sequence: Sequence
   shareUrl: URL
   sponsor: Sponsor
@@ -497,18 +554,35 @@ enum RecordingsSortableField {
   TITLE
 }
 
+type RecordingTag {
+  tag: Tag!
+}
+
+type RecordingTagConnection {
+  aggregate: Aggregate
+  edges: [RecordingTagEdge!]
+  nodes: [RecordingTag!]
+  pageInfo: PageInfo!
+}
+
+type RecordingTagEdge {
+  cursor: String!
+  node: RecordingTag!
+}
+
 type Sequence implements Node {
   collection: Collection
   contentType: SequenceContentType!
   description: String!
   id: ID!
-  logoImage: Image
-  logoImageWithFallback: Image!
+  image: Image
+  imageWithFallback: Image!
+  logoImage: Image @deprecated(reason: "Sequence.logoImage is replaced with Sequence.image")
+  logoImageWithFallback: Image! @deprecated(reason: "Sequence.logoImageWithFallback is replaced with Sequence.imageWithFallback")
   recordings(
     after: String
     collectionId: ID
     first: Int
-    orderBy: [RecordingsOrder!]
     presenterId: ID
     sponsorId: ID
 
@@ -556,9 +630,11 @@ type Sponsor implements Node {
   collections(after: String, contentType: CollectionContentType = CONFERENCE, first: Int, orderBy: [CollectionsOrder!], search: String): CollectionConnection!
   description: String!
   id: ID!
+  image: Image
+  imageWithFallback: Image!
   location: String
-  logoImage: Image
-  logoImageWithFallback: Image!
+  logoImage: Image @deprecated(reason: "Sponsor.logoImage is replaced with Sponsor.image")
+  logoImageWithFallback: Image! @deprecated(reason: "Sponsor.logoImageWithFallback is replaced with Sponsor.imageWithFallback")
   recordings(
     after: String
     collectionId: ID
@@ -615,6 +691,35 @@ type TagConnection {
 type TagEdge {
   cursor: String!
   node: Tag!
+}
+
+input TestimoniesOrder {
+  direction: OrderByDirection!
+  field: TestimoniesSortableField!
+}
+
+"""Properties by which testimony connections can be ordered."""
+enum TestimoniesSortableField {
+  WRITTEN_DATE
+}
+
+type Testimony implements Node {
+  author: String!
+  body: String!
+  id: ID!
+  writtenDate: Date!
+}
+
+type TestimonyConnection {
+  aggregate: Aggregate
+  edges: [TestimonyEdge!]
+  nodes: [Testimony!]
+  pageInfo: PageInfo!
+}
+
+type TestimonyEdge {
+  cursor: String!
+  node: Testimony!
 }
 
 type Transcript implements Node {
@@ -748,6 +853,7 @@ type VideoFile implements Node {
   height: Int!
   id: ID!
   logUrl: URL
+  mimeType: String!
   recording: Recording!
   url: URL!
   width: Int!

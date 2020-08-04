@@ -5,20 +5,20 @@ query search($language: Language!, $term: String!) {
 		nodes {
 			id
 			title
-			logoImage: logoImageWithFallback {
+			logoImage: imageWithFallback {
 				url(size: 86)
 			}
 		}
 	}
-	presenters(language: $language, search: $term, first: 25) {
+	presenters: persons(role: SPEAKER, withContentTypes: [SERMON, STORY], language: $language, search: $term, first: 25) {
 		nodes {
 			id
 			name
 			description
-			photoWithFallback {
+			photoWithFallback: imageWithFallback {
 				url(size: 86)
 			}
-			photo {
+			photo: image {
 				url(size: 256)
 			}
 		}
@@ -32,7 +32,7 @@ query search($language: Language!, $term: String!) {
 		nodes {
 			id
 			title
-			logoImage: logoImageWithFallback {
+			logoImage: imageWithFallback {
 				url(size: 86)
 			}
 		}
@@ -41,7 +41,7 @@ query search($language: Language!, $term: String!) {
 		nodes {
 			id
 			title
-			logoImage: logoImageWithFallback {
+			logoImage: imageWithFallback {
 				url(size: 86)
 			}
 		}

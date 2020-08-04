@@ -100,8 +100,7 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
 						duration={3500}
 						loop
 						style={styles.title}
-						accessibilityHint={I18n.t('maximize_player')}
-					>
+						accessibilityHint={I18n.t('maximize_player')}>
 						{track.title}
 					</MarqueeText>
 				}

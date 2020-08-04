@@ -195,8 +195,7 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 							duration={3500}
 							loop
 							style={styles.title}
-							accessibilityHint={I18n.t('maximize_player')}
-						>
+							accessibilityHint={I18n.t('maximize_player')}>
 							{track.title}
 						</MarqueeText>
 					}

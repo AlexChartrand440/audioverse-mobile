@@ -83,8 +83,7 @@ const PlayerControls: React.FC<Props> = ({ playPause, skipToPrevious, skipToNext
 			style={{
 				...styles.container,
 				paddingBottom: styles.container.paddingBottom + insets.bottom,
-			}}
-		>
+			}}>
 			<ImageButton
 				source={iconReplay}
 				imageStyle={styles.icon}

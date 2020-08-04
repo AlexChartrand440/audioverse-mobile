@@ -16,8 +16,7 @@ export const ImageButton: React.FC<Props> = ({ onPress, style, imageStyle, acces
 			style={style}
 			accessible={true}
 			accessibilityLabel={accessibilityLabel}
-			accessibilityRole="button"
-		>
+			accessibilityRole="button">
 			<Image source={source} {...props} style={imageStyle} />
 		</TouchableOpacity>
 	);

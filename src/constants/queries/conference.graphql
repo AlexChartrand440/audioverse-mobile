@@ -2,7 +2,7 @@ query conference($id: ID!) {
 	conference(id: $id) {
 		id
 		title
-		logoImage: logoImageWithFallback {
+		logoImage: imageWithFallback {
 			url(size: 172)
 		}
 	}

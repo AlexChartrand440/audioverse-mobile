@@ -9,7 +9,7 @@ query sponsorsWithMusic($language: Language!, $afterCursor: String) {
 		nodes {
 			id
 			title
-			logoImage: logoImageWithFallback {
+			logoImage: imageWithFallback {
 				url(size: 86)
 			}
 		}

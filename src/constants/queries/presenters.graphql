@@ -1,13 +1,20 @@
 query presenters($language: Language!, $afterCursor: String) {
-	presenters(language: $language, first: 1500, after: $afterCursor, orderBy: [{ field: NAME, direction: ASC }]) {
+	presenters: persons(
+		role: SPEAKER
+		withContentTypes: [SERMON, STORY]
+		language: $language
+		first: 1500
+		after: $afterCursor
+		orderBy: [{ field: NAME, direction: ASC }]
+	) {
 		nodes {
 			id
 			name
 			description
-			photo86: photoWithFallback {
+			photo86: imageWithFallback {
 				url(size: 86)
 			}
-			photo256: photo {
+			photo256: image {
 				url(size: 256)
 			}
 		}
