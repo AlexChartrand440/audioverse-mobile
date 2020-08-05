@@ -19,7 +19,6 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* AudioVerseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AudioVerseTests.m */; };
 		2FB7F90BC17DA0BDC15DDB99 /* libPods-AudioVerse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D687EC6CDCD31571A6A933 /* libPods-AudioVerse.a */; };
-		3B61520124DB407F00D17B47 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		3BD9676D24C73A0C00F9D338 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD9676C24C73A0C00F9D338 /* Launch Screen.storyboard */; };
 		97FAE1CE000BB1ABC9D482B1 /* libPods-AudioVerse-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EF067DC98447415A570841D /* libPods-AudioVerse-tvOSTests.a */; };
 		B00DB3B521CC492C00A98E3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B00DB38221CC492B00A98E3C /* GoogleService-Info.plist */; };
@@ -433,7 +432,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B61520124DB407F00D17B47 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3BD9676D24C73A0C00F9D338 /* Launch Screen.storyboard in Resources */,
 				B00DB3B521CC492C00A98E3C /* GoogleService-Info.plist in Resources */,
@@ -470,7 +468,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		0C536E31CF12BE6B0AC705FE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

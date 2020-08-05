@@ -12,7 +12,6 @@
     "prettier:write": "npx prettier --write **/*.{js,ts,tsx,json,graphql} && npx prettier --write *.{js,tsx,json}",
     "postversion": "react-native-version",
     "ios:beta": "fastlane ios beta",
-    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
     "android:beta": "fastlane android beta",
     "graphql:codegen": "graphql codegen",
     "graphql:coverage": "graphql coverage",
