@@ -142,6 +142,7 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 				cancelButtonIndex: options.length - 1,
 			},
 			(buttonIndex) => {
+				if (!track) return;
 				if (typeof buttonIndex !== 'undefined' && buttonIndex !== options.length - 1) {
 					actions.download(
 						track,
