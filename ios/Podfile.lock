@@ -433,6 +433,8 @@ PODS:
     - React
   - RNScreens (2.9.0):
     - React
+  - RNShare (3.7.0):
+    - React
   - RNVectorIcons (6.6.0):
     - React
   - Toast (4.0.0)
@@ -508,6 +510,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -629,6 +632,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -681,7 +686,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 344b969c45af3d8464d36e8dea264942992ef033
   react-native-simple-toast: 58b71ef003f01d2c0bf5dcd2fdccc75861dabade
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
-  react-native-track-player: ae3ffb3aa756148d456f946dc070767c8dc218df
+  react-native-track-player: f99b7f08a0039ae0ad4ca649f210bbad85b35f0a
   react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
   react-native-viewpager: a7b438ca32c57b2614ece2a123e7fe116f743131
   react-native-webview: 679b6f400176e2ea8a785acf7ae16cf282e7d1eb
@@ -704,6 +709,7 @@ SPEC CHECKSUMS:
   RNLocalize: b6df30cc25ae736d37874f9bce13351db2f56796
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
   RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
+  RNShare: a1d5064df7a0ebe778d001869b3f0a124bf0a491
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
