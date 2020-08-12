@@ -1,9 +1,10 @@
 import throttle from 'lodash.throttle';
 import React from 'react';
-import { Alert, Linking, Share, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
 import ActionSheet from 'react-native-action-sheet';
 import { Button } from 'react-native-elements';
 import firebase from 'react-native-firebase';
+import Share from 'react-native-share';
 import { Track } from 'react-native-track-player';
 import { NavigationInjectedProps } from 'react-navigation';
 
@@ -150,7 +151,47 @@ const PlayerOptions: React.FC<Props> = ({
 			item_id: track.id,
 		});
 		// share
-		Share.share({ message: `${I18n.t('share_this_blessing_with_you.')} ${track.shareUrl}` });
+		const title = `${track.title} – AudioVerse`;
+		const url = track.shareUrl;
+		const options = Platform.select({
+			ios: {
+				activityItemSources: [
+					{
+						// For sharing url with custom title.
+						placeholderItem: {
+							type: 'text' as const,
+							content: title,
+						},
+						item: {
+							default: {
+								type: 'url' as const,
+								content: url,
+							},
+							mail: {
+								type: 'text' as const,
+								content: `${track.title} – ${track.artist}\n\n${url}`,
+							},
+						},
+						subject: {
+							default: title,
+						},
+						linkMetadata: {
+							originalUrl: url,
+							url,
+							title,
+						},
+					},
+				],
+			},
+			default: {
+				url,
+				message: I18n.t('share_this_blessing_with_you.'),
+				title,
+				subject: title,
+			},
+		});
+		StatusBar.setBarStyle('light-content');
+		Share.open(options).finally(() => StatusBar.setBarStyle('dark-content'));
 	};
 
 	const handleMore = () => {
