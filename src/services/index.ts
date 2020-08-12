@@ -17,12 +17,12 @@ export const fetchData = async (endpoint: string) => {
 	return contentType && contentType.indexOf('application/json') !== -1 ? response.json() : response.text();
 };
 
-export const fetchGraphQLData = async (
+export const fetchGraphQLData = (
 	query: string,
 	variables: { [key: string]: any },
 	keyMapper: (results: any) => any,
 	user?: UserState
-) => {
+): Promise<{ result: any; nextAfterCursor: string | undefined }> => {
 	console.log('GraphQL variables:', variables, query);
 	const headers: any = {
 		'Content-Type': 'application/json',
@@ -30,19 +30,20 @@ export const fetchGraphQLData = async (
 	if (user) {
 		headers['x-av-session'] = user.sessionToken;
 	}
-	const response = await fetch(GRAPHQL_URL, {
+	return fetch(GRAPHQL_URL, {
 		method: 'POST',
 		headers,
 		body: JSON.stringify({ query, variables }),
-	});
-	return response.json().then((json) => {
-		if (json.errors) {
-			console.log('GraphQL errors', json.errors);
-		}
-		const results = keyMapper(json.data);
-		return {
-			result: results.nodes,
-			nextAfterCursor: results.pageInfo?.hasNextPage ? results.pageInfo?.endCursor : undefined,
-		};
-	});
+	})
+		.then((response) => response.json())
+		.then((json) => {
+			if (json.errors) {
+				console.log('GraphQL errors', json.errors);
+			}
+			const results = keyMapper(json.data);
+			return {
+				result: results.nodes,
+				nextAfterCursor: results.pageInfo?.hasNextPage ? results.pageInfo?.endCursor : undefined,
+			};
+		});
 };

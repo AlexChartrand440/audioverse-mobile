@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, Platform, StatusBar, StyleSheet, View } from 'react-native';
 import ActionSheet from 'react-native-action-sheet';
 import { Button, ListItem } from 'react-native-elements';
@@ -21,8 +21,11 @@ import {
 	skipToPrevious,
 } from '../../actions';
 import ProgressBar from '../../components/progressbar/ProgressBar';
-import { Dirs } from '../../constants';
+import { Dirs, Queries } from '../../constants';
+import { trackInitialized } from '../../sagas/player';
+import { fetchGraphQLData } from '../../services';
 import { UserState } from '../../store/user/types';
+import { parseRecording } from '../../utils';
 
 import PlayerContent from './PlayerContent';
 import PlayerControls from './PlayerControls';
@@ -84,6 +87,26 @@ const styles = StyleSheet.create({
 });
 
 const Player: React.FC<Props> = ({ navigation, track, rate, language, user, actions, isFavorite, bitRate }) => {
+	const [freshRecording, setFreshRecording] = useState<Track | undefined>(undefined);
+
+	useEffect(() => {
+		const fetchRecording = async () => {
+			if (!track) return;
+			const { result } = await fetchGraphQLData(Queries.recording, { id: track.id }, (results) => ({
+				nodes: results.recording,
+			})).catch(() => ({ result: undefined }));
+			if (result) {
+				setFreshRecording(parseRecording(result));
+			}
+		};
+		fetchRecording();
+	}, [track]);
+	track = freshRecording || track;
+	/**
+	 * Tracks downloaded in the past may not have all the properties current tracks would. If network conditions
+	 * allow, downloading a fresh track ensures that as many functions as possible are available.
+	 */
+
 	const handleDownload = () => {
 		const bitratesIndex: Bitrate[] = [];
 		const options: string[] = [];
@@ -119,6 +142,7 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 				cancelButtonIndex: options.length - 1,
 			},
 			(buttonIndex) => {
+				if (!track) return;
 				if (typeof buttonIndex !== 'undefined' && buttonIndex !== options.length - 1) {
 					actions.download(
 						track,

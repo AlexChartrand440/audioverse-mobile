@@ -254,7 +254,7 @@ const PlayerOptions: React.FC<Props> = ({
 					accessibilityLabel={I18n.t('add_to_playlists')}
 				/>
 			)}
-			{(track.contentType === ContentTypes.sermon || track.contentType === ContentTypes.book) && (
+			{(track.contentType === ContentTypes.sermon || track.contentType === ContentTypes.book) && track.shareUrl && (
 				<Button
 					icon={{
 						type: 'feather',
