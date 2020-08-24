@@ -1,7 +1,6 @@
 /* eslint-disable */
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
-
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -141,6 +140,10 @@ export enum BlogPostSortableField {
 
 export type Collection = Node & {
   __typename?: 'Collection';
+  /** The canonical HTML path to this resource. */
+  canonicalPath: Scalars['String'];
+  /** The canonical URL to this resource. */
+  canonicalUrl: Scalars['String'];
   contentType: CollectionContentType;
   endDate?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
@@ -153,6 +156,8 @@ export type Collection = Node & {
   logoImageWithFallback: Image;
   recordings: RecordingConnection;
   sequences: SequenceConnection;
+  /** A shareable short URL to this resource. */
+  shareUrl: Scalars['String'];
   sponsor?: Maybe<Sponsor>;
   startDate?: Maybe<Scalars['Date']>;
   title: Scalars['String'];
@@ -264,6 +269,10 @@ export type Mutation = {
   signup: AuthenticatedUserPayload;
   unfavoriteRecording: Scalars['Boolean'];
   updateMyProfile: AuthenticatedUserPayload;
+  /** Sends a reset password email to the user, as the first step in the reset password process. */
+  userRecover: SuccessPayload;
+  /** Resets a user's password with a token received from `userRecover`. */
+  userReset: SuccessPayload;
 };
 
 
@@ -324,6 +333,17 @@ export type MutationUpdateMyProfileArgs = {
   input: UserUpdateProfileInput;
 };
 
+
+export type MutationUserRecoverArgs = {
+  email: Scalars['String'];
+};
+
+
+export type MutationUserResetArgs = {
+  password: Scalars['String'];
+  token: Scalars['String'];
+};
+
 export type Node = {
   id: Scalars['ID'];
 };
@@ -344,6 +364,10 @@ export type PageInfo = {
 
 export type Person = Node & {
   __typename?: 'Person';
+  /** The canonical HTML path to this resource. */
+  canonicalPath: Scalars['String'];
+  /** The canonical URL to this resource. */
+  canonicalUrl: Scalars['String'];
   description: Scalars['String'];
   givenName: Scalars['String'];
   id: Scalars['ID'];
@@ -355,6 +379,8 @@ export type Person = Node & {
   /** @deprecated Person.photoWithFallback is replaced with Person.imageWithFallback */
   photoWithFallback: Image;
   recordings: RecordingConnection;
+  /** A shareable short URL to this resource. */
+  shareUrl: Scalars['String'];
   summary: Scalars['String'];
   surname: Scalars['String'];
   website?: Maybe<Scalars['String']>;
@@ -843,6 +869,8 @@ export type Recording = Node & {
   __typename?: 'Recording';
   attachments: Array<Attachment>;
   audioFiles: Array<AudioFile>;
+  /** The canonical HTML path to this resource. */
+  canonicalPath: Scalars['String'];
   canonicalUrl: Scalars['URL'];
   collection?: Maybe<Collection>;
   contentType: RecordingContentType;
@@ -910,6 +938,8 @@ export type RecordingsOrder = {
 export enum RecordingsSortableField {
   CreatedAt = 'CREATED_AT',
   Id = 'ID',
+  PublishedAt = 'PUBLISHED_AT',
+  RecordedAt = 'RECORDED_AT',
   Title = 'TITLE'
 }
 
@@ -934,6 +964,10 @@ export type RecordingTagEdge = {
 
 export type Sequence = Node & {
   __typename?: 'Sequence';
+  /** The canonical HTML path to this resource. */
+  canonicalPath: Scalars['String'];
+  /** The canonical URL to this resource. */
+  canonicalUrl: Scalars['String'];
   collection?: Maybe<Collection>;
   contentType: SequenceContentType;
   description: Scalars['String'];
@@ -945,6 +979,8 @@ export type Sequence = Node & {
   /** @deprecated Sequence.logoImageWithFallback is replaced with Sequence.imageWithFallback */
   logoImageWithFallback: Image;
   recordings: RecordingConnection;
+  /** A shareable short URL to this resource. */
+  shareUrl: Scalars['String'];
   sponsor?: Maybe<Sponsor>;
   summary: Scalars['String'];
   title: Scalars['String'];
@@ -994,8 +1030,12 @@ export enum SequenceSortableField {
   Title = 'TITLE'
 }
 
-export type Sponsor = Node & {
+export type Sponsor = Node & UniformResourceLocatable & {
   __typename?: 'Sponsor';
+  /** The canonical HTML path to this resource. */
+  canonicalPath: Scalars['String'];
+  /** The canonical URL to this resource. */
+  canonicalUrl: Scalars['String'];
   collections: CollectionConnection;
   description: Scalars['String'];
   id: Scalars['ID'];
@@ -1008,6 +1048,8 @@ export type Sponsor = Node & {
   logoImageWithFallback: Image;
   recordings: RecordingConnection;
   sequences: SequenceConnection;
+  /** A shareable short URL to this resource. */
+  shareUrl: Scalars['String'];
   title: Scalars['String'];
   website?: Maybe<Scalars['String']>;
 };
@@ -1069,6 +1111,12 @@ export enum SponsorsSortableField {
   Title = 'TITLE'
 }
 
+export type SuccessPayload = {
+  __typename?: 'SuccessPayload';
+  errors: Array<InputValidationError>;
+  success: Scalars['Boolean'];
+};
+
 export type Tag = Node & {
   __typename?: 'Tag';
   id: Scalars['ID'];
@@ -1125,6 +1173,13 @@ export type Transcript = Node & {
   __typename?: 'Transcript';
   id: Scalars['ID'];
   text: Scalars['String'];
+};
+
+/** Represents a type that can be retrieved by a URL. */
+export type UniformResourceLocatable = {
+  canonicalPath: Scalars['String'];
+  canonicalUrl: Scalars['String'];
+  shareUrl: Scalars['String'];
 };
 
 
@@ -1355,7 +1410,10 @@ export type AudiobookRecordingsQuery = (
 export type RecordingFragmentFragment = (
   { __typename?: 'Recording' }
   & Pick<Recording, 'id' | 'title' | 'contentType' | 'description' | 'duration' | 'recordingDate' | 'shareUrl'>
-  & { collection?: Maybe<(
+  & { imageWithFallback: (
+    { __typename?: 'Image' }
+    & Pick<Image, 'url'>
+  ), collection?: Maybe<(
     { __typename?: 'Collection' }
     & Pick<Collection, 'id' | 'title'>
     & { logoImage?: Maybe<(
@@ -1366,9 +1424,9 @@ export type RecordingFragmentFragment = (
     { __typename?: 'Attachment' }
     & Pick<Attachment, 'filename' | 'url'>
   )>, mediaFiles: Array<(
-    { __typename?: 'MediaFile' }
-    & Pick<MediaFile, 'bitrate' | 'duration' | 'filename' | 'filesize'>
-    & { downloadURL: MediaFile['url'] }
+    { __typename?: 'AudioFile' }
+    & Pick<AudioFile, 'bitrate' | 'duration' | 'filename' | 'filesize'>
+    & { downloadURL: AudioFile['url'] }
   )>, videoFiles: Array<(
     { __typename?: 'VideoFile' }
     & Pick<VideoFile, 'container' | 'filename' | 'filesize' | 'height' | 'width' | 'logUrl'>

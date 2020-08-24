@@ -1,7 +1,6 @@
 # ------------------------------------------------------
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------ 
-
 type Aggregate {
   count: Int!
 }
@@ -106,6 +105,11 @@ enum BlogPostSortableField {
 }
 
 type Collection implements Node {
+  """The canonical HTML path to this resource."""
+  canonicalPath: String!
+
+  """The canonical URL to this resource."""
+  canonicalUrl: String!
   contentType: CollectionContentType!
   endDate: Date
   id: ID!
@@ -126,6 +130,9 @@ type Collection implements Node {
     tagName: String
   ): RecordingConnection!
   sequences(after: String, first: Int, orderBy: [SequenceOrder!], search: String, sponsorId: ID): SequenceConnection!
+
+  """A shareable short URL to this resource."""
+  shareUrl: String!
   sponsor: Sponsor
   startDate: Date
   title: String!
@@ -209,6 +216,23 @@ type Mutation {
   signup(input: UserSignupInput!): AuthenticatedUserPayload!
   unfavoriteRecording(id: ID!): Boolean!
   updateMyProfile(input: UserUpdateProfileInput!): AuthenticatedUserPayload!
+
+  """
+  Sends a reset password email to the user, as the first step in the reset password process.
+  """
+  userRecover(
+    """The email address of the user to recover."""
+    email: String!
+  ): SuccessPayload!
+
+  """Resets a user's password with a token received from `userRecover`."""
+  userReset(
+    """New password that will be set as part of the reset password process."""
+    password: String!
+
+    """The reset token required to reset the user's password."""
+    token: String!
+  ): SuccessPayload!
 }
 
 interface Node {
@@ -231,6 +255,11 @@ type PageInfo {
 }
 
 type Person implements Node {
+  """The canonical HTML path to this resource."""
+  canonicalPath: String!
+
+  """The canonical URL to this resource."""
+  canonicalUrl: String!
   description: String!
   givenName: String!
   id: ID!
@@ -250,6 +279,9 @@ type Person implements Node {
     """The name of the tag to filter the recordings by."""
     tagName: String
   ): RecordingConnection!
+
+  """A shareable short URL to this resource."""
+  shareUrl: String!
   summary: String!
   surname: String!
   website: String
@@ -499,6 +531,9 @@ type Query {
 type Recording implements Node {
   attachments: [Attachment!]!
   audioFiles: [AudioFile!]!
+
+  """The canonical HTML path to this resource."""
+  canonicalPath: String!
   canonicalUrl: URL!
   collection: Collection
   contentType: RecordingContentType!
@@ -551,6 +586,8 @@ input RecordingsOrder {
 enum RecordingsSortableField {
   CREATED_AT
   ID
+  PUBLISHED_AT
+  RECORDED_AT
   TITLE
 }
 
@@ -571,6 +608,11 @@ type RecordingTagEdge {
 }
 
 type Sequence implements Node {
+  """The canonical HTML path to this resource."""
+  canonicalPath: String!
+
+  """The canonical URL to this resource."""
+  canonicalUrl: String!
   collection: Collection
   contentType: SequenceContentType!
   description: String!
@@ -589,6 +631,9 @@ type Sequence implements Node {
     """The name of the tag to filter the recordings by."""
     tagName: String
   ): RecordingConnection!
+
+  """A shareable short URL to this resource."""
+  shareUrl: String!
   sponsor: Sponsor
   summary: String!
   title: String!
@@ -626,7 +671,12 @@ enum SequenceSortableField {
   TITLE
 }
 
-type Sponsor implements Node {
+type Sponsor implements Node & UniformResourceLocatable {
+  """The canonical HTML path to this resource."""
+  canonicalPath: String!
+
+  """The canonical URL to this resource."""
+  canonicalUrl: String!
   collections(after: String, contentType: CollectionContentType = CONFERENCE, first: Int, orderBy: [CollectionsOrder!], search: String): CollectionConnection!
   description: String!
   id: ID!
@@ -648,6 +698,9 @@ type Sponsor implements Node {
     tagName: String
   ): RecordingConnection!
   sequences(after: String, collectionId: ID, contentType: SequenceContentType = SERIES, first: Int, orderBy: [SequenceOrder!], search: String): SequenceConnection!
+
+  """A shareable short URL to this resource."""
+  shareUrl: String!
   title: String!
   website: String
 }
@@ -674,6 +727,11 @@ enum SponsorsSortableField {
   CREATED_AT
   ID
   TITLE
+}
+
+type SuccessPayload {
+  errors: [InputValidationError!]!
+  success: Boolean!
 }
 
 type Tag implements Node {
@@ -725,6 +783,13 @@ type TestimonyEdge {
 type Transcript implements Node {
   id: ID!
   text: String!
+}
+
+"""Represents a type that can be retrieved by a URL."""
+interface UniformResourceLocatable {
+  canonicalPath: String!
+  canonicalUrl: String!
+  shareUrl: String!
 }
 
 """
