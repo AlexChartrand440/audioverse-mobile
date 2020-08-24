@@ -6,7 +6,7 @@ query sponsorRecordings($language: Language!, $sponsorId: ID, $afterCursor: Stri
 		sponsorId: $sponsorId
 		first: 25
 		after: $afterCursor
-		orderBy: [{ field: CREATED_AT, direction: DESC }]
+		orderBy: [{ field: PUBLISHED_AT, direction: DESC }]
 	) {
 		nodes {
 			...recordingFragment

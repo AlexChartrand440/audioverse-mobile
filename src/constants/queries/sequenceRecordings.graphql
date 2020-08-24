@@ -6,7 +6,7 @@ query sequenceRecordings($language: Language!, $sequenceId: ID, $afterCursor: St
 		sequenceId: $sequenceId
 		first: 25
 		after: $afterCursor
-		orderBy: [{ field: CREATED_AT, direction: DESC }]
+		orderBy: [{ field: PUBLISHED_AT, direction: DESC }]
 	) {
 		nodes {
 			...recordingFragment

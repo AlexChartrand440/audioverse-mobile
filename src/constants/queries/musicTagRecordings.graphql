@@ -6,7 +6,7 @@ query musicTagRecordings($language: Language!, $tagName: String, $afterCursor: S
 		tagName: $tagName
 		first: 25
 		after: $afterCursor
-		orderBy: [{ field: CREATED_AT, direction: DESC }]
+		orderBy: [{ field: PUBLISHED_AT, direction: DESC }]
 	) {
 		nodes {
 			...recordingFragment
