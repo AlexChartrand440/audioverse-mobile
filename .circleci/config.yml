@@ -3,17 +3,14 @@ orbs:
   node: circleci/node@4.0.0
 jobs:
   build-and-test:
-    executor:
-      name: node/default
+    executor: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm ci
-            - run: npm run lint
-            - run: npm audit --audit-level=moderate
-            - run: npm test
-            - run: npm run graphql:validate
+      - node/install-packages
+      - run: npm run lint
+      - run: npm audit --audit-level=moderate
+      - run: npm test
+      - run: npm run graphql:validate
 workflows:
   build-and-test:
     jobs:
