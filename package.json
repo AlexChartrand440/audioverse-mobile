@@ -3,7 +3,7 @@
   "version": "3.3.12",
   "private": true,
   "scripts": {
-    "postinstall": "node ./fix_metro_android_release_bug.js && ./node_modules/.bin/patch-package && ./node_modules/.bin/jetify",
+    "postinstall": "node ./fix_metro_android_release_bug.js && npx patch-package && npx jetify",
     "start": "react-native start --reset-cache && react-native start",
     "test": "jest",
     "test:watch": "jest --watch",
