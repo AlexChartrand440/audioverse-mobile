@@ -21,14 +21,15 @@ interface TabBarLabelProps {
 	tintColor: string;
 }
 
-const navigationOptionsFunction = ({ navigation }: NavigationInjectedProps) => ({
-	title: navigation.state.params ? navigation.state.params.title : '',
-	headerTitleContainerStyle: {
-		width: Platform.OS === 'ios' ? '60%' : '75%',
-		alignItems: Platform.OS === 'ios' ? 'center' : 'flex-start',
-	},
-	// WORKAROUND: https://github.com/react-navigation/react-navigation/issues/7057#issuecomment-593086348
-});
+const navigationOptionsFunction = ({ navigation }: NavigationInjectedProps) =>
+	({
+		title: navigation.state.params ? navigation.state.params.title : '',
+		headerTitleContainerStyle: {
+			width: Platform.OS === 'ios' ? '60%' : '75%',
+			alignItems: Platform.OS === 'ios' ? 'center' : 'flex-start',
+		},
+		// WORKAROUND: https://github.com/react-navigation/react-navigation/issues/7057#issuecomment-593086348
+	} as const);
 
 const ScriptureSongsTab = createMaterialTopTabNavigator(
 	{
