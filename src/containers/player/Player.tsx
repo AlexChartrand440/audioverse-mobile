@@ -22,7 +22,6 @@ import {
 } from '../../actions';
 import ProgressBar from '../../components/progressbar/ProgressBar';
 import { Dirs, Queries } from '../../constants';
-import { trackInitialized } from '../../sagas/player';
 import { fetchGraphQLData } from '../../services';
 import { UserState } from '../../store/user/types';
 import { parseRecording } from '../../utils';
@@ -100,8 +99,8 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 			}
 		};
 		fetchRecording();
-	}, [track]);
-	track = freshRecording || track;
+	}, [track?.id]);
+	const freshTrack = freshRecording || track;
 	/**
 	 * Tracks downloaded in the past may not have all the properties current tracks would. If network conditions
 	 * allow, downloading a fresh track ensures that as many functions as possible are available.
@@ -111,22 +110,22 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 		const bitratesIndex: Bitrate[] = [];
 		const options: string[] = [];
 
-		if (!track) return;
+		if (!freshTrack) return;
 
 		// audio
-		for (let i = track.mediaFiles.length - 1; i >= 0; i--) {
-			bitratesIndex.push(track.mediaFiles[i]);
-			options.push(`${track.mediaFiles[i].bitrate} kbps - ${getSize(track.mediaFiles[i].filesize)}`);
+		for (let i = freshTrack.mediaFiles.length - 1; i >= 0; i--) {
+			bitratesIndex.push(freshTrack.mediaFiles[i]);
+			options.push(`${freshTrack.mediaFiles[i].bitrate} kbps - ${getSize(freshTrack.mediaFiles[i].filesize)}`);
 		}
 
 		// video
-		if (track.videoFiles.length) {
-			for (let i = track.videoFiles.length - 1; i >= 0; i--) {
-				if (track.videoFiles[i].container !== 'm3u8_ios') {
-					bitratesIndex.push(track.videoFiles[i]);
+		if (freshTrack.videoFiles.length) {
+			for (let i = freshTrack.videoFiles.length - 1; i >= 0; i--) {
+				if (freshTrack.videoFiles[i].container !== 'm3u8_ios') {
+					bitratesIndex.push(freshTrack.videoFiles[i]);
 					options.push(
-						`MP4 (${track.videoFiles[i].width} x ${track.videoFiles[i].height}) - ${getSize(
-							track.videoFiles[i].filesize
+						`MP4 (${freshTrack.videoFiles[i].width} x ${freshTrack.videoFiles[i].height}) - ${getSize(
+							freshTrack.videoFiles[i].filesize
 						)}`
 					);
 				}
@@ -142,10 +141,10 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 				cancelButtonIndex: options.length - 1,
 			},
 			(buttonIndex) => {
-				if (!track) return;
+				if (!freshTrack) return;
 				if (typeof buttonIndex !== 'undefined' && buttonIndex !== options.length - 1) {
 					actions.download(
-						track,
+						freshTrack,
 						Dirs.presentations,
 						bitratesIndex[buttonIndex].downloadURL,
 						bitratesIndex[buttonIndex].filename,
@@ -172,8 +171,8 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 	};
 
 	const handlePlayVideo = () => {
-		if (track) {
-			actions.playVideo(track);
+		if (freshTrack) {
+			actions.playVideo(freshTrack);
 		}
 	};
 
@@ -184,7 +183,7 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 		(navigation as any).pop();
 	};
 
-	if (!track) {
+	if (!freshTrack) {
 		return <View />;
 	}
 
@@ -209,9 +208,9 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 				<ListItem
 					leftAvatar={{
 						source:
-							track.artwork && track.artwork.toString().startsWith('http')
-								? { uri: track.artwork }
-								: (track.artwork as any),
+							freshTrack.artwork && freshTrack.artwork.toString().startsWith('http')
+								? { uri: freshTrack.artwork }
+								: (freshTrack.artwork as any),
 					}}
 					title={
 						<MarqueeText
@@ -220,10 +219,10 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 							loop
 							style={styles.title}
 							accessibilityHint={I18n.t('maximize_player')}>
-							{track.title}
+							{freshTrack.title}
 						</MarqueeText>
 					}
-					subtitle={track.artist}
+					subtitle={freshTrack.artist}
 					subtitleProps={{ numberOfLines: 1 }}
 					rightElement={rightElement}
 					containerStyle={{ backgroundColor: '#E0E0E080' }}
@@ -231,10 +230,10 @@ const Player: React.FC<Props> = ({ navigation, track, rate, language, user, acti
 					underlayColor="#E0E0E080"
 				/>
 			</View>
-			<PlayerContent data={track} language={language} navigation={navigation} />
+			<PlayerContent data={freshTrack} language={language} navigation={navigation} />
 			<PlayerOptions
 				navigation={navigation}
-				track={track}
+				track={freshTrack}
 				onDownload={handleDownload}
 				rate={rate}
 				user={user}
