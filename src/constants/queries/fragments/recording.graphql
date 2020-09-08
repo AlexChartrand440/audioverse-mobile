@@ -16,18 +16,18 @@ fragment recordingFragment on Recording {
 			url(size: 256)
 		}
 	}
-	attachments {
+	attachments(allowedContainers: [PDF]) {
 		filename
 		url
 	}
-	mediaFiles: audioFiles {
+	mediaFiles: audioFiles(allowedContainers: [MP3]) {
 		bitrate
 		duration
 		filename
 		filesize
 		downloadURL: url
 	}
-	videoFiles {
+	videoFiles(allowedContainers: [MP4, M3U8_IOS]) {
 		container
 		filename
 		filesize

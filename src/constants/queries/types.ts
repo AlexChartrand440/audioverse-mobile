@@ -145,21 +145,25 @@ export type Collection = Node & {
   /** The canonical URL to this resource. */
   canonicalUrl: Scalars['String'];
   contentType: CollectionContentType;
+  description: Scalars['String'];
   endDate?: Maybe<Scalars['Date']>;
   id: Scalars['ID'];
   image?: Maybe<Image>;
   imageWithFallback: Image;
+  isHidden?: Maybe<Scalars['Boolean']>;
   location?: Maybe<Scalars['String']>;
   /** @deprecated Collection.logoImage is replaced with Collection.image */
   logoImage?: Maybe<Image>;
   /** @deprecated Collection.logoImageWithFallback is replaced with Collection.imageWithFallback */
   logoImageWithFallback: Image;
+  notes?: Maybe<Scalars['String']>;
   recordings: RecordingConnection;
   sequences: SequenceConnection;
   /** A shareable short URL to this resource. */
   shareUrl: Scalars['String'];
   sponsor?: Maybe<Sponsor>;
   startDate?: Maybe<Scalars['Date']>;
+  summary: Scalars['String'];
   title: Scalars['String'];
 };
 
@@ -167,6 +171,8 @@ export type Collection = Node & {
 export type CollectionRecordingsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   sequenceId?: Maybe<Scalars['ID']>;
@@ -178,6 +184,8 @@ export type CollectionRecordingsArgs = {
 export type CollectionSequencesArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -198,10 +206,27 @@ export enum CollectionContentType {
   StoryProgram = 'STORY_PROGRAM'
 }
 
+export type CollectionCreateInput = {
+  contentType: CollectionContentType;
+  description?: Maybe<Scalars['String']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  location?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  sponsorId: Scalars['ID'];
+  summary?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
 export type CollectionEdge = {
   __typename?: 'CollectionEdge';
   cursor: Scalars['String'];
   node: Collection;
+};
+
+export type CollectionPayload = {
+  __typename?: 'CollectionPayload';
+  collection?: Maybe<Collection>;
+  errors: Array<InputValidationError>;
 };
 
 export type CollectionsOrder = {
@@ -215,6 +240,16 @@ export enum CollectionsSortableField {
   Id = 'ID',
   Title = 'TITLE'
 }
+
+export type CollectionUpdateInput = {
+  description?: Maybe<Scalars['String']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  location?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  sponsorId?: Maybe<Scalars['ID']>;
+  summary?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
 
 
 export type Image = {
@@ -232,6 +267,21 @@ export type InputValidationError = {
   message: Scalars['String'];
 };
 
+export type InternalContact = {
+  __typename?: 'InternalContact';
+  address: Scalars['String'];
+  email: Scalars['String'];
+  name: Scalars['String'];
+  phone: Scalars['String'];
+};
+
+export type InternalContactInput = {
+  address?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+};
+
 /** Supported languages */
 export enum Language {
   Chinese = 'CHINESE',
@@ -243,22 +293,104 @@ export enum Language {
   Spanish = 'SPANISH'
 }
 
-export type MediaFile = Node & {
-  __typename?: 'MediaFile';
-  bitrate: Scalars['Int'];
-  duration: Scalars['Float'];
-  filename: Scalars['String'];
-  /** In bytes */
-  filesize: Scalars['String'];
+export type License = Node & {
+  __typename?: 'License';
+  description: Scalars['String'];
   id: Scalars['ID'];
-  mimeType: Scalars['String'];
-  recording: Recording;
-  url: Scalars['URL'];
+  image?: Maybe<Image>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  notes?: Maybe<Scalars['String']>;
+  permitsSales?: Maybe<Scalars['Boolean']>;
+  summary: Scalars['String'];
+  title: Scalars['String'];
 };
+
+export type LicenseConnection = {
+  __typename?: 'LicenseConnection';
+  aggregate?: Maybe<Aggregate>;
+  edges?: Maybe<Array<LicenseEdge>>;
+  nodes?: Maybe<Array<License>>;
+  pageInfo: PageInfo;
+};
+
+export type LicenseCreateInput = {
+  description?: Maybe<Scalars['String']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  language: Language;
+  notes?: Maybe<Scalars['String']>;
+  permitsSales?: Maybe<Scalars['Boolean']>;
+  summary?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
+export type LicenseEdge = {
+  __typename?: 'LicenseEdge';
+  cursor: Scalars['String'];
+  node: License;
+};
+
+export type LicensePayload = {
+  __typename?: 'LicensePayload';
+  errors: Array<InputValidationError>;
+  license?: Maybe<License>;
+};
+
+export type LicensesOrder = {
+  direction: OrderByDirection;
+  field: LicensesSortableField;
+};
+
+/** Properties by which license connections can be ordered. */
+export enum LicensesSortableField {
+  CreatedAt = 'CREATED_AT',
+  Id = 'ID',
+  Title = 'TITLE'
+}
+
+export type LicenseUpdateInput = {
+  description?: Maybe<Scalars['String']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  notes?: Maybe<Scalars['String']>;
+  permitsSales?: Maybe<Scalars['Boolean']>;
+  summary?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
+/** The media file container types. */
+export enum MediaFileContainer {
+  Doc = 'DOC',
+  Docx = 'DOCX',
+  Flv = 'FLV',
+  Jpg = 'JPG',
+  Key = 'KEY',
+  M3U8Ios = 'M3U8_IOS',
+  M3U8Web = 'M3U8_WEB',
+  M4A = 'M4A',
+  M4V = 'M4V',
+  Mov = 'MOV',
+  Mp3 = 'MP3',
+  Mp4 = 'MP4',
+  Odp = 'ODP',
+  Odt = 'ODT',
+  Pages = 'PAGES',
+  Pdf = 'PDF',
+  Png = 'PNG',
+  Ppt = 'PPT',
+  Pptx = 'PPTX',
+  Wav = 'WAV',
+  Wma = 'WMA',
+  Wmv = 'WMV'
+}
 
 export type Mutation = {
   __typename?: 'Mutation';
+  collectionCreate: CollectionPayload;
+  collectionDelete: SuccessPayload;
+  collectionUpdate: CollectionPayload;
   favoriteRecording: Scalars['Boolean'];
+  licenseCreate: LicensePayload;
+  licenseDelete: SuccessPayload;
+  licenseUpdate: LicensePayload;
   login: AuthenticatedUserPayload;
   loginSocial: AuthenticatedUserPayload;
   playlistAdd: UserPlaylist;
@@ -266,18 +398,59 @@ export type Mutation = {
   playlistRecordingAdd: Scalars['Boolean'];
   playlistRecordingRemove: Scalars['Boolean'];
   playlistUpdate: UserPlaylist;
+  sequenceCreate: SequencePayload;
+  sequenceDelete: SuccessPayload;
+  sequenceUpdate: SequencePayload;
   signup: AuthenticatedUserPayload;
+  sponsorCreate: SponsorPayload;
+  sponsorDelete: SuccessPayload;
+  sponsorUpdate: SponsorPayload;
   unfavoriteRecording: Scalars['Boolean'];
   updateMyProfile: AuthenticatedUserPayload;
+  userCreate: UserPayload;
+  userDelete: SuccessPayload;
   /** Sends a reset password email to the user, as the first step in the reset password process. */
   userRecover: SuccessPayload;
   /** Resets a user's password with a token received from `userRecover`. */
   userReset: SuccessPayload;
+  userUpdate: UserPayload;
+};
+
+
+export type MutationCollectionCreateArgs = {
+  input: CollectionCreateInput;
+};
+
+
+export type MutationCollectionDeleteArgs = {
+  collectionId: Scalars['ID'];
+};
+
+
+export type MutationCollectionUpdateArgs = {
+  collectionId: Scalars['ID'];
+  input: CollectionUpdateInput;
 };
 
 
 export type MutationFavoriteRecordingArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationLicenseCreateArgs = {
+  input: LicenseCreateInput;
+};
+
+
+export type MutationLicenseDeleteArgs = {
+  licenseId: Scalars['ID'];
+};
+
+
+export type MutationLicenseUpdateArgs = {
+  input: LicenseUpdateInput;
+  licenseId: Scalars['ID'];
 };
 
 
@@ -319,8 +492,40 @@ export type MutationPlaylistUpdateArgs = {
 };
 
 
+export type MutationSequenceCreateArgs = {
+  input: SequenceCreateInput;
+};
+
+
+export type MutationSequenceDeleteArgs = {
+  sequenceId: Scalars['ID'];
+};
+
+
+export type MutationSequenceUpdateArgs = {
+  input: SequenceUpdateInput;
+  sequenceId: Scalars['ID'];
+};
+
+
 export type MutationSignupArgs = {
   input: UserSignupInput;
+};
+
+
+export type MutationSponsorCreateArgs = {
+  input: SponsorCreateInput;
+};
+
+
+export type MutationSponsorDeleteArgs = {
+  sponsorId: Scalars['ID'];
+};
+
+
+export type MutationSponsorUpdateArgs = {
+  input: SponsorUpdateInput;
+  sponsorId: Scalars['ID'];
 };
 
 
@@ -330,7 +535,17 @@ export type MutationUnfavoriteRecordingArgs = {
 
 
 export type MutationUpdateMyProfileArgs = {
-  input: UserUpdateProfileInput;
+  input: UserUpdateInput;
+};
+
+
+export type MutationUserCreateArgs = {
+  input: UserCreateInput;
+};
+
+
+export type MutationUserDeleteArgs = {
+  userId: Scalars['ID'];
 };
 
 
@@ -342,6 +557,12 @@ export type MutationUserRecoverArgs = {
 export type MutationUserResetArgs = {
   password: Scalars['String'];
   token: Scalars['String'];
+};
+
+
+export type MutationUserUpdateArgs = {
+  input: UserUpdateInput;
+  userId: Scalars['ID'];
 };
 
 export type Node = {
@@ -391,6 +612,8 @@ export type PersonRecordingsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   sequenceId?: Maybe<Scalars['ID']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -471,6 +694,8 @@ export type Query = {
   conferences: CollectionConnection;
   featuredBlogPosts: BlogPostConnection;
   featuredRecordings: RecordingConnection;
+  license?: Maybe<License>;
+  licenses: LicenseConnection;
   me?: Maybe<AuthenticatedUser>;
   /** Alias for `sequence(id: ID)` */
   musicAlbum?: Maybe<Sequence>;
@@ -484,8 +709,6 @@ export type Query = {
   person?: Maybe<Person>;
   persons: PersonConnection;
   popularRecordings: PopularRecordingConnection;
-  /** @deprecated Query.presenters is replaced with Query.persons(role: SPEAKER, withContentTypes: [SERMON, STORY]) */
-  presenters: PersonConnection;
   recording?: Maybe<Recording>;
   recordings: RecordingConnection;
   sequence?: Maybe<Sequence>;
@@ -509,6 +732,8 @@ export type Query = {
   storySeason?: Maybe<Sequence>;
   storySeasons: SequenceConnection;
   testimonies: TestimonyConnection;
+  user?: Maybe<User>;
+  users: UserConnection;
 };
 
 
@@ -520,6 +745,7 @@ export type QueryAudiobibleArgs = {
 export type QueryAudiobiblesArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -532,7 +758,9 @@ export type QueryAudiobooksArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -547,7 +775,9 @@ export type QueryAudiobookSeriesArgs = {
 export type QueryAudiobookSeriesesArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<CollectionsOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -563,7 +793,9 @@ export type QueryAudiobookTracksArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   search?: Maybe<Scalars['String']>;
@@ -582,6 +814,7 @@ export type QueryBlogPostsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<BlogPostOrder>>;
 };
 
@@ -594,7 +827,9 @@ export type QueryCollectionArgs = {
 export type QueryCollectionsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<CollectionsOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -609,7 +844,9 @@ export type QueryConferenceArgs = {
 export type QueryConferencesArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<CollectionsOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -620,6 +857,7 @@ export type QueryFeaturedBlogPostsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -628,11 +866,29 @@ export type QueryFeaturedRecordingsArgs = {
   collectionId?: Maybe<Scalars['ID']>;
   contentType?: Maybe<RecordingContentType>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   presenterId?: Maybe<Scalars['ID']>;
   sequenceId?: Maybe<Scalars['ID']>;
   sponsorId?: Maybe<Scalars['ID']>;
   tagName?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryLicenseArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryLicensesArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  language: Language;
+  offset?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Array<LicensesOrder>>;
+  search?: Maybe<Scalars['String']>;
 };
 
 
@@ -645,7 +901,9 @@ export type QueryMusicAlbumsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -656,6 +914,7 @@ export type QueryMusicBookTagsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -663,6 +922,7 @@ export type QueryMusicMoodTagsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
 };
 
 
@@ -675,7 +935,9 @@ export type QueryMusicTracksArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   search?: Maybe<Scalars['String']>;
@@ -693,7 +955,9 @@ export type QueryPersonArgs = {
 export type QueryPersonsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<PersonsOrder>>;
   role?: Maybe<PersonsRoleField>;
   search?: Maybe<Scalars['String']>;
@@ -706,20 +970,13 @@ export type QueryPopularRecordingsArgs = {
   collectionId?: Maybe<Scalars['ID']>;
   contentType?: Maybe<RecordingContentType>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   presenterId?: Maybe<Scalars['ID']>;
   sequenceId?: Maybe<Scalars['ID']>;
   sponsorId?: Maybe<Scalars['ID']>;
   tagName?: Maybe<Scalars['String']>;
-};
-
-
-export type QueryPresentersArgs = {
-  after?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  language: Language;
-  orderBy?: Maybe<Array<PersonsOrder>>;
-  search?: Maybe<Scalars['String']>;
 };
 
 
@@ -732,7 +989,9 @@ export type QueryRecordingsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   search?: Maybe<Scalars['String']>;
@@ -751,7 +1010,9 @@ export type QuerySequencesArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -767,7 +1028,9 @@ export type QuerySeriesesArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -783,7 +1046,9 @@ export type QuerySermonsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   search?: Maybe<Scalars['String']>;
@@ -801,7 +1066,9 @@ export type QuerySponsorArgs = {
 export type QuerySponsorsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SponsorsOrder>>;
   search?: Maybe<Scalars['String']>;
   withMusic?: Maybe<Scalars['Boolean']>;
@@ -812,7 +1079,9 @@ export type QueryStoriesArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   search?: Maybe<Scalars['String']>;
@@ -835,7 +1104,9 @@ export type QueryStoryProgramArgs = {
 export type QueryStoryProgramsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<CollectionsOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -851,7 +1122,9 @@ export type QueryStorySeasonsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
   search?: Maybe<Scalars['String']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -862,7 +1135,22 @@ export type QueryTestimoniesArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<TestimoniesOrder>>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryUsersArgs = {
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Array<UsersOrder>>;
+  search?: Maybe<Scalars['String']>;
 };
 
 export type Recording = Node & {
@@ -880,11 +1168,7 @@ export type Recording = Node & {
   duration: Scalars['Float'];
   id: Scalars['ID'];
   imageWithFallback: Image;
-  /** @deprecated Recording.mediaFiles is replaced with Recording.audioFiles. */
-  mediaFiles: Array<MediaFile>;
   persons: Array<Person>;
-  /** @deprecated Recording.presenters is replaced with Recording.persons(role: SPEAKER) */
-  presenters: Array<Person>;
   recordingDate?: Maybe<Scalars['Date']>;
   recordingTags: RecordingTagConnection;
   sequence?: Maybe<Sequence>;
@@ -897,7 +1181,19 @@ export type Recording = Node & {
 };
 
 
+export type RecordingAttachmentsArgs = {
+  allowedContainers?: Maybe<Array<MediaFileContainer>>;
+};
+
+
+export type RecordingAudioFilesArgs = {
+  allowedContainers?: Maybe<Array<MediaFileContainer>>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+};
+
+
 export type RecordingPersonsArgs = {
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
   role?: Maybe<PersonsRoleField>;
 };
 
@@ -905,6 +1201,13 @@ export type RecordingPersonsArgs = {
 export type RecordingRecordingTagsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+};
+
+
+export type RecordingVideoFilesArgs = {
+  allowedContainers?: Maybe<Array<MediaFileContainer>>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
 };
 
 export type RecordingConnection = {
@@ -974,10 +1277,12 @@ export type Sequence = Node & {
   id: Scalars['ID'];
   image?: Maybe<Image>;
   imageWithFallback: Image;
+  isHidden?: Maybe<Scalars['Boolean']>;
   /** @deprecated Sequence.logoImage is replaced with Sequence.image */
   logoImage?: Maybe<Image>;
   /** @deprecated Sequence.logoImageWithFallback is replaced with Sequence.imageWithFallback */
   logoImageWithFallback: Image;
+  notes?: Maybe<Scalars['String']>;
   recordings: RecordingConnection;
   /** A shareable short URL to this resource. */
   shareUrl: Scalars['String'];
@@ -991,6 +1296,8 @@ export type SequenceRecordingsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   presenterId?: Maybe<Scalars['ID']>;
   sponsorId?: Maybe<Scalars['ID']>;
   tagName?: Maybe<Scalars['String']>;
@@ -1012,6 +1319,17 @@ export enum SequenceContentType {
   StorySeason = 'STORY_SEASON'
 }
 
+export type SequenceCreateInput = {
+  collectionId?: Maybe<Scalars['ID']>;
+  contentType: SequenceContentType;
+  description?: Maybe<Scalars['String']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  notes?: Maybe<Scalars['String']>;
+  sponsorId: Scalars['ID'];
+  summary?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
 export type SequenceEdge = {
   __typename?: 'SequenceEdge';
   cursor: Scalars['String'];
@@ -1023,6 +1341,12 @@ export type SequenceOrder = {
   field: SequenceSortableField;
 };
 
+export type SequencePayload = {
+  __typename?: 'SequencePayload';
+  errors: Array<InputValidationError>;
+  sequence?: Maybe<Sequence>;
+};
+
 /** Properties by which sequence connections can be ordered. */
 export enum SequenceSortableField {
   CreatedAt = 'CREATED_AT',
@@ -1030,26 +1354,43 @@ export enum SequenceSortableField {
   Title = 'TITLE'
 }
 
+export type SequenceUpdateInput = {
+  collectionId?: Maybe<Scalars['ID']>;
+  description?: Maybe<Scalars['String']>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  notes?: Maybe<Scalars['String']>;
+  sponsorId?: Maybe<Scalars['ID']>;
+  summary?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+};
+
 export type Sponsor = Node & UniformResourceLocatable & {
   __typename?: 'Sponsor';
+  address?: Maybe<Scalars['String']>;
   /** The canonical HTML path to this resource. */
   canonicalPath: Scalars['String'];
   /** The canonical URL to this resource. */
   canonicalUrl: Scalars['String'];
   collections: CollectionConnection;
   description: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   image?: Maybe<Image>;
   imageWithFallback: Image;
+  internalContact?: Maybe<InternalContact>;
+  isHidden: Scalars['Boolean'];
   location?: Maybe<Scalars['String']>;
   /** @deprecated Sponsor.logoImage is replaced with Sponsor.image */
   logoImage?: Maybe<Image>;
   /** @deprecated Sponsor.logoImageWithFallback is replaced with Sponsor.imageWithFallback */
   logoImageWithFallback: Image;
+  notes?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
   recordings: RecordingConnection;
   sequences: SequenceConnection;
   /** A shareable short URL to this resource. */
   shareUrl: Scalars['String'];
+  summary: Scalars['String'];
   title: Scalars['String'];
   website?: Maybe<Scalars['String']>;
 };
@@ -1059,6 +1400,8 @@ export type SponsorCollectionsArgs = {
   after?: Maybe<Scalars['String']>;
   contentType?: Maybe<CollectionContentType>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<CollectionsOrder>>;
   search?: Maybe<Scalars['String']>;
 };
@@ -1069,6 +1412,8 @@ export type SponsorRecordingsArgs = {
   collectionId?: Maybe<Scalars['ID']>;
   contentType?: Maybe<RecordingContentType>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   sequenceId?: Maybe<Scalars['ID']>;
@@ -1081,6 +1426,8 @@ export type SponsorSequencesArgs = {
   collectionId?: Maybe<Scalars['ID']>;
   contentType?: Maybe<SequenceContentType>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<SequenceOrder>>;
   search?: Maybe<Scalars['String']>;
 };
@@ -1093,10 +1440,31 @@ export type SponsorConnection = {
   pageInfo: PageInfo;
 };
 
+export type SponsorCreateInput = {
+  address?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  internalContact?: Maybe<InternalContactInput>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  language: Language;
+  location?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  summary?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+  website?: Maybe<Scalars['String']>;
+};
+
 export type SponsorEdge = {
   __typename?: 'SponsorEdge';
   cursor: Scalars['String'];
   node: Sponsor;
+};
+
+export type SponsorPayload = {
+  __typename?: 'SponsorPayload';
+  errors: Array<InputValidationError>;
+  sponsor?: Maybe<Sponsor>;
 };
 
 export type SponsorsOrder = {
@@ -1110,6 +1478,20 @@ export enum SponsorsSortableField {
   Id = 'ID',
   Title = 'TITLE'
 }
+
+export type SponsorUpdateInput = {
+  address?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  internalContact?: Maybe<InternalContactInput>;
+  isHidden?: Maybe<Scalars['Boolean']>;
+  location?: Maybe<Scalars['String']>;
+  notes?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  summary?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
+};
 
 export type SuccessPayload = {
   __typename?: 'SuccessPayload';
@@ -1185,13 +1567,36 @@ export type UniformResourceLocatable = {
 
 export type User = Node & {
   __typename?: 'User';
+  /** The first line of the address. Typically the street address or PO Box number. */
+  address1?: Maybe<Scalars['String']>;
+  /** The second line of the address. Typically the number of the apartment, suite, or unit. */
+  address2?: Maybe<Scalars['String']>;
+  /** The name of the city, district, village, or town. */
+  city?: Maybe<Scalars['String']>;
+  /** The name of the country. */
+  country?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
+  /** The user's email address. */
+  email: Scalars['String'];
   favoriteRecordings: RecordingConnection;
+  /** The user's first name. */
   givenName: Scalars['String'];
   id: Scalars['ID'];
+  /** Whether the user has permission to perform all administrative functions. */
+  isSuperuser: Scalars['Boolean'];
+  /** The user's preferred interface language. */
+  language: Language;
+  /** The full name of the user, based on the values for givenName and surname. */
   name: Scalars['String'];
   playlist?: Maybe<UserPlaylist>;
   playlists: UserPlaylistConnection;
+  /** The postal or zip code. */
+  postalCode?: Maybe<Scalars['String']>;
+  /** The name of the region, such as the province, state, or district. */
+  province?: Maybe<Scalars['String']>;
+  /** The user's administrative roles. */
+  roles: Array<UserRoles>;
+  /** The user's last name. */
   surname: Scalars['String'];
 };
 
@@ -1200,6 +1605,8 @@ export type UserFavoriteRecordingsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<RecordingsOrder>>;
   presenterId?: Maybe<Scalars['ID']>;
   sequenceId?: Maybe<Scalars['ID']>;
@@ -1217,7 +1624,51 @@ export type UserPlaylistsArgs = {
   after?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   language: Language;
+  offset?: Maybe<Scalars['Int']>;
   orderBy?: Maybe<Array<UserPlaylistsOrder>>;
+};
+
+export type UserConnection = {
+  __typename?: 'UserConnection';
+  aggregate?: Maybe<Aggregate>;
+  edges?: Maybe<Array<UserEdge>>;
+  nodes?: Maybe<Array<User>>;
+  pageInfo: PageInfo;
+};
+
+export type UserCreateInput = {
+  /** The first line of the address. Typically the street address or PO Box number. */
+  address1?: Maybe<Scalars['String']>;
+  /** The second line of the address. Typically the number of the apartment, suite, or unit. */
+  address2?: Maybe<Scalars['String']>;
+  /** The name of the city, district, village, or town. */
+  city?: Maybe<Scalars['String']>;
+  /** The name of the country. */
+  country?: Maybe<Scalars['String']>;
+  /** The user's email address. */
+  email: Scalars['String'];
+  /** The user's first name. */
+  givenName: Scalars['String'];
+  /** Whether the user has permission to perform all administrative functions. */
+  isSuperuser?: Maybe<Scalars['Boolean']>;
+  /** The user's preferred interface language. */
+  language?: Maybe<Language>;
+  /** The user's password. */
+  password?: Maybe<Scalars['String']>;
+  /** The postal or zip code. */
+  postalCode?: Maybe<Scalars['String']>;
+  /** The name of the region, such as the province, state, or district. */
+  province?: Maybe<Scalars['String']>;
+  /** The user's administrative roles. */
+  roles?: Maybe<Array<UserRoles>>;
+  /** The user's last name. */
+  surname: Scalars['String'];
+};
+
+export type UserEdge = {
+  __typename?: 'UserEdge';
+  cursor: Scalars['String'];
+  node: User;
 };
 
 export type UserLoginInput = {
@@ -1231,6 +1682,12 @@ export type UserLoginSocialInput = {
   socialName: UserSocialServiceName;
   socialToken: Scalars['String'];
   surname?: Maybe<Scalars['String']>;
+};
+
+export type UserPayload = {
+  __typename?: 'UserPayload';
+  errors: Array<InputValidationError>;
+  user?: Maybe<User>;
 };
 
 export type UserPlaylist = Node & {
@@ -1248,6 +1705,8 @@ export type UserPlaylistRecordingsArgs = {
   after?: Maybe<Scalars['String']>;
   collectionId?: Maybe<Scalars['ID']>;
   first?: Maybe<Scalars['Int']>;
+  includeUnpublished?: Maybe<Scalars['Boolean']>;
+  offset?: Maybe<Scalars['Int']>;
   presenterId?: Maybe<Scalars['ID']>;
   sequenceId?: Maybe<Scalars['ID']>;
   sponsorId?: Maybe<Scalars['ID']>;
@@ -1293,6 +1752,19 @@ export type UserPlaylistUpdateInput = {
   title: Scalars['String'];
 };
 
+/** The administrative roles a user may hold. */
+export enum UserRoles {
+  Administration = 'ADMINISTRATION',
+  Catalog = 'CATALOG',
+  Communcations = 'COMMUNCATIONS',
+  Equipment = 'EQUIPMENT',
+  Legal = 'LEGAL',
+  Mediamanager = 'MEDIAMANAGER',
+  Screening = 'SCREENING',
+  Stats = 'STATS',
+  Technical = 'TECHNICAL'
+}
+
 export type UserSignupInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -1305,11 +1777,45 @@ export enum UserSocialServiceName {
   Google = 'GOOGLE'
 }
 
-export type UserUpdateProfileInput = {
-  email: Scalars['String'];
-  givenName: Scalars['String'];
+export type UsersOrder = {
+  direction: OrderByDirection;
+  field: UsersSortableField;
+};
+
+/** Properties by which user connections can be ordered. */
+export enum UsersSortableField {
+  CreatedAt = 'CREATED_AT',
+  Email = 'EMAIL',
+  Id = 'ID'
+}
+
+export type UserUpdateInput = {
+  /** The first line of the address. Typically the street address or PO Box number. */
+  address1?: Maybe<Scalars['String']>;
+  /** The second line of the address. Typically the number of the apartment, suite, or unit. */
+  address2?: Maybe<Scalars['String']>;
+  /** The name of the city, district, village, or town. */
+  city?: Maybe<Scalars['String']>;
+  /** The name of the country. */
+  country?: Maybe<Scalars['String']>;
+  /** The user's email address. */
+  email?: Maybe<Scalars['String']>;
+  /** The user's first name. */
+  givenName?: Maybe<Scalars['String']>;
+  /** Whether the user has permission to perform all administrative functions. */
+  isSuperuser?: Maybe<Scalars['Boolean']>;
+  /** The user's preferred interface language. */
+  language?: Maybe<Language>;
+  /** The user's password. */
   password?: Maybe<Scalars['String']>;
-  surname: Scalars['String'];
+  /** The postal or zip code. */
+  postalCode?: Maybe<Scalars['String']>;
+  /** The name of the region, such as the province, state, or district. */
+  province?: Maybe<Scalars['String']>;
+  /** The user's administrative roles. */
+  roles?: Maybe<Array<UserRoles>>;
+  /** The user's last name. */
+  surname?: Maybe<Scalars['String']>;
 };
 
 export type VideoFile = Node & {
@@ -1322,6 +1828,7 @@ export type VideoFile = Node & {
   filesize: Scalars['String'];
   height: Scalars['Int'];
   id: Scalars['ID'];
+  /** The URL to record video views for analytics. */
   logUrl?: Maybe<Scalars['URL']>;
   mimeType: Scalars['String'];
   recording: Recording;
