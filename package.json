@@ -15,7 +15,8 @@
     "android:beta": "fastlane android beta",
     "graphql:codegen": "graphql codegen",
     "graphql:coverage": "graphql coverage",
-    "graphql:validate": "graphql validate --noStrictFragments"
+    "graphql:validate": "graphql validate --noStrictFragments",
+    "graphql:validate:local": "graphql-inspector validate --noStrictFragments './**/*.graphql' http://localhost:3000/graphql"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^1.1.2",
@@ -74,6 +75,7 @@
     "@graphql-codegen/schema-ast": "^1.17.8",
     "@graphql-codegen/typescript": "^1.17.9",
     "@graphql-codegen/typescript-operations": "^1.17.8",
+    "@graphql-inspector/cli": "^2.2.0",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/enzyme": "^3.10.5",
     "@types/i18n-js": "^3.0.3",
