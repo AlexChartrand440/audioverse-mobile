@@ -157,7 +157,7 @@ export const List: React.FC<Props> = ({
 	};
 
 	return (
-		<View style={styles.container}>
+		<View style={styles.container} testID="list-container">
 			<FlatList
 				ref={_flatListRef}
 				ListHeaderComponent={Header}

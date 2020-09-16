@@ -68,11 +68,17 @@ const BottomTabNavigator = createBottomTabNavigator(
 	{
 		Presentations: {
 			screen: WithPlayerPresentationsNavigator,
-			navigationOptions: screenNavigationOptions('home', 'home'),
+			navigationOptions: {
+				...screenNavigationOptions('home', 'home'),
+				tabBarTestID: 'main-tab',
+			},
 		},
 		Discover: {
 			screen: WithPlayerDiscoverNavigator,
-			navigationOptions: screenNavigationOptions('discover', 'grid'),
+			navigationOptions: {
+				...screenNavigationOptions('discover', 'grid'),
+				tabBarTestID: 'discover-tab',
+			},
 		},
 		Bible: {
 			screen: WithPlayerBibleNavigator,
@@ -80,11 +86,17 @@ const BottomTabNavigator = createBottomTabNavigator(
 		},
 		Books: {
 			screen: WithPlayerBooksNavigator,
-			navigationOptions: screenNavigationOptions('books', 'book-open'),
+			navigationOptions: {
+				...screenNavigationOptions('books', 'book-open'),
+				tabBarTestID: 'books-tab',
+			},
 		},
 		Menu: {
 			screen: WithPlayerMenuNavigator,
-			navigationOptions: screenNavigationOptions('menu', 'menu'),
+			navigationOptions: {
+				...screenNavigationOptions('menu', 'menu'),
+				tabBarTestID: 'menu-tab',
+			},
 		},
 	},
 	{

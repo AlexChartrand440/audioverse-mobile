@@ -86,7 +86,7 @@ const MiniPlayer: React.FC<Props> = ({ navigation, track, actions }) => {
 	);
 
 	return (
-		<View style={styles.container}>
+		<View style={styles.container} testID="mini-player">
 			<ListItem
 				leftAvatar={{
 					source:

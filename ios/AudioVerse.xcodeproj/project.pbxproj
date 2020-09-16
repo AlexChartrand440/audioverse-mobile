@@ -19,6 +19,8 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* AudioVerseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AudioVerseTests.m */; };
 		2FB7F90BC17DA0BDC15DDB99 /* libPods-AudioVerse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D687EC6CDCD31571A6A933 /* libPods-AudioVerse.a */; };
+		3B13814A25116BFC008F4B18 /* AudioVerseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B13814925116BFC008F4B18 /* AudioVerseUITests.swift */; };
+		3B13815225116C5B008F4B18 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B13815125116C5B008F4B18 /* SnapshotHelper.swift */; };
 		3BD9676D24C73A0C00F9D338 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD9676C24C73A0C00F9D338 /* Launch Screen.storyboard */; };
 		97FAE1CE000BB1ABC9D482B1 /* libPods-AudioVerse-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EF067DC98447415A570841D /* libPods-AudioVerse-tvOSTests.a */; };
 		B00DB3B521CC492C00A98E3C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B00DB38221CC492B00A98E3C /* GoogleService-Info.plist */; };
@@ -40,6 +42,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "AudioVerse-tvOS";
+		};
+		3B13814C25116BFC008F4B18 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = AudioVerse;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -63,6 +72,10 @@
 		2D02E47B1E0B4A5D006451C7 /* AudioVerse-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AudioVerse-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* AudioVerse-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AudioVerse-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B13814725116BFC008F4B18 /* AudioVerseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioVerseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B13814925116BFC008F4B18 /* AudioVerseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioVerseUITests.swift; sourceTree = "<group>"; };
+		3B13814B25116BFC008F4B18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B13815125116C5B008F4B18 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
 		3BD9676C24C73A0C00F9D338 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		46B354FD92626772799E499A /* Pods-AudioVerse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioVerse.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudioVerse/Pods-AudioVerse.release.xcconfig"; sourceTree = "<group>"; };
 		46D808E657B3431D922C2FAE /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -133,6 +146,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3B13814425116BFC008F4B18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -186,6 +206,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3B13814825116BFC008F4B18 /* AudioVerseUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3B13815125116C5B008F4B18 /* SnapshotHelper.swift */,
+				3B13814925116BFC008F4B18 /* AudioVerseUITests.swift */,
+				3B13814B25116BFC008F4B18 /* Info.plist */,
+			);
+			path = AudioVerseUITests;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +230,7 @@
 				13B07FAE1A68108700A75B9A /* AudioVerse */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AudioVerseTests */,
+				3B13814825116BFC008F4B18 /* AudioVerseUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				FE977834C9CF4FFB9AAB0644 /* Resources */,
@@ -218,6 +249,7 @@
 				00E356EE1AD99517003FC87E /* AudioVerseTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* AudioVerse-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* AudioVerse-tvOSTests.xctest */,
+				3B13814725116BFC008F4B18 /* AudioVerseUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -350,12 +382,31 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* AudioVerse-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		3B13814625116BFC008F4B18 /* AudioVerseUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B13815025116BFC008F4B18 /* Build configuration list for PBXNativeTarget "AudioVerseUITests" */;
+			buildPhases = (
+				3B13814325116BFC008F4B18 /* Sources */,
+				3B13814425116BFC008F4B18 /* Frameworks */,
+				3B13814525116BFC008F4B18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3B13814D25116BFC008F4B18 /* PBXTargetDependency */,
+			);
+			name = AudioVerseUITests;
+			productName = AudioVerseUITests;
+			productReference = 3B13814725116BFC008F4B18 /* AudioVerseUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1170;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -390,6 +441,12 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
+					3B13814625116BFC008F4B18 = {
+						CreatedOnToolsVersion = 11.7;
+						DevelopmentTeam = T636GPF37H;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "AudioVerse" */;
@@ -416,6 +473,7 @@
 				00E356ED1AD99517003FC87E /* AudioVerseTests */,
 				2D02E47A1E0B4A5D006451C7 /* AudioVerse-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* AudioVerse-tvOSTests */,
+				3B13814625116BFC008F4B18 /* AudioVerseUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -447,6 +505,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2D02E48E1E0B4A5D006451C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3B13814525116BFC008F4B18 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -698,6 +763,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3B13814325116BFC008F4B18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B13814A25116BFC008F4B18 /* AudioVerseUITests.swift in Sources */,
+				3B13815225116C5B008F4B18 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -710,6 +784,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* AudioVerse-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		3B13814D25116BFC008F4B18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* AudioVerse */;
+			targetProxy = 3B13814C25116BFC008F4B18 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -977,6 +1056,61 @@
 			};
 			name = Release;
 		};
+		3B13814E25116BFC008F4B18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = T636GPF37H;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AudioVerseUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.audioverse.AudioVerseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AudioVerse;
+			};
+			name = Debug;
+		};
+		3B13814F25116BFC008F4B18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = T636GPF37H;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = AudioVerseUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.audioverse.AudioVerseUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AudioVerse;
+			};
+			name = Release;
+		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1111,6 +1245,15 @@
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
 				2D02E49A1E0B4A5E006451C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3B13815025116BFC008F4B18 /* Build configuration list for PBXNativeTarget "AudioVerseUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3B13814E25116BFC008F4B18 /* Debug */,
+				3B13814F25116BFC008F4B18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

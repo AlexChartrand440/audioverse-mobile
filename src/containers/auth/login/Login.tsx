@@ -338,6 +338,7 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 				type="clear"
 				containerStyle={styles.close}
 				onPress={handleClose}
+				testID="login-modal-close"
 			/>
 			<View style={styles.form}>
 				<Image source={logo} style={styles.logo} resizeMode="contain" />
