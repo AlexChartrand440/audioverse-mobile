@@ -30,6 +30,7 @@ const VideoPlayer: React.FC<NavigationInjectedProps> = ({ navigation }) => {
 				onBack={() => {
 					navigation.goBack();
 				}}
+				ignoreSilentSwitch="ignore"
 			/>
 		</View>
 	);
