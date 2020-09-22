@@ -138,8 +138,8 @@ android {
         applicationId "org.audioverse.exodus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 87
-        versionName "3.4.0"
+        versionCode 88
+        versionName "3.4.1"
         multiDexEnabled true
     }
     signingConfigs {
