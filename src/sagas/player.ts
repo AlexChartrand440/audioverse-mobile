@@ -391,11 +391,17 @@ export function* trackInitialized({ track }: { type: string; track: Track }) {
 		yield call(TrackPlayer.setRate, rate);
 	}
 
-	// set the playback position if there is a position stored and is only one track
-	const position = yield select(selectors.getPosition);
-	const queue = yield call(TrackPlayer.getQueue);
-	if (position && queue.length === 1) {
-		yield call(TrackPlayer.seekTo, position);
+	/**
+	 * Android: Set the playback position if there is a position stored and is only one track
+	 * iOS: In order to WORKAROUND(https://github.com/react-native-kit/react-native-track-player/issues/387)
+	 * we wait to seek until the track has started playing (in event-handler.ts).
+	 */
+	if (Platform.OS !== 'ios') {
+		const position = yield select(selectors.getPosition);
+		const queue = yield call(TrackPlayer.getQueue);
+		if (position && queue.length === 1) {
+			yield call(TrackPlayer.seekTo, position);
+		}
 	}
 
 	// analytics

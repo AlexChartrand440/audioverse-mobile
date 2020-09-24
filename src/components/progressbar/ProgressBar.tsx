@@ -1,5 +1,5 @@
 import Slider from '@react-native-community/slider';
-import React from 'react';
+import React, { useState } from 'react';
 import { Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import TrackPlayer, { useProgress } from 'react-native-track-player';
 
@@ -32,11 +32,20 @@ const styles = StyleSheet.create({
 });
 
 const ProgressBar: React.FC<Props> = ({ rate }) => {
-	const progress = useProgress();
+	const trackProgress = useProgress(1);
+	const [lastTrackProgress, setLastTrackProgress] = useState(0);
+	const [realProgress, setRealProgress] = useState(0);
+
+	const roundedTrackProgress = Math.floor(trackProgress.position);
+	if (lastTrackProgress != roundedTrackProgress) {
+		setLastTrackProgress(roundedTrackProgress);
+		setRealProgress(roundedTrackProgress);
+	}
 
 	const handleValueChange = async (value: number) => {
 		await TrackPlayer.pause();
 		await TrackPlayer.seekTo(value);
+		setRealProgress(value);
 	};
 
 	const handleSlidingComplete = async () => {
@@ -49,17 +58,16 @@ const ProgressBar: React.FC<Props> = ({ rate }) => {
 			}
 		}
 	};
-
-	const position = formatTime(Math.floor(progress.position));
-	const duration = formatTime(Math.floor(progress.duration));
+	const position = formatTime(Math.floor(realProgress));
+	const duration = formatTime(Math.floor(trackProgress.duration));
 
 	return (
 		<View style={styles.container}>
 			<TouchableWithoutFeedback>
 				<Slider
-					value={progress.position}
+					value={trackProgress.position}
 					minimumValue={0}
-					maximumValue={progress.duration}
+					maximumValue={trackProgress.duration}
 					step={1}
 					minimumTrackTintColor="#E53935"
 					thumbTintColor="#E53935"
