@@ -8,6 +8,7 @@ import I18n from '../../locales';
 import * as actions from '../actions';
 import { ContentTypes } from '../constants';
 import prompts, { Prompt } from '../constants/prompts';
+import { getPosition } from '../reducers/selectors';
 import { bibleChapter } from '../store/Bible/actions';
 import { playbackPosition, playbackTrackId } from '../store/playback/actions';
 
@@ -58,12 +59,22 @@ async function eventHandler(store: Store, data: Data) {
 		});
 	}
 
+	let lastTrackId: any = -1;
 	TrackPlayer.addEventListener(PlayerEvent.PlaybackState, async (data) => {
 		console.log('playback-state', data, PlayerState);
 		if (data.state === PlayerState.Buffering) {
 			// clear interval
 			clearInterval(interval);
 		} else if (data.state === PlayerState.Playing) {
+			const currentTrackId = await TrackPlayer.getCurrentTrack();
+			if (Platform.OS === 'ios' && lastTrackId !== currentTrackId) {
+				lastTrackId = currentTrackId;
+				const position = getPosition(store.getState());
+				const queue = await TrackPlayer.getQueue();
+				if (position && queue.length === 1) {
+					await TrackPlayer.seekTo(position);
+				}
+			}
 			playing();
 		} else if (data.state === PlayerState.Paused) {
 			// clear interval

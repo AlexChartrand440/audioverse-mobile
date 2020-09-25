@@ -337,7 +337,7 @@ PODS:
     - Toast (~> 4.0.0)
   - react-native-slider (3.0.3):
     - React
-  - react-native-track-player (1.2.0):
+  - react-native-track-player (2.0.0-rc13):
     - React
   - react-native-video (5.0.2):
     - React
@@ -686,7 +686,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 01158a92c300895d79dee447e980672dc3fb85a6
   react-native-simple-toast: 58b71ef003f01d2c0bf5dcd2fdccc75861dabade
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
-  react-native-track-player: f99b7f08a0039ae0ad4ca649f210bbad85b35f0a
+  react-native-track-player: 6c2c2f163534bb6d6b5fea68959b3641f70718dd
   react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
   react-native-viewpager: f730c1d175a2c1ae789464855d4a2c14247d3109
   react-native-webview: 6ee7868ca8eba635dbf7963986d1ab7959da0391
