@@ -8,7 +8,7 @@ import I18n from '../../locales';
 import * as actions from '../actions';
 import { ContentTypes } from '../constants';
 import prompts, { Prompt } from '../constants/prompts';
-import { getPosition } from '../reducers/selectors';
+import { getPosition, getRate } from '../reducers/selectors';
 import { bibleChapter } from '../store/Bible/actions';
 import { playbackPosition, playbackTrackId } from '../store/playback/actions';
 
@@ -20,8 +20,16 @@ interface Data {
 let interval: any = null;
 
 async function eventHandler(store: Store, data: Data) {
-	TrackPlayer.addEventListener(PlayerEvent.RemotePlay, () => {
-		TrackPlayer.play();
+	TrackPlayer.addEventListener(PlayerEvent.RemotePlay, async () => {
+		await TrackPlayer.play();
+		// workaround on iOS play/pause resets the playback speed to 1
+		// https://github.com/react-native-kit/react-native-track-player/issues/614
+		if (Platform.OS === 'ios') {
+			const rate = getRate(store.getState());
+			if (rate !== 1) {
+				await TrackPlayer.setRate(rate);
+			}
+		}
 	});
 
 	TrackPlayer.addEventListener(PlayerEvent.RemotePause, () => {

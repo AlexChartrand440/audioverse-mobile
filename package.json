@@ -49,7 +49,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-swiper": "1.5.14",
     "react-native-tab-view": "^2.15.1",
-    "react-native-track-player": "^2.0.0-rc13",
+    "react-native-track-player": "git+https://github.com/react-native-kit/react-native-track-player.git#v2",
     "react-native-vector-icons": "6.6.0",
     "react-native-video": "^5.0.2",
     "react-native-video-controls": "^2.6.0",
