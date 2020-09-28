@@ -11,6 +11,7 @@
     "lint:fix": "eslint --ext .js,.json,.ts,.tsx --fix ./src",
     "prettier:write": "npx prettier --write **/*.{js,ts,tsx,json,graphql} && npx prettier --write *.{js,tsx,json}",
     "postversion": "react-native-version",
+    "build:bump": "react-native-version -b",
     "ios:beta": "fastlane ios beta",
     "android:beta": "fastlane android beta",
     "graphql:codegen": "graphql codegen",
