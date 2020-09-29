@@ -6,7 +6,7 @@ query audiobookRecordings($language: Language!, $sequenceId: ID, $afterCursor: S
 		sequenceId: $sequenceId
 		first: 25
 		after: $afterCursor
-		orderBy: [{ field: PUBLISHED_AT, direction: DESC }]
+		orderBy: [{ field: ID, direction: ASC }]
 	) {
 		nodes {
 			...recordingFragment

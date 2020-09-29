@@ -477,7 +477,7 @@ export function* loadBook({ loadMore, refresh, url: sequenceId }: LoadBookAction
 	const file = `${BIBLE_AND_BOOKS_DIR}/${Dirs.audiobooks}/audiobookRecording_${sequenceId}`;
 	const exists = yield RNFetchBlob.fs.exists(file);
 	console.log('exists', exists);
-	if (refresh || !exists) {
+	if (refresh || loadMore || !exists) {
 		const pagination = yield select(selectors.getBookPagination);
 		yield call(fetchDataGraphQL, loadMore, refresh, pagination, fetchBook, Queries.audiobookRecordings, { sequenceId });
 		// write to file system
