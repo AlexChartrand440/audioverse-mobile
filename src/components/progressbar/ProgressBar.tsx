@@ -32,7 +32,14 @@ const styles = StyleSheet.create({
 });
 
 const ProgressBar: React.FC<Props> = ({ rate }) => {
-	const trackProgress = useProgress(1);
+	const updateInterval = 100;
+	/**
+	 * At max rate (2x) we need to update the position timestamp every 500msecs. Using 100msec for the
+	 * update interval should balance between keeping the timestamp ticking evenly (to the limit of
+	 * human perception) and adding too much load to the device.
+	 */
+	const trackProgress = useProgress(updateInterval);
+
 	const [lastTrackProgress, setLastTrackProgress] = useState(0);
 	const [realProgress, setRealProgress] = useState(0);
 
