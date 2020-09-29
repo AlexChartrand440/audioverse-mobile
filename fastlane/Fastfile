@@ -13,21 +13,21 @@ platform :ios do
     # UI.important "Important Message"
     # UI.error "O NO!"
     # UI.message "Basic blah"
-    answer = UI.select("Would you like to add a Changelog?", ["Yes", "No"])
-    changelog = ask('Type Changelog message:') if answer == "Yes"
+    # answer = UI.select("Would you like to add a Changelog?", ["Yes", "No"])
+    # changelog = ask('Type Changelog message:') if answer == "Yes"
     
     # Get latest certs appstore
     # match(type: 'appstore')
-    get_certificates
-    get_provisioning_profile(app_identifier: "org.audioverse.mobile")
+    get_certificates(username: "matthew@audioverse.org")
+    get_provisioning_profile(app_identifier: "org.audioverse.mobile", username: "matthew@audioverse.org")
     
     build_app(workspace: "ios/AudioVerse.xcworkspace", scheme: "AudioVerse", include_bitcode: true, include_symbols: true)
     
-    if changelog
-      upload_to_testflight(changelog: changelog, skip_submission: true, skip_waiting_for_build_processing: true, team_name: "AudioVerse")
-    else
-      upload_to_testflight(skip_submission: true, skip_waiting_for_build_processing: true, team_name: "AudioVerse")
-    end    
+    # if changelog
+    #   upload_to_testflight(changelog: changelog, skip_submission: true, skip_waiting_for_build_processing: true, team_name: "AudioVerse")
+    # else
+      upload_to_testflight(skip_submission: true, skip_waiting_for_build_processing: true, team_name: "AudioVerse", username: "matthew@audioverse.org")
+    # end    
     
     version = get_version_number(target: "AudioVerse", xcodeproj: "ios/AudioVerse.xcodeproj")
     slack(
