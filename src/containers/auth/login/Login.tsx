@@ -191,6 +191,8 @@ const Login: React.FC<Props> = ({ navigation, language, actions }) => {
 			firebase.analytics().logEvent('login', { sign_up_method: 'email' });
 			// navigate to the main screen
 			navigate();
+		} else {
+			Alert.alert(I18n.t('Invalid_username_or_password.'));
 		}
 	};
 
