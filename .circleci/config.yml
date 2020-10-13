@@ -8,7 +8,7 @@ jobs:
       - checkout
       - node/install-packages
       - run: npm run lint
-      - run: npm audit --audit-level=moderate
+      # - run: npm audit --audit-level=moderate
       - run: npm test
       - run: npm run graphql:validate
 workflows:
