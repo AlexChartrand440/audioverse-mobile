@@ -164,8 +164,7 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 				source: { uri: item.logoImage.url },
 			}}
 			title={item.title}
-			onPress={() => {
-				console.log(item);
+			onPress={() =>
 				navigation.navigate({
 					routeName: 'Serie',
 					params: {
@@ -173,8 +172,8 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 						title: item.title,
 						description: item.description,
 					},
-				});
-			}}
+				})
+			}
 			bottomDivider
 		/>
 	);
