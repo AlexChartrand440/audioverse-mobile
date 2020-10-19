@@ -148,7 +148,12 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 				source: { uri: item.logoImage.url },
 			}}
 			title={item.title}
-			onPress={() => navigation.navigate({ routeName: 'Conference', params: { url: item.id, title: item.title } })}
+			onPress={() =>
+				navigation.navigate({
+					routeName: 'Conference',
+					params: { url: item.id, title: item.title, description: item.description },
+				})
+			}
 			bottomDivider
 		/>
 	);
@@ -159,7 +164,16 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 				source: { uri: item.logoImage.url },
 			}}
 			title={item.title}
-			onPress={() => navigation.navigate({ routeName: 'Serie', params: { url: item.id, title: item.title } })}
+			onPress={() =>
+				navigation.navigate({
+					routeName: 'Serie',
+					params: {
+						url: item.id,
+						title: item.title,
+						description: item.description,
+					},
+				})
+			}
 			bottomDivider
 		/>
 	);
@@ -170,7 +184,12 @@ const Search: React.FC<Props> & NavigationNavigatorProps = ({ navigation, action
 				source: { uri: item.logoImage.url },
 			}}
 			title={item.title}
-			onPress={() => navigation.navigate({ routeName: 'Sponsor', params: { url: item.id, title: item.title } })}
+			onPress={() =>
+				navigation.navigate({
+					routeName: 'Sponsor',
+					params: { url: item.id, title: item.title, description: item.description },
+				})
+			}
 			bottomDivider
 		/>
 	);
