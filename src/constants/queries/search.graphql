@@ -5,6 +5,7 @@ query search($language: Language!, $term: String!) {
 		nodes {
 			id
 			title
+			description
 			logoImage: imageWithFallback {
 				url(size: 86)
 			}
@@ -32,6 +33,7 @@ query search($language: Language!, $term: String!) {
 		nodes {
 			id
 			title
+			description
 			logoImage: imageWithFallback {
 				url(size: 86)
 			}
@@ -41,6 +43,7 @@ query search($language: Language!, $term: String!) {
 		nodes {
 			id
 			title
+			description
 			logoImage: imageWithFallback {
 				url(size: 86)
 			}
