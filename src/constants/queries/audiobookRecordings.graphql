@@ -1,10 +1,10 @@
 #import "./fragments/recording.graphql"
-
+# We are loading <1500 recordings here since the audiobooks are cached and we want to have all of them locally
 query audiobookRecordings($language: Language!, $sequenceId: ID, $afterCursor: String) {
 	recordings(
 		language: $language
 		sequenceId: $sequenceId
-		first: 25
+		first: 1500
 		after: $afterCursor
 		orderBy: [{ field: ID, direction: ASC }]
 	) {
