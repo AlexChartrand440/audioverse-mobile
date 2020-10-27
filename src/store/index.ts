@@ -292,6 +292,22 @@ const migrations: any = {
 			},
 		};
 	},
+	5: async (state: { [key: string]: any }) => {
+		// Clear out incorrectly cached audiobook recordings
+		const BIBLE_AND_BOOKS_DIR =
+			Platform.OS === 'ios' ? RNFetchBlob.fs.dirs.DocumentDir : `${RNFetchBlob.fs.dirs.MainBundleDir}/app_appdata`;
+		const folder = `${BIBLE_AND_BOOKS_DIR}/${Dirs.audiobooks}/`;
+		if (await RNFetchBlob.fs.isDir(folder)) {
+			const files = await RNFetchBlob.fs.ls(folder);
+			console.log('audiobook files', files);
+			for (const filename of files) {
+				if (filename.includes('audiobookRecording_')) {
+					await RNFetchBlob.fs.unlink(`${folder}/${filename}`);
+				}
+			}
+		}
+		return state;
+	},
 };
 
 // persist reducer
@@ -300,7 +316,7 @@ const persistConfig = {
 	storage: AsyncStorage,
 	whitelist: ['settings', 'playback', 'bible', 'user', 'lists', 'presenters'],
 	timeout: 0, // disable timeout https://github.com/rt2zz/redux-persist/issues/717
-	version: 4,
+	version: 5,
 	migrate: customCreateMigrate(migrations, {
 		debug: true,
 		asyncMigrations: true,
