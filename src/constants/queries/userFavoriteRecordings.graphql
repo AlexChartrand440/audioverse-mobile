@@ -3,7 +3,7 @@
 query userFavoriteRecordings {
 	me {
 		user {
-			favoriteRecordings {
+			favoriteRecordings(first: 500) {
 				nodes {
 					...recordingFragment
 				}
